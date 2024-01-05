@@ -1,0 +1,174 @@
+%% This is file `emmt-unicode.sty'.
+%%
+%% Poor man pseudo-code in equations.
+%%
+\ProvidesPackage{emmt-unicode}[2022/07/20 v. 0.0.1]
+\RequirePackage{array}
+
+%% See https://tex.stackexchange.com/questions/195458/implementing-declareunicodecharacter-in-lualatex-an-xelatex
+\RequirePackage{newunicodechar}
+\RequirePackage{ifxetex,ifluatex}
+\newif\ifemmtunicode
+\ifxetex\emmtunicodetrue\fi
+\ifluatex\emmtunicodetrue\fi
+\ifemmtunicode
+\else
+  \RequirePackage[utf8]{inputenc}
+\fi
+\newif\ifemmtslantcmp % slated version of comparison operators?
+\@ifpackageloaded{amssymb}{\emmtslantcmptrue}{}
+\@ifpackageloaded{stix}{\emmtslantcmptrue}{}
+
+%\providecommand{\IfMath}[2]{\relax\ifmmode #1\else #2\fi}
+
+%% Miscellaneous.
+\RequirePackage{eurosym}
+\newunicodechar{€}{\euro} % Euro sign
+%\newunicodechar{€}{\ensuremath{\euro}}% Euro sign
+
+%% Small superscript digits.
+ \newunicodechar{⁰}{\ensuremath{^0}}
+ \newunicodechar{¹}{\ensuremath{^1}}
+ \newunicodechar{²}{\ensuremath{^2}}
+ \newunicodechar{³}{\ensuremath{^3}}
+ \newunicodechar{⁴}{\ensuremath{^4}}
+ \newunicodechar{⁵}{\ensuremath{^5}}
+ \newunicodechar{⁶}{\ensuremath{^6}}
+ \newunicodechar{⁷}{\ensuremath{^7}}
+ \newunicodechar{⁸}{\ensuremath{^8}}
+ \newunicodechar{⁹}{\ensuremath{^9}}
+
+%% Greek letters.
+ \newunicodechar{Α}{\ensuremath{\Alpha}}     % greek Alpha
+ \newunicodechar{Β}{\ensuremath{\Beta}}      % greek Beta
+ \newunicodechar{Γ}{\ensuremath{\Gamma}}     % greek Gamma
+ \newunicodechar{Δ}{\ensuremath{\Delta}}     % greek Delta
+ \newunicodechar{Ε}{\ensuremath{\Epsilon}}   % greek Epsilon
+ \newunicodechar{Ζ}{\ensuremath{\Zeta}}      % greek Zeta
+ \newunicodechar{Η}{\ensuremath{\Eta}}       % greek Eta
+ \newunicodechar{Θ}{\ensuremath{\Theta}}     % greek Theta
+ \newunicodechar{Ι}{\ensuremath{\Iota}}      % greek Iota
+ \newunicodechar{Κ}{\ensuremath{\Kappa}}     % greek Kappa
+ \newunicodechar{Λ}{\ensuremath{\Lambda}}    % greek Lambda
+ \newunicodechar{Μ}{\ensuremath{\Mu}}        % greek Mu
+ \newunicodechar{Ν}{\ensuremath{\Nu}}        % greek Nu
+ \newunicodechar{Ξ}{\ensuremath{\Xi}}        % greek Xi
+ \newunicodechar{Ο}{\ensuremath{\Omicron}}   % greek Omicron
+ \newunicodechar{Π}{\ensuremath{\Pi}}        % greek Pi
+ \newunicodechar{Ρ}{\ensuremath{\Rho}}       % greek Rho
+ \newunicodechar{Σ}{\ensuremath{\Sigma}}     % greek Sigma
+ \newunicodechar{Τ}{\ensuremath{\Tau}}       % greek Tau
+ \newunicodechar{Υ}{\ensuremath{\Upsilon}}   % greek Upsilon
+ \newunicodechar{Φ}{\ensuremath{\Phi}}       % greek Phi
+ \newunicodechar{Χ}{\ensuremath{\Chi}}       % greek Chi
+ \newunicodechar{Ψ}{\ensuremath{\Psi}}       % greek Psi
+ \newunicodechar{Ω}{\ensuremath{\Omega}}     % greek Omega
+
+ \newunicodechar{α}{\ensuremath{\alpha}}     % greek alpha
+%\newunicodechar{α}{\ensuremath{\upalpha}}   % greek alpha
+ \newunicodechar{β}{\ensuremath{\beta}}      % greek beta
+ \newunicodechar{γ}{\ensuremath{\gamma}}     % greek gamma
+ \newunicodechar{δ}{\ensuremath{\delta}}     % greek delta
+%\newunicodechar{ε}{\ensuremath{\epsilon}}   % greek epsilon
+ \newunicodechar{ε}{\ensuremath{\varepsilon}}% greek epsilon
+ \newunicodechar{ζ}{\ensuremath{\zeta}}      % greek zeta
+ \newunicodechar{η}{\ensuremath{\eta}}       % greek eta
+ \newunicodechar{θ}{\ensuremath{\theta}}     % greek theta
+%\newunicodechar{θ}{\ensuremath{\vartheta}}  % greek theta
+ \newunicodechar{ι}{\ensuremath{\iota}}      % greek iota
+ \newunicodechar{κ}{\ensuremath{\kappa}}     % greek kappa
+ \newunicodechar{λ}{\ensuremath{\lambda}}    % greek lambda
+ \newunicodechar{μ}{\ensuremath{\mu}}        % greek mu
+ \newunicodechar{ν}{\ensuremath{\nu}}        % greek nu
+ \newunicodechar{ξ}{\ensuremath{\xi}}        % greek xi
+ \newunicodechar{ο}{\ensuremath{\omicron}}   % greek omicron
+ \newunicodechar{π}{\ensuremath{\pi}}        % greek pi
+ \newunicodechar{ρ}{\ensuremath{\rho}}       % greek rho
+ \newunicodechar{ς}{\ensuremath{\varsigma}}  % greek stigma
+ \newunicodechar{σ}{\ensuremath{\sigma}}     % greek sigma
+ \newunicodechar{τ}{\ensuremath{\tau}}       % greek tau
+ \newunicodechar{υ}{\ensuremath{\upsilon}}   % greek upsilon
+%\newunicodechar{φ}{\ensuremath{\phi}}       % greek phi
+ \newunicodechar{φ}{\ensuremath{\varphi}}    % greek phi
+ \newunicodechar{χ}{\ensuremath{\chi}}       % greek chi
+ \newunicodechar{ψ}{\ensuremath{\psi}}       % greek psi
+ \newunicodechar{ω}{\ensuremath{\omega}}     % reek omega
+
+%% Black-board letters.
+ \newunicodechar{𝔸}{\ensuremath{\mathbb{A}}}
+ \newunicodechar{𝔹}{\ensuremath{\mathbb{B}}}
+ \newunicodechar{ℂ}{\ensuremath{\mathbb{C}}}
+ \newunicodechar{𝔻}{\ensuremath{\mathbb{D}}}
+ \newunicodechar{𝔼}{\ensuremath{\mathbb{E}}}
+ \newunicodechar{𝔽}{\ensuremath{\mathbb{F}}}
+ \newunicodechar{𝔾}{\ensuremath{\mathbb{G}}}
+ \newunicodechar{ℍ}{\ensuremath{\mathbb{H}}}
+ \newunicodechar{𝕀}{\ensuremath{\mathbb{I}}}
+ \newunicodechar{𝕁}{\ensuremath{\mathbb{J}}}
+ \newunicodechar{𝕂}{\ensuremath{\mathbb{K}}}
+ \newunicodechar{𝕃}{\ensuremath{\mathbb{L}}}
+ \newunicodechar{𝕄}{\ensuremath{\mathbb{M}}}
+ \newunicodechar{ℕ}{\ensuremath{\mathbb{N}}}
+ \newunicodechar{𝕆}{\ensuremath{\mathbb{O}}}
+ \newunicodechar{ℙ}{\ensuremath{\mathbb{P}}}
+ \newunicodechar{ℚ}{\ensuremath{\mathbb{Q}}}
+ \newunicodechar{ℝ}{\ensuremath{\mathbb{R}}}
+ \newunicodechar{𝕊}{\ensuremath{\mathbb{S}}}
+ \newunicodechar{𝕋}{\ensuremath{\mathbb{T}}}
+ \newunicodechar{𝕌}{\ensuremath{\mathbb{U}}}
+ \newunicodechar{𝕍}{\ensuremath{\mathbb{V}}}
+ \newunicodechar{𝕎}{\ensuremath{\mathbb{W}}}
+ \newunicodechar{𝕏}{\ensuremath{\mathbb{X}}}
+ \newunicodechar{𝕐}{\ensuremath{\mathbb{Y}}}
+ \newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+
+%% Mathematics.
+ \newunicodechar{°}{\ifmmode\degree\else\textdegree\fi}
+ \newunicodechar{±}{\ensuremath{\pm}}         % plus-minus sign
+ \newunicodechar{∓}{\ensuremath{\mp}}         % minus-plus sign
+ \newunicodechar{µ}{\ensuremath{\upmu}}       % micro sign
+ \newunicodechar{·}{\ensuremath{\cdot}}       % centered dot
+ \newunicodechar{×}{\ensuremath{\times}}      % multiplication sign
+ \newunicodechar{÷}{\ensuremath{\div}}        % division sign
+ \newunicodechar{…}{\ensuremath{\ldots}}      % ellipsis
+ \newunicodechar{ℓ}{\ensuremath{\ell}}
+ \newunicodechar{∀}{\ensuremath{\forall}}     % for all
+ \newunicodechar{∂}{\ensuremath{\partial}}    % partial differential
+ \newunicodechar{∅}{\ensuremath{\varnothing}} % empty set
+ \newunicodechar{∇}{\ensuremath{\nabla}}      % nabla, gradient
+ \newunicodechar{∈}{\ensuremath{\in}}         % element of
+ \newunicodechar{∉}{\ensuremath{\not\in}}     % not an element of
+ \newunicodechar{⊤}{\ensuremath{\top}}        % down tack, top
+ \newunicodechar{∘}{\ensuremath{\circ}}       % composition of functions
+ \newunicodechar{∝}{\ensuremath{\propto}}     % proportional to
+ \newunicodechar{∞}{\ensuremath{\infty}}      % infinity
+ \newunicodechar{∠}{\ensuremath{\angle}}      % angle
+ \newunicodechar{≈}{\ensuremath{\approx}}
+ \newunicodechar{≠}{\ensuremath{\not=}}
+ \newunicodechar{≡}{\ensuremath{\equiv}}
+ \ifemmtslantcmp
+   \newunicodechar{≤}{\ensuremath{\leqslant}}
+   \newunicodechar{≥}{\ensuremath{\geqslant}}
+ \else
+   \newunicodechar{≤}{\ensuremath{\le}}
+   \newunicodechar{≥}{\ensuremath{\ge}}
+ \fi
+ \newunicodechar{≪}{\ensuremath{\ll}}
+ \newunicodechar{≫}{\ensuremath{\gg}}
+ \newunicodechar{⊗}{\ensuremath{\otimes}}
+ \newunicodechar{⊙}{\ensuremath{\odot}}
+ \newunicodechar{⋅}{\ensuremath{\cdot}} % dot operator
+%\newunicodechar{⋅}{\ensuremath{\!\cdot\!}}  % dot operator
+%\newunicodechar{⋅}{\ensuremath{\raisebox{0.3ex}{.}}} % dot operator
+%\newunicodechar{⋅}{\mathpunct{\mathchar"2201}} % dot operator
+ \newunicodechar{✕}{\ensuremath{\times}}
+ \newunicodechar{⨯}{\ensuremath{\times}} % cross product
+
+%% Arrows.
+ \newunicodechar{⟺}{\ensuremath{\Longleftrightarrow}}
+ \newunicodechar{←}{\ifmmode\leftarrow\else\textleftarrow\fi} % leftwards arrow
+ \newunicodechar{↑}{\ifmmode\uparrow\else\textuparrow\fi} % upwards arrow
+ \newunicodechar{→}{\ifmmode\rightarrow\else\textrightarrow\fi} % rightwards arrow
+ \newunicodechar{↓}{\ifmmode\downarrow\else\textdownarrow\fi} % downwards arrow
+ \newunicodechar{↦}{\ensuremath{\mapsto}}
+ \newunicodechar{⇒}{\ensuremath{\Rightarrow}}
