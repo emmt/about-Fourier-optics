@@ -5,3 +5,5 @@
 [About Fourier optics](https://github.com/emmt/about-Fourier-optics) is a
 compilation of notes about Fourier optics. This work is targeted at numerical
 modeling of optical systems by physical optics propagation (POP).
+
+**Warning** This document shall be considered as *work in progress* for now.
