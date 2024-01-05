@@ -381,6 +381,33 @@ plane at $z_{0}$ by a shift-invariant propagation kernel
 $h_{z_{1} - z_{0}}(\V{x})$ between this plane and the transverse plane at
 $z_{1}$.
 
+\begin{table}[t]
+  \centering
+  \begin{tabular}{ll}
+    Notation & Description \\
+    \hline
+    $n$ & Refractive index of the medium\\
+    $c$ & Propagation speed in the void\\
+    $ν$ & Temporal frequency of wave\\
+    $λ= c/(n\,ν)$ & Wavelength in the medium\\
+    $k = 2\,π/λ$ & Wave number\\
+    $\V{k} = (k_{x},k_{y},k_{z})$ & Wave vector (with $k_{z} > 0$)\\
+    %$σ = \mathrm{sign}(k_{z})$
+    %         & $σ = +1$ if wave is propagating toward $z > 0$, \\
+    %         & $σ = -1$ otherwise\\
+    $\V{r} = (x,y,z)$ & Position in 3-dimensional space\\
+    $\V{x} = (x,y)$ & Lateral position in a transverse plane\\
+    $\V{α} = (α,β)$ & Spatial frequency\\
+    $u_{z}(\V{x}) = u_{z}(x,y) = u(x,y,z)$ & Field in a transverse plane\\
+    $\FT{u}_{z}(\V{α}) = \FT{u}_{z}(α,β)$
+             & Angular spectrum, Fourier transform of $u_{z}(\V{x})$\\
+  \end{tabular}
+  \caption{Notations. All coordinates are Cartesian coordinates with the
+    convention that the $z$-axis is oriented so that $z$ increases as the waves
+    physically propagate.}
+  \label{tab:notations}
+\end{table}
+
 
 \subsubsection{The angular spectrum solution}
 \label{sec:angular-spectrum}
@@ -716,37 +743,6 @@ the propagation kernel $h_{z}(\V{x})$ given in
 Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel} however for $z ≥ 0$, \oops{that is
   for forward propagation}.
 
-\oops{A word on Kirchhoff diffraction? Rayleigh-Sommerfeld solutions assume a
-  planar surface $\Sigma_{0}$ while Kirchhoff solutions have no such
-  restriction \citep{Goodman-1996-Fourier_optics}.}
-
-\begin{table}[t]
-  \centering
-  \begin{tabular}{ll}
-    Notation & Description \\
-    \hline
-    $n$ & Refractive index of the medium\\
-    $c$ & Propagation speed in the void\\
-    $ν$ & Temporal frequency of wave\\
-    $λ= c/(n\,ν)$ & Wavelength in the medium\\
-    $k = 2\,π/λ$ & Wave number\\
-    $\V{k} = (k_{x},k_{y},k_{z})$ & Wave vector (with $k_{z} > 0$)\\
-    %$σ = \mathrm{sign}(k_{z})$
-    %         & $σ = +1$ if wave is propagating toward $z > 0$, \\
-    %         & $σ = -1$ otherwise\\
-    $\V{r} = (x,y,z)$ & Position in 3-dimensional space\\
-    $\V{x} = (x,y)$ & Lateral position in a transverse plane\\
-    $\V{α} = (α,β)$ & Spatial frequency\\
-    $u_{z}(\V{x}) = u_{z}(x,y) = u(x,y,z)$ & Field in a transverse plane\\
-    $\FT{u}_{z}(\V{α}) = \FT{u}_{z}(α,β)$
-             & Angular spectrum, Fourier transform of $u_{z}(\V{x})$\\
-  \end{tabular}
-  \caption{Notations. All coordinates are Cartesian coordinates with the
-    convention that the $z$-axis is oriented so that $z$ increases as the waves
-    physically propagate.}
-  \label{tab:notations}
-\end{table}
-
 
 \subsection{Paraxial approximation: Fresnel diffraction}
 \label{sec:Fresnel-diffraction}
@@ -860,7 +856,7 @@ Propagation by this kernel implements \textbf{Fresnel diffraction}:
     u_{z_{1}}\Paren*{\V{x}_{1}}
     = \frac{\mathe^{\mathi\,k\,Δz}}{\mathi\,λ\,Δz}\,
       \iint u_{z_{0}}\Paren*{\V{x}_{0}}\,
-      \mathe^{\frac{\mathi\,k\,\Norm*{\V{x}_{1} - \V{x}_{0}}^{2}}{2\,Δz}}\,
+      \mathe^{\frac{\mathi\,π\,\Norm*{\V{x}_{1} - \V{x}_{0}}^{2}}{λ\,Δz}}\,
       \mathd\V{x}_{0}
   }
 \end{equation}
@@ -1147,21 +1143,23 @@ for modeling optical propagation. There are several possible fast
 methods\footnote{using FFTs for efficiency} to propagate the field:
 \begin{itemize}
 \item \textbf{Propagation by discrete convolution.} This method consists in
-      approximating the diffraction integral by a discrete convolution computed
-      by means of 3 FFTs and sampling either the non-paraxial
+      approximating the diffraction integral in
+      Eq.~\eqref{eq:convolutive-propagation} by a discrete convolution computed
+      by means of 3 FFTs and by sampling either the non-paraxial
       (Rayleigh-Sommerfeld) or paraxial (Fresnel) propagation kernels. This
-      method is developed in Subsection~\ref{eq:convolutive-propagation}.
+      method is developed in Section~\ref{sec:convolutive-propagation}.
 \item \textbf{Propagation by the transfer function.} This method is similar to
       the propagation by convolution except that the propagation transfer
       function is directly sampled instead of being computed by the DFT of the
-      sampled propagation kernel. Again, either the non-paraxial
-      (Rayleigh-Sommerfeld) or the paraxial (Fresnel) propagation transfer
-      functions may be used. This method costs 2 FFTs.
+      sampled propagation kernel. Either the non-paraxial (Rayleigh-Sommerfeld)
+      or the paraxial (Fresnel) propagation transfer functions may be used.
+      This method costs 2 FFTs.
 \item \textbf{Propagation by the Fresnel transform.} Expanding the quadratic
-      phase factor in the Fresnel propagation kernel, the Fresnel diffraction
-      integral may be rewritten as in in
-      Eq.~\eqref{eq:Fresnel-diffraction-integral-alt} where the integral can be
-      computed by a single Fourier transform. Hence, this method costs 1 FFT.
+      phase factor in the Fresnel propagation kernel in
+      Eq.~\eqref{eq:Fresnel-kernel}, the Fresnel diffraction integral may be
+      rewritten as in Eq.~\eqref{eq:Fresnel-diffraction-integral-alt} where the
+      integral can be computed by a single Fourier transform. Hence, this
+      method costs 1 FFT.
 \item \textbf{Propagation by the fractional Fourier transform.} This method,
       also called the 2-step Fresnel transform, amounts to performing two
       consecutive propagations by the Fresnel transform and hence costs 2 FFTs.
@@ -1252,7 +1250,7 @@ entries are given by:
   = \mathe^{-\mathi\,2\,\pi\,δx\,δα\,\Inner{\V{j}}{\V{j}'}}
 \end{equation}
 The $N\times N$ DFT can be computed by the \emph{fast Fourier transform} (FFT)
-in $\mathcal{O}(N^{2}\,\log N)$ operations. As shown by
+in $\mathcal{O}(N^{2}\,\log_{2}N)$ operations. As shown by
 Eqs.~\eqref{eq:DFT-sampling-condition,1D} and
 \eqref{eq:DFT-sampling-condition,nD} in Appendix~\ref{sec:DFT}, having $\M{F}$
 inversible imposes:
@@ -1298,12 +1296,13 @@ where
 $h_{z}[\V{j} - \V{j}'] = h_{z}(δx\,(\V{j} - \V{j}')) = h_{z}(\V{x}[\V{j}] - \V{x}[\V{j}'])$
 and $u_{0}[\V{j}] = u_{0}(\V{x}[\V{j}'])$ are the sampled propagation kernel
 and input field. The discrete convolution can be quickly computed by 3 FFTs.
+\oops{Give the expression in algebra notation.}
 
-There are 2 issues to take care of:
+There are however 2 issues to take care of:
 \begin{enumerate}
-\item To avoid aliasing the size of the sampled area must be sufficiently large
-      (using zero padding to extend the supports of the beam in the input and
-      output transverse planes).
+\item To avoid aliasing, the size of the sampled area must be sufficiently
+      large (using zero padding to extend the supports of the beam in the input
+      and output transverse planes).
 \item To provide a good approximation, the variations of all the functions
       involved in the convolution (the input field and the kernel) must be
       correctly sampled which imposes a lower bound on the sampling step $δx$
@@ -1316,7 +1315,7 @@ These issues are discussed next.
 
 To limit the number of operations, the sum in the discrete convolution in
 Eq.~\eqref{eq:discrete-convolution} shall only be performed for
-$\V{j}' \in Ω_{0}$ where $Ω_{0}$ includes all nodes for which the field $u_{0}$
+$\V{j}' \in Ω_{0}$ where $Ω_{0}$ includes the nodes for which the field $u_{0}$
 in the input transverse plane is non-zero, in other words:
 \begin{equation}
   \label{eq:8}
@@ -1331,7 +1330,7 @@ The discrete convolution shall also only be computed for nodes $\V{j}$ where
 the field in the output transverse plane is non-zero. Due to diffraction, it is
 not possible to strictly impose such a restriction but we may assume that a
 mask is placed in the output transverse plane so that we can define $Ω_{z}$
-which includes all nodes where the field in the output transverse plane is
+which includes the nodes where the field in the output transverse plane is
 non-zero \emph{after} the mask. Said otherwise, we assume that we are only
 interested in having the field in the output transverse plane for a limited
 support $Ω_{z}$. For practical reasons and since we are interested in making as
@@ -1341,10 +1340,10 @@ shall be as small as possible.
 For a faster computation of the discrete convolution, the discrete Fourier
 transform (DFT) may be used, but to avoid aliasing, the size of the grid must
 be large enough. Denoting $L_{0}$ and $L_{z}$ the maximum number of samples
-along any dimension of $Ω_{0}$ and $Ω_{z}$, then the minimal size of the
-support of the propagation kernel is $L = L_{0} + L_{z} - 1$ to account for all
-possible values of $\V{j} - \V{j}'$ and the minimal output discrete convolution
-has size $L + L_{0} - 1$. Finally, the minimal grid size is:
+along any dimension of $Ω_{0}$ and $Ω_{z}$, the minimal size of the support of
+the propagation kernel is $L = L_{0} + L_{z} - 1$ to account for all possible
+values of $\V{j} - \V{j}'$ and the minimal output discrete convolution has size
+$L + L_{0} - 1$. Finally, the minimal grid size is:
 \begin{equation}
   \label{eq:convolution-grid-size}
   N ≥ 2\,L_{0} + L_{z} - 2.
@@ -1356,22 +1355,22 @@ applying the inverse DFT. \oops{(Not clear and supports are assumed centered in
 
 In the considered conditions and assuming square supports to simplify, the
 direct computation of the discrete convolution by
-Eq.~\eqref{eq:discrete-convolution} takes
-$\mathcal{O}(L_{0}^{2}\,L_{z}^{2}) \sim L^{4}$ operations with $L$ the typical
+Eq.~\eqref{eq:discrete-convolution} takes about
+$2\,L_{0}^{2}\,L_{z}^{2} \sim 2\,L^{4}$ operations with $L$ the typical
 value of $L_{0}$ and $L_{z}$. Computation by fast Fourier transform (FFT) takes
-$\mathcal{O}(3\,N^{2}\,\log_{2}N^{2}) \sim 3\,(3\,L)^{2}\,\log_{2}((3\,L)^{2}) = 54\,L^{2}\,\log_{2}L$
+about $3\,N^{2}\,\log_{2}N^{2} \sim 3\,(3\,L)^{2}\,\log_{2}((3\,L)^{2}) \sim 54\,L^{2}\,\log_{2}L$
 operations. For large\footnote{not so large in fact, since the FFT-based method
-  is faster for $L ≥ 15$ ignoring overheads} $L$'s, the FFT-based method is
+  is faster for $L ≥ 10$ ignoring overheads} $L$'s, the FFT-based method is
 much faster despite the larger size of the required grid.
 
 
 \subsubsection{Sampling and range constraints in Rayleigh-Sommerfeld diffraction}
 
 The propagation kernel $h_{z}(\V{x})$ in Rayleigh-Sommerfeld diffraction is
-given by Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}. The most constraining term
-for the sampling step is the phase of the $\mathe^{\mathi\,k\,r}$ term since it
-varies by more than $π$ radians when the variation of $r$ between adjacent
-samples is greater than $\lambda/2$.
+given by Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel} and the most constraining
+term for the sampling step is the phase of the $\mathe^{\mathi\,k\,r}$ term
+since it varies by more than $π$ radians when the variation of $r$ between
+adjacent samples is greater than $\lambda/2$.
 
 On a lateral grid sampled at positions $\V{x}[\V{j}] = \V{j}\timesδx\,$ with
 $\V{j} \in \Set{J}^{2}$, the propagation distance is given by:
@@ -1469,7 +1468,7 @@ those such that $\V{j} = (±\ell,0)$ or $\V{j} = (0,±\ell)$, hence:
   \label{eq:δr_max,cont''}
   δr_{\Tag{max}}
   \approx δx\,\max_{\V{j} \in Ω}
-     \frac{\Norm*{\V{j}}_{\infty}}{\sqrt{\Norm*{\V{j}}_{\infty}^{2} + (z/δx)^{2}}}
+     \frac{\Norm*{\V{j}}_{\infty}}{\sqrt{\Norm*{\V{j}}_{\infty}^{2} + (z/δx)^{2}}}.
 \end{equation}
 Deriving the function:
 \begin{equation}
@@ -1543,8 +1542,9 @@ wavelengths\footnote{if $\Abs{z}$ is less than a few $λ$, evanescent waves must
 $D$ must be as small as possible.
 
 Remember that Rayleigh-Sommerfeld diffraction integral assumes $z ≥ 0$, that is
-forward propagation, for \textbf{reverse propagation}, a deconvolution by the
-forward propagation kernel shall be computed.
+forward propagation, \textbf{reverse propagation} can nevertheless be
+implemented as the deconvolution by the forward propagation kernel.
+
 
 \subsubsection{Sampling and range constraints for paraxial propagation kernel}
 
