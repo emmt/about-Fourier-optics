@@ -1,0 +1,15 @@
+*.aux
+*.bak
+*.bbl
+*.bib.sav
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.sav.tmp
+*.synctex.gz
+*~
+/.auctex-auto
