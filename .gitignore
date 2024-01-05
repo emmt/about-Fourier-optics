@@ -7,9 +7,11 @@
 *.fdb_latexmk
 *.fls
 *.log
+*.orig
 *.out
 *.pdf
 *.sav.tmp
 *.synctex.gz
+*.toc
 *~
 /.auctex-auto
