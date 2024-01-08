@@ -2,13 +2,18 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+# Permissions for this workflow.
+permissions:
+  contents: read
+  pages: write
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -21,12 +26,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
       - uses: xu-cheng/latex-action@v2
-        with: 
-          working_directory: .         
+        with:
+          working_directory: .
           root_file: about-Fourier-optics.tex
       - run: sudo apt-get -y install pdf2svg
       - run: |
-          pdf2svg  about-Fourier-optics.pdf  about-Fourier-optics.svg 1
+          pdf2svg about-Fourier-optics.pdf about-Fourier-optics.svg 1
           mkdir pdf
           mv *{.svg,.pdf} pdf/.
       - uses: peaceiris/actions-gh-pages@v3
