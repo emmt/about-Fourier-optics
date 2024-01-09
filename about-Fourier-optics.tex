@@ -113,6 +113,9 @@
 
 \newcommand*{\gammabar}{\overline{γ}}
 
+\newcommand{\NyquistFreq}{α_{\Tag{Nyquist}}}
+\newcommand{\CutoffFreq}{α_{\Tag{max}}}
+
 \renewcommand{\baselinestretch}{1.15}
 %------------------------------------------------------------------------------
 % Ref: Alexander R. Perlis., "A complement to \smash, \llap, and \rlap,"
@@ -1315,27 +1318,27 @@ These issues are discussed next.
 
 To limit the number of operations, the sum in the discrete convolution in
 Eq.~\eqref{eq:discrete-convolution} shall only be performed for
-$\V{j}' \in Ω_{0}$ where $Ω_{0}$ includes the nodes for which the field $u_{0}$
-in the input transverse plane is non-zero, in other words:
+$\V{x}[\V{j}'] \in Ω_{0}$ where $Ω_{0}$ includes the lateral positions where
+the field $u_{0}$ in the input transverse plane is non-zero. At least:
 \begin{equation}
-  \label{eq:8}
+  \label{eq:input-field-support}
   %\forall \V{j}' \in \Set{J}^{2},\quad
   u_{0}[\V{j}']
   % \equiv u_{0}(δx\times\V{j}')
   \not= 0
   \quad\Longrightarrow\quad
-  \V{j}' \in Ω_{0}.
+  \V{x}[\V{j}'] \in Ω_{0}.
 \end{equation}
 The discrete convolution shall also only be computed for nodes $\V{j}$ where
 the field in the output transverse plane is non-zero. Due to diffraction, it is
 not possible to strictly impose such a restriction but we may assume that a
 mask is placed in the output transverse plane so that we can define $Ω_{z}$
-which includes the nodes where the field in the output transverse plane is
-non-zero \emph{after} the mask. Said otherwise, we assume that we are only
-interested in having the field in the output transverse plane for a limited
-support $Ω_{z}$. For practical reasons and since we are interested in making as
-few operations as possible, the supports $Ω_{0}$ and $Ω_{z}$ must be finite and
-shall be as small as possible.
+which includes the lateral positions where the field in the output transverse
+plane is non-zero \emph{after} the mask. Said otherwise, we assume that we are
+only interested in having the field in the output transverse plane for a
+limited support $Ω_{z}$. For practical reasons and since we are interested in
+making as few operations as possible, the supports $Ω_{0}$ and $Ω_{z}$ must
+have finite sizes and shall be as small as possible.
 
 For a faster computation of the discrete convolution, the discrete Fourier
 transform (DFT) may be used, but to avoid aliasing, the size of the grid must
@@ -1365,6 +1368,7 @@ much faster despite the larger size of the required grid.
 
 
 \subsubsection{Sampling and range constraints in Rayleigh-Sommerfeld diffraction}
+\label{sec:Rayleigh-Sommerfeld-diffraction:sampling-constraint}
 
 The propagation kernel $h_{z}(\V{x})$ in Rayleigh-Sommerfeld diffraction is
 given by Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel} and the most constraining
@@ -1372,31 +1376,32 @@ term for the sampling step is the phase of the $\mathe^{\mathi\,k\,r}$ term
 since it varies by more than $π$ radians when the variation of $r$ between
 adjacent samples is greater than $\lambda/2$.
 
-On a lateral grid sampled at positions $\V{x}[\V{j}] = \V{j}\timesδx\,$ with
-$\V{j} \in \Set{J}^{2}$, the propagation distance is given by:
+In Rayleigh-Sommerfeld kernel $h_{z}(\V{x})$ given by
+Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}, the propagation distance is:
 \begin{equation}
-  \label{eq:r[j]}
-  r[\V{j}] = \sqrt{\Norm*{\V{x}[\V{j}]}^{2} + z^{2}}
-  = \sqrt{δx^{2}\,\Norm*{\V{j}}^{2} + z^{2}}
+  \label{eq:r(x)}
+  r(\V{x}) = \sqrt{\Norm*{\V{x}}^{2} + z^{2}}
 \end{equation}
 with $z > 0$ the distance along the $z$-axis between the input and output
-planes. To avoid irreversible phase wrapping, the phase difference between two
-adjacent nodes of the sampling grid must not be greater than $π$ which yields
-the condition $k\,δr_{\Tag{max}} ≤ π$ or equivalently $δr_{\Tag{max}} ≤ λ/2$
-with $δr_{\Tag{max}}$ the greatest absolute variation of $r$ between 2 adjacent
-nodes in the sampling grid:
+transverse planes. To avoid irreversible phase wrapping, the phase difference
+between two adjacent nodes of the sampling grid must not be greater than $π$
+which yields the condition $k\,δr_{\Tag{max}} ≤ π$ or equivalently
+$δr_{\Tag{max}} ≤ λ/2$ with $δr_{\Tag{max}}$ the greatest absolute variation of
+$r$ between 2 adjacent nodes in the sampling grid:
 \begin{equation}
   \label{eq:δr_max}
   δr_{\Tag{max}}
-  = \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}} \Abs*{r[\V{j} + δ\V{j}] - r[\V{j}]}
+  = \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}} \Abs*{r(\V{x} + δ\V{x}) - r(\V{x})}
 \end{equation}
-with $Ω$ the discrete kernel support accounting for all differences in
-lateral positions between the input and output transverse planes and:
+with $Ω = Ω_{z} - Ω_{0}$ the discrete kernel support accounting for all
+differences in lateral positions between the input and output transverse planes
+and:
 \begin{equation}
   \label{eq:δΩ}
-  δΩ = \Brace*{(±1,0),(0,±1)}
+  δΩ = \Brace*{(±δx,0),(0,±δx)}
 \end{equation}
-the offsets to the closest sampled nodes (the blue dots in Fig.~\ref{fig:closest-nodes}).
+the offsets to the closest sampled nodes (the blue dots in
+Fig.~\ref{fig:closest-nodes}).
 
 \begin{figure}
   \centering
@@ -1432,7 +1437,9 @@ the offsets to the closest sampled nodes (the blue dots in Fig.~\ref{fig:closest
       \draw (\r,-2*\s) node[right]{nodes at $\V{j} + δ\V{j}$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Closest nodes on a grid.}
+  \caption{Closest nodes on a grid. In green, the considered node at index
+    $δ\V{j}$; in blue, its closest neighbors at index $δ\V{j} + δ\V{j}$ with
+    $δ\V{j} \in \Brace{(±1,0),(0,±1)}$.}
   \label{fig:closest-nodes}
 \end{figure}
 
@@ -1440,68 +1447,70 @@ Since it is required that $δx$ be small enough to correctly sample the
 variations of $r$, the following approximation can be made:
 \begin{align}
   \label{eq:δr,approx}
-  r[\V{j} + δ\V{j}] - r[\V{j}]
-  \approx \Inner*{\frac{\partial r[\V{j}]}{\partial\V{j}}}{δ\V{j}}
-  = \frac{δx^{2}\,\Inner{\V{j}}{δ\V{j}}}{r[\V{j}]}
+  r(\V{x} + δ\V{x}) - r(\V{x})
+  ≈ \Inner*{\frac{\partial r(\V{x})}{\partial\V{x}}}{δ\V{x}}
+  = \frac{\Inner{\V{x}}{δ\V{x}}}{r(\V{x})}
 \end{align}
 where $\Inner{}{}$ denotes the inner (scalar) product. Hence:
 \begin{align}
-  \label{eq:δr_max,cont'}
+  \label{eq:δr_max,i}
   δr_{\Tag{max}}
-  %&= \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  %\Abs*{r[\V{j} + δ\V{j}] - r[\V{j}]}\\
-  %&\approx \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  %\Abs*{\Inner*{\frac{\partial r[\V{j}]}{\partial\V{j}}}{δ\V{j}}}\\
-  \approx δx^{2}\,\max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\frac{\Inner{\V{j}}{δ\V{j}}}{r[\V{j}]}}
-  &= δx^{2}\,\max_{\V{j} \in Ω}
-     \frac{\max_{δ\V{j} \in δΩ}\Abs*{\Inner{\V{j}}{δ\V{j}}}}{r[\V{j}]}\\
-  &= δx^{2}\,\max_{\V{j} \in Ω}
-     \frac{\Norm*{\V{j}}_{\infty}}{r[\V{j}]}
+  ≈ \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{\frac{\Inner{\V{x}}{δ\V{x}}}{r(\V{x})}}
+  &= \max_{\V{x} \in Ω}
+     \frac{\max_{δ\V{x} \in δΩ}\Abs*{\Inner{\V{x}}{δ\V{x}}}}{r(\V{x})}
 \end{align}
-with $\Norm*{\V{j}}_{\infty} = \max\Paren*{\Abs*{j_{1}},\Abs*{j_{2}}}$ the
-infinite norm of $\V{j}$. Since
-$r[\V{j}] = \sqrt{δx^{2}\,(j_{1}^{2} + j_{2}^{2}) + z^{2}}$, the nodes that
-have a given $\Norm*{\V{j}}_{\infty} = \ell$ and yet the least $r[\V{j}]$ are
-those such that $\V{j} = (±\ell,0)$ or $\V{j} = (0,±\ell)$, hence:
+From the definition of $δΩ$ in Eq.~\eqref{eq:δΩ}, the numerator in the last
+above right-hand side can be simplified to:
 \begin{equation}
-  \label{eq:δr_max,cont''}
+  \label{eq:max<x,δx>}
+  \max_{δ\V{x} \in δΩ}\Abs*{\Inner{\V{x}}{δ\V{x}}} = δx\,\Norm*{\V{x}}_{\infty}
+\end{equation}
+with $\Norm*{\V{x}}_{\infty} = \max\Paren*{\Abs*{x},\Abs*{y}}$ the infinite
+norm of $\V{x} = (x,y)$ and then:
+\begin{align}
+  \label{eq:δr_max,ii}
   δr_{\Tag{max}}
-  \approx δx\,\max_{\V{j} \in Ω}
-     \frac{\Norm*{\V{j}}_{\infty}}{\sqrt{\Norm*{\V{j}}_{\infty}^{2} + (z/δx)^{2}}}.
+  ≈ δx\,\max_{\V{x} \in Ω} \frac{\Norm*{\V{x}}_{\infty}}{r(\V{x})}.
+\end{align}
+Clearly, the nodes that have a given $\Norm*{\V{x}}_{\infty} = \ell$ and yet
+the least $r(\V{x})$ are those such that $\V{x} = (±\ell,0)$ or
+$\V{x} = (0,±\ell)$, hence:
+\begin{equation}
+  \label{eq:δr_max,iii}
+  δr_{\Tag{max}}
+  \approx δx\,\max_{\V{x} \in Ω}
+     \frac{\Norm*{\V{x}}_{\infty}}{\sqrt{\Norm*{\V{x}}_{\infty}^{2} + z^{2}}}.
 \end{equation}
 Deriving the function:
 \begin{equation}
   \label{eq:δr}
-  δr(\ell) = \frac{\ell}{\sqrt{\ell^{2} + (z/δx)^{2}}}
+  δr(\ell) = \frac{\ell}{\sqrt{\ell^{2} + z^{2}}}
 \end{equation}
 yields:
 \begin{equation}
   \label{eq:δr'}
-  δr'(\ell) = \frac{(z/δx)^{2}}{\Paren*{\ell^{2} + (z/δx)^{2}}^{3/2}}
+  δr'(\ell) = \frac{z^{2}}{\Paren*{\ell^{2} + z^{2}}^{3/2}}
 \end{equation}
 which is non-negative, hence $δr(\ell)$ is increasing with $\ell$. The maximal
 value for $δr$ is thus found at
-$\ell_{\Tag{max}} = \max_{\V{j} \in Ω} \Norm*{\V{j}}_{\infty} = L/2$ with $L$
-the lateral size of $Ω$ in number of samples and finally:
+$\ell_{\Tag{max}} = \max_{\V{x} \in Ω} \Norm*{\V{x}}_{\infty} = D/2$ with $D$
+the lateral size of $Ω$ and finally:
 \begin{equation}
   \label{eq:δr_max,end}
-  δr_{\Tag{max}} \approx \frac{δx\,D/2}{\sqrt{z^{2} + (D/2)^{2}}}.
+  δr_{\Tag{max}} \approx \frac{δx\,D/2}{\sqrt{z^{2} + (D/2)^{2}}}
+  = \frac{δx/2}{\sqrt{(z/D)^{2} + 1/4}}.
 \end{equation}
-with $D = L\,δx$ the lateral size of $Ω$ in length units.
 
 The sampling condition for the Rayleigh-Sommerfeld kernel, that is
 $δr_{\Tag{max}} ≤ λ/2$, finally writes:
 \begin{equation}
-  \frac{δx}{\sqrt{z^{2} + (D/2)^{2}}} ≤ λ/D.
+  \frac{δx}{\sqrt{(z/D)^{2} + 1/4}} ≤ λ.
 \end{equation}
-% In other words, the grid cells, of size $δx$, at the edge of an aperture of
-% diameter $D$ must be seen from a range $z$ with an angle that is smaller than
-% the diffraction angle $λ/D$ by the aperture.
 This condition may be expressed as an upper bound on the sampling step:
 \begin{equation}
   \label{eq:Rayleigh-Sommerfeld-sampling-condition}
-  δx ≤ λ\,\sqrt{(z/D)^{2} + 1/4}
+  δx ≤ δx_{\Tag{max}} = λ\,\sqrt{(z/D)^{2} + 1/4}
   \approx
   \begin{cases}
     λ/2 & \text{when $\Abs{z} \ll D$}\\
@@ -1511,14 +1520,15 @@ This condition may be expressed as an upper bound on the sampling step:
 with $D$ the lateral size of $Ω$. In the near field, that is for $z \ll D$, the
 bound is the Shannon sampling step to correctly sample all propagating waves
 which have spatial frequencies up to $1/λ$. In the far field, that is for
-$z \gg D$, the bound is the propagation distance along $z$ times the angular
-diffraction limit $λ/D$ for an aperture of size $D$. Note that, even though the
-angular spectrum $\FT{u}_{0}(\V{α})$ of the field in the input transverse
-plane has a cutoff frequency much smaller than $1/λ$, the maximal sampling step
-of $λ/2$ still applies to avoid phase errors in the sampled kernel before
-computing its discrete Fourier transform. To benefit from a cutoff frequency of
-the angular spectrum, another method must be considered where it is the
-propagation transfer function $\FT{h}_{z}(\V{α})$ which is sampled.
+$z \gg D$, the bound is the propagation distance along the $z$-axis times the
+angular diffraction limit $λ/D$ for an aperture of size $D$. Note that, even
+though the angular spectrum $\FT{u}_{0}(\V{α})$ of the field in the input
+transverse plane has a cutoff frequency much smaller than
+$1/(2\,δx_{\Tag{max}})$, the constraint $δx ≤ δx_{\Tag{max}}$ still applies to
+avoid undersampling the kernel before computing its discrete Fourier transform.
+To benefit from a cutoff frequency of the angular spectrum, another method must
+be considered where the propagation transfer function $\FT{h}_{z}(\V{α})$ is
+directly sampled.
 
 Looking at Eq.~\eqref{eq:Rayleigh-Sommerfeld-sampling-condition}, it is clear
 that having the smallest possible $D$ is desirable to relax the constraint on
@@ -1536,14 +1546,15 @@ minimal range condition to apply this propagation method:
   \label{eq:Rayleigh-Sommerfeld-range-condition}
   \Abs{z} ≥ D\,\sqrt{(δx/λ)^{2} - 1/4}
 \end{equation}
-provided $δx > λ/2$ otherwise, $\Abs{z}$ can be as small as a few
+provided $δx > λ/2$; otherwise, $\Abs{z}$ can be as small as a few
 wavelengths\footnote{if $\Abs{z}$ is less than a few $λ$, evanescent waves must
   be taken into account}. Again, to relax as much as possible this constraint,
 $D$ must be as small as possible.
 
 Remember that Rayleigh-Sommerfeld diffraction integral assumes $z ≥ 0$, that is
 forward propagation, \textbf{reverse propagation} can nevertheless be
-implemented as the deconvolution by the forward propagation kernel.
+implemented as the deconvolution by the forward propagation kernel. \oops{Give
+  the formal expression.}
 
 
 \subsubsection{Sampling and range constraints for paraxial propagation kernel}
@@ -1554,56 +1565,54 @@ Eq.~\eqref{eq:Fresnel-kernel} which we recall for convenience:
   h_{z}(\V{x}) = \frac{\mathe^{\mathi\,k\,z}}{\mathi\,λ\,z}\,
   \mathe^{\mathi\,π\,\Norm*{\V{x}}^{2}/(λ\,z)}.
 \end{equation}
-Now the phase is varying as $\phi(\V{x}) = π\,\Norm*{\V{x}}^{2}/(λ\,z)$ a quadratic function
-of the transverse position $\V{x}$. The maximal absolute difference of the quadratic phase
-between adjacent nodes of the grid is:
+Now the phase is varying as $\phi(\V{x}) = π\,\Norm*{\V{x}}^{2}/(λ\,z)$ a
+quadratic function of the transverse position $\V{x}$. The maximal absolute
+difference of the quadratic phase between adjacent nodes of the grid is:
 \begin{align}
   δ\phi_{\Tag{max}}
-  &= \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\phi(\V{x}[\V{j} + δ\V{j}]) - \phi(\V{x}[\V{j}])} \\
-  &= \frac{π\,δx^{2}}{λ\,\Abs{z}}\,
-  \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\Norm*{\V{j} + δ\V{j}}^{2} - \Norm*{\V{j}}^{2}}
+  &= \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{\phi(\V{x} + δ\V{x}) - \phi(\V{x})} \\
+  &= \frac{π}{λ\,\Abs{z}}\,
+  \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{\Norm*{\V{x} + δ\V{x}}^{2} - \Norm*{\V{x}}^{2}}
 \end{align}
 with, as in the previous subsection, $Ω = Ω_{0} - Ω_{z}$ the set of nodes for
 which the kernel must be evaluated and $δΩ$ given in Eq.~\eqref{eq:δΩ} the
 offsets to the adjacent nodes. To estimate $δ\phi_{\Tag{max}}$, we compute:
 \begin{align}
   \label{eq:max-quadratic-diff}
-  \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\Norm*{\V{j} + δ\V{j}}^{2} - \Norm*{\V{j}}^{2}}
-  &= \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\Norm*{δ\V{j}}^{2} + 2\,\Inner{\V{j}}{δ\V{j}}}\\
+  \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{\Norm*{\V{x} + δ\V{x}}^{2} - \Norm*{\V{x}}^{2}}
+  &= \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{\Norm*{δ\V{x}}^{2} + 2\,\Inner{\V{x}}{δ\V{x}}}\\
   \label{eq:max-quadratic-diff,a}
-  &= \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{1 + 2\,\Inner{\V{j}}{δ\V{j}}}\\
-  &= 1 + 2\,\max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\Inner{\V{j}}{δ\V{j}}}\\
+  &= \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{δx^{2} + 2\,\Inner{\V{x}}{δ\V{x}}}\\
+  &= δx^{2} + 2\,\max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{\Inner{\V{x}}{δ\V{x}}}\\
   \label{eq:max-quadratic-diff,b}
-  &= 1 + 2\,\max_{\V{j} \in Ω}\Norm*{\V{j}}_{\infty}\\
+  &= δx^{2} + 2\,δx\,\max_{\V{x} \in Ω}\Norm*{\V{x}}_{\infty}\\
   \label{eq:max-quadratic-diff,c}
-  &= 1 + L
+  &= δx^{2} + δx\,D
 \end{align}
 where right-hand side~\eqref{eq:max-quadratic-diff,a} follows from
-$\Norm*{δ\V{j}} = 1$ for any $δ\V{j} \in δΩ$, right-hand
-side~\eqref{eq:max-quadratic-diff,b} follows from
-$\max_{δ\V{j} \in δΩ}\Abs*{\Inner{\V{j}}{δ\V{j}}} = \Norm*{\V{j}}_{\infty}$
-already proven before, and right-hand side~\eqref{eq:max-quadratic-diff,c}
-follows from $\max_{\V{j} \in Ω}\Norm*{\V{j}}_{\infty} = L/2$ also proven
-before with $L$ the lateral size of $Ω$ in number of samples. Note that,
-contrarily to the computations in Eq.~\eqref{eq:δr,approx}, there are no
-approximations here. The maximal absolute difference of the quadratic phase
+$\Norm*{δ\V{x}} = δx$ for any $δ\V{x} \in δΩ$ with $δΩ$ defined in
+Eq.~\eqref{eq:δΩ}, right-hand side~\eqref{eq:max-quadratic-diff,b} follows from
+Eq.~\eqref{eq:max<x,δx>}, and right-hand side~\eqref{eq:max-quadratic-diff,c}
+follows from $\max_{\V{x} \in Ω}\Norm*{\V{x}}_{\infty} = D/2$ with $D$ the
+lateral size of $Ω$. Note that, contrarily to the computations in
+Eq.~\eqref{eq:δr,approx}, there are no approximations here. The maximal
+absolute difference of the quadratic phase
 \begin{equation}
   \label{eq:max-quadratic-diff}
   δ\phi_{\Tag{max}}
-  = \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\phi(\V{x}[\V{j} + δ\V{j}]) - \phi(\V{x}[\V{j}])}
-  = \frac{π\,(L + 1)\,δx^{2}}{λ\,\Abs{z}}
-  ≈ \frac{π\,L\,δx^{2}}{λ\,\Abs{z}}
+  = \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \Abs*{\phi(\V{x} + δ\V{x}) - \phi(\V{x})}
+  = \frac{π\,(D + δx)\,δx}{λ\,\Abs{z}}
+  ≈ \frac{π\,D\,δx}{λ\,\Abs{z}},
 \end{equation}
-the latter approximation since $L \gg 1$ in general. Using
-$D = L\,δx = D_{0} + D_{z}$, the lateral size of $Ω$ in units of length, the
-condition $δ\phi_{\Tag{max}} ≤ π$ amounts to:
+the latter approximation since $D \gg δx$ in general. The condition
+$δ\phi_{\Tag{max}} ≤ π$ amounts to:
 \begin{equation}
   \label{eq:}
   \frac{D\,δx}{λ\,\Abs{z}} ≤ 1
@@ -1620,20 +1629,27 @@ or as a minimal propagation range condition:
 \end{equation}
 Compared to Eq.~\eqref{eq:Rayleigh-Sommerfeld-sampling-condition},
 Eq.~\eqref{eq:paraxial-sampling-condition} corresponds to the far field case
-$\Abs{z} \gg D$. Compared to Eq.~\eqref{eq:Rayleigh-Sommerfeld-range-condition},
-Eq.~\eqref{eq:paraxial-range-condition} corresponds to
-$δx \gg λ/2$.
+$\Abs{z} \gg D$; while, compared to
+Eq.~\eqref{eq:Rayleigh-Sommerfeld-range-condition},
+Eq.~\eqref{eq:paraxial-range-condition} corresponds to $δx \gg λ/2$.
 
-Note that the paraxial condition approximation
-
+Note that the paraxial approximation of the propagation kernel assumes that the
+condition in Eq.~\eqref{eq:paraxial-condition} holds which is equivalent to:
+\begin{equation}
+  \label{eq:paraxial-condition-for-z}
+  \Abs{z} \gg \Paren*{\frac{\Norm*{\V{x}}^{4}}{8\,λ}}^{1/3}
+\end{equation}
+although \citet{Southwell.1981.Fresnel_approximation_validity} has shown that,
+in practice, the Fresnel approximation works quite well for propagation
+distances much smaller than that.
 
 \subsection{Angular spectrum propagation}
 \label{sec:angular-spectrum-propagation}
 
 The angular spectrum propagation method is similar to the propagation by
 convolution computed by means of FFT's, the only difference is that the
-propagation transfer function is directly sampled instead of being given by a
-DFT of the sampled propagation kernel.
+propagation transfer function $\FT{h}_{z}(\V{α})$ is directly sampled instead
+of being given by a DFT of the sampled propagation kernel $h_{z}(\V{x})$.
 
 \subsubsection{Propagation by the non-paraxial transfer function}
 
@@ -1660,9 +1676,8 @@ is numerically approximated by:
 since $δx\,δα = 1/N$ for the approximation of the Fourier transform by the DFT
 operator $\M{F}$ and with a frequency-wise phase shift $\phi$ given by:
 \begin{equation}
-  \phi[\V{j}]
-  = k\,Δz\,\sqrt{1 - \Norm{λ\,\V{α}_{\V{j}}}^{2}}
-  = k\,Δz\,\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}
+  \phi(\V{α})
+  = k\,z\,\sqrt{1 - \Norm{λ\,\V{α}}^{2}}
 \end{equation}
 with $\varepsilon = λ\,δα = λ/(N\,δx)$, usually $\varepsilon \ll 1$.
 
@@ -1674,206 +1689,208 @@ sampled functions must vary slowly between consecutive samples. In particular
 for the phase shift:
 \begin{equation}
   \label{eq:phase-sampling-condition}
-  \Abs*{\phi[\V{j} + δ\V{j}] - \phi[\V{j}]} ≤ π
+  \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} ≤ π
 \end{equation}
-must hold $\forall \V{j} \in Ω$ and $\forall δ\V{j} \in δΩ$ with:
+must hold for any $\V{α} \in Ξ$ and any $δ\V{α} \in δΞ$ with:
 \begin{equation}
-  Ω = \Brace*{\V{j} \in \Set{J}^{2} \Given \Norm{\V{j}} < α_{\Tag{max}}/δα}\\
+  δΞ = \Brace*{(±δα,0),(0,±δα)}
 \end{equation}
-the domain where spatial frequencies are below the cutoff frequency $α_{\Tag{max}}$ of the angular spectrum $\FT{u}_{z}$ and:
+the offsets to the closest spatial frequencies (the blue dots in
+Fig.~\ref{fig:closest-nodes}) and with:
 \begin{equation}
-  δΩ = \Brace*{(±1,0),(0,±1)}
+  Ξ = \Brace*{
+    \V{α} \in \Set{R}^{2} \Given \Norm{\V{α}} < \CutoffFreq
+    \text{\ and\ } \Norm{\V{α}}_{\infty} ≤ \NyquistFreq
+  }\\
 \end{equation}
-the offsets to the closest spatial frequencies (see blue dots in the figure).
-
-Note that $α_{\Tag{max}}$ may be infinite. We introduce:
+the domain where spatial frequencies are below the cutoff frequency
+$\CutoffFreq$ of the angular spectrum $\FT{u}_{z}$ and the Nyquist frequency:
 \begin{equation}
   \label{eq:Nyquist-frequency}
-  α_{\Tag{Nyquist}} = \frac{1}{2}\,N\,δα = \frac{1}{2\,δx}
+  \NyquistFreq = \frac{1}{2}\,N\,δα = \frac{1}{2\,δx}
 \end{equation}
-the Nyquist frequency.
+for a $N\times N$ grid of discrete spatial frequencies. Note that
+$\CutoffFreq$ may be infinite.
 
-This imposes a short range limit: $\boxed{
-  \Abs*{Δz} ≤ \frac{N\,δx^{2}}{λ}\,\sqrt{1 - \tfrac{1}{2}\,(N\,\varepsilon)^{2}}
-}$
-
-
-\subsubsection{Short range limit of the angular spectrum (demonstration)}
-
-The constraint in Eq.~\eqref{eq:phase-sampling-condition} that must hold for
-any $\forall \V{j} \in Ω$ and $\forall δ\V{j} \in δΩ$ equivalently holds for
-the maximal absolute value of the sampled phase difference:
+Assuming the spectral sampling step $δα = 1/(N\,δx)$ is small enough, the
+maximal absolute phase difference value can be estimated following the same
+steps as in
+section~\ref{sec:Rayleigh-Sommerfeld-diffraction:sampling-constraint}:
 \begin{align}
-  &\Abs*{\phi[\V{j} + δ\V{j}] - \phi[\V{j}]} ≤ π
-    \quad\forall \V{j} \in Ω,\ \forall δ\V{j} \in δΩ\notag\\
-  \Longleftrightarrow\quad
-  & \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\phi[\V{j} + δ\V{j}] - \phi[\V{j}]} ≤ π
+  δ\phi_{\Tag{max}}
+  &=\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} \\
+  &\simeq \max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  \Abs*{\Inner*{\frac{\partial \phi(\V{α})}{\partial \V{α}}}{δ\V{α}}}\\
+  &= k\,\Abs*{z}\,λ^{2}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  \Abs*{\frac{\Inner*{\V{α}}{δ\V{α}}}{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}\\
+  &= k\,\Abs*{z}\,λ^{2}\,\max_{\V{α} \in Ξ}
+    \frac{\max_{δ\V{α} \in δΞ}\Abs*{\Inner*{\V{α}}{δ\V{α}}}}
+    {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}\\
+  &= k\,\Abs*{z}\,λ^{2}\,δα\,\max_{\V{α} \in Ξ}
+    \frac{\Norm*{\V{α}}_{\infty}}
+    {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}.
+    \label{eq:δϕ_max:nonparaxial}
 \end{align}
-% \emph{Objective.} Compute: $\displaystyle
-% \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-% \Abs*{\phi[\V{j} + δ\V{j}] - \phi[\V{j}]}
-% $
-The maximal value can be estimated as follows:
-\begin{align}
-  \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\phi[\V{j} + δ\V{j}] - \phi[\V{j}]}
-  &\simeq \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\Inner*{\frac{\partial \phi[\V{j}]}{\partial \V{j}}}{δ\V{j}}}\\
-  &= k\,\Abs{Δz}\,\varepsilon^{2}\,
-    \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\frac{\Inner*{\V{j}}{δ\V{j}}}{\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}}}
-\end{align}
-since $\phi[\V{j}] = k\,Δz\,\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}$. Then
-\begin{align}
-  \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\frac{\Inner*{\V{j}}{δ\V{j}}}{\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}}}
-  &= \max_{\V{j} \in Ω}
-    \frac{\max_{δ\V{j} \in δΩ}\Abs*{\Inner*{\V{j}}{δ\V{j}}}}%
-    {\Abs*{\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}}}
-  = \max_{\V{j} \in Ω}
-    \frac{\Norm*{\V{j}}_{\infty}}{\Abs*{\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}}}\\
-\end{align}
-with $\Norm*{\V{j}}_{\infty} = \max(\Abs*{j_{1}},\Abs*{j_{2}})$ the infinite
-norm of $\V{j}$. Introducing $L = \max_{\V{j} \in Ω}\Norm{\V{j}} ≤ N/\sqrt{2}$
+Introducing $L = \max_{\V{α} \in Ξ}\Norm{\V{α}} ≤ N/\sqrt{2}$
 and noting that $L ≤ N/\sqrt{2}$ due to the finite number of samples along a
-lateral dimension, there are 2 cases to consider:
+lateral dimension, there are different cases to consider:
 \begin{itemize}
-\item If $\max_{\V{j} \in Ω}\Norm{\V{j}} ≥ 1/\varepsilon$, then the sampled
-      spatial frequencies include evanescent waves and
-      $\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}$ may be arbitrarily close to
-      zero for $\Norm*{\V{j}}_{\infty} > 0$. Hence, the condition in
-      Eq.~\eqref{eq:phase-sampling-condition} cannot hold and aliasing is
-      unavoidable.
-\item If $\varepsilon\,L < 1$, then the sampled spatial frequencies include
-      evanescent waves and $\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}$ may be
-      arbitrarily small. If $N/2 ≤ L ≤ N/\sqrt{2}$, then any point on the
-      circle defined by $\Norm*{\V{j}}_{2} = L$ yields the minimal value of the
-      denominator and the maximal value of the numerator. If $L ≤ N/2$, then
-      any point at the intersection of the square and of the circle defined by
-      $\Norm*{\V{j}}_{2} = L$ yields the minimal value of the denominator and
-      the maximal value of the numerator. Hence:
-      Figure~\ref{fig:phase-wrapping-non-paraxial-transfer} shows the different
-      possibilities in that case. Form that figure, it can be deduced that
-      \begin{align}
-        \max_{\V{j} \in Ω}
-    \frac{\Norm*{\V{j}}_{\infty}}{\Abs*{\sqrt{1 - \Norm{\varepsilon\,\V{j}}^{2}}}}
-        &\approx
-          \frac{\min(L,N/2)}{\sqrt{1 - (\varepsilon\,L)^{2}}}
-      \end{align}
-
+\item If
+      $\max_{\V{α} \in Ξ}\Norm{\V{α}} = \min(\CutoffFreq,\sqrt{2}\,\NyquistFreq) ≥ 1/λ$,
+      then the sampled spatial frequencies include evanescent waves and
+      $\sqrt{1 - \Norm{λ\,\V{α}}^{2}}$ may be arbitrarily close to zero for
+      $\Norm*{\V{α}}_{\infty} > 0$. Hence, the condition in
+      Eq.~\eqref{eq:phase-sampling-condition} cannot hold and phase wrapping is
+      irreversible.
+\item Otherwise, maximizing the right-hand-side in
+      Eq.~\eqref{eq:δϕ_max:nonparaxial} amounts to finding the frequencies in
+      $Ξ$ such that $\Norm*{\V{α}}_{\infty}$ and $\Norm*{\V{α}}$ are both
+      maximized. The 3 possibilities are illustrated by
+      Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer}. If
+      $\sqrt{2}\,\NyquistFreq < \min(1/λ,\CutoffFreq)$, then the worst
+      spatial frequencies are indicated by blue dots in the leftmost panel of
+      Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
+      \begin{equation}
+        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+        = \frac{\NyquistFreq}{\sqrt{1 - 2\,λ^{2}\,\NyquistFreq^{2}}};
+      \end{equation}
+      else if $\NyquistFreq ≤ \CutoffFreq < 1/λ$, then the worst
+      spatial frequencies are indicated by green dots in the central panel of
+      Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
+      \begin{equation}
+        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+        = \frac{\NyquistFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}};
+      \end{equation}
+      finally, if $\CutoffFreq < \min(1/λ,\NyquistFreq)$, then the worst
+      spatial frequencies are indicated by orange dots in the rightmost panel
+      of Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
+      \begin{equation}
+        \label{eq:max-term:3rd-case:nonparaxial}
+        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+        = \frac{\CutoffFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}.
+      \end{equation}
+      Combining these 3 possibilities:
+      \begin{equation}
+        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+        = \frac{\min(\CutoffFreq,\NyquistFreq)}{\sqrt{1 - λ^{2}\,\min(\CutoffFreq,\sqrt{2}\,\NyquistFreq)^{2}}}.
+      \end{equation}
+      In principle, to avoid aliasing, the sampling step must be chosen so that
+      the Nyquist frequency is not less than the cutoff frequency, that is
+      $\NyquistFreq ≥ \CutoffFreq$, so that the above right-hand side is given
+      by Eq.~\eqref{eq:max-term:3rd-case:nonparaxial}. In this case the
+      sampling conditions are:
+      \begin{equation}
+        \label{eq:nonparaxial-angular-spectrum-sampling-conditions}
+        \begin{cases}
+          \displaystyle
+          \frac{2\,λ\,\Abs*{z}\,δα\,\CutoffFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}
+          =\frac{2\,λ\,\Abs*{z}\,\CutoffFreq}{N\,δx\,\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}
+          ≤ 1\\[2ex]
+          \displaystyle
+          \CutoffFreq ≤ \NyquistFreq = \frac{N}{2\,δx}
+        \end{cases}
+      \end{equation}
 \end{itemize}
-
-and, since the numerator of the above right-hand side is \oops{nearly} a
-non-decreasing function of $\Norm{\V{j}}$ while the denominator is a
-non-increasing function of $\Norm{\V{j}}$,
-
-\begin{align}
-  \max_{\V{j} \in Ω}
-  \frac{\Norm*{\V{α}_{\V{j}}}_{\infty}}{\Abs*{\sqrt{1 - \Norm{λ\,\V{α}_{\V{j}}}^{2}}}}
-  &\approx
-    \frac{\min(L,N/2)}{\sqrt{1 - (\varepsilon\,L)^{2}}}
-\end{align}
 
 \begin{figure}
   \centering
   \begin{tikzpicture}[scale=1,%grid lines/.style={solid}
     ]
     \tikzmath{
-      \gridstep=0.2;
-      \gridsize=17;
-      \Ax=\gridstep*(\gridsize - 1)/2;
-      \Ay=\Ax;
-      \Ar=sqrt(\Ax^2 + \Ay^2) + 0.3*\gridstep;
-      \Bx=\Ax;
-      \By=4*\gridstep;
-      \Br=sqrt(\Bx^2 + \By^2) + 0.15*\gridstep; % med. radius
-      \Cx=5*\gridstep;% offset of extreme nodes in min. case
-      \Cy=1*\gridstep;% offset of extreme nodes in min. case
-      \Cr=sqrt(\Cx^2 + \Cy^2) + 0.15*\gridstep; % min. radius
+      \xshift=1;
       \r=0.1; % small disk radius
+      \gridsize=1.2;
+      \gridradius=\gridsize/sqrt(2);
+      \smallstep=0.05*\gridsize;
+      \Ar=1.2*\gridradius;
+      \Ax=\gridsize/2;
+      \Ay=\Ax;
+      \Br=0.85*\gridradius; % med. radius
+      \Bx=\Ax;
+      \By=sqrt(\Br^2 - \Bx^2);
+      \Cr=0.45*\gridradius; % min. radius
     }
     % Case A:
-    \begin{scope}[xshift=-50mm]
+    \begin{scope}[xshift=-30mm]
+      \fill[fill=gray!20] (-\Ax,-\Ay) rectangle (\Ax,\Ay);
       \foreach \x in {-\Ax,+\Ax} {
         \foreach \y in {-\Ax,+\Ax} {
           \fill [color=OwlBlue] (\x,\y) circle (\r);
         }
       }
-      \draw[grid lines] (-\Ax,-\Ay) grid[step=\gridstep] (\Ax,\Ay);
+      \draw (-\Ax,-\Ay) rectangle (\Ax,\Ay);
       \draw (0,0) circle (\Ar);
-      \draw[<-] (60:\Ar) -- (60:\Ar+0.4) -- ++(0.4,0) node [anchor=west] {$\min(1/λ,α_{\Tag{max}})$};
+      \draw[<-] (60:\Ar) -- (60:\Ar+0.4) -- ++(0.4,0) node [anchor=west] {$\CutoffFreq$};
     \end{scope}
     % Case B:
     \begin{scope}
+      \fill[fill=gray!20] (-\Ax,-\Ay) rectangle (\Ax,\Ay);
       \foreach \x in {-\Bx,+\Bx} {
         \foreach \y in {-\By,+\By} {
           \fill [color=OwlGreen] (\x,\y) circle (\r);
           \fill [color=OwlGreen] (\y,\x) circle (\r);
         }
       }
-      \draw[grid lines] (-\Ax,-\Ay) grid[step=\gridstep] (\Ax,\Ay);
+      \draw (-\Ax,-\Ay) rectangle (\Ax,\Ay);
       \draw (0,0) circle (\Br);
     \end{scope}
    % Case C:
-     \begin{scope}[xshift=40mm]
-      \foreach \x in {-\Cx,+\Cx} {
-        \foreach \y in {-\Cy,+\Cy} {
-          \fill [color=OwlOrange] (\x,\y) circle (\r);
-          \fill [color=OwlOrange] (\y,\x) circle (\r);
-        }
+     \begin{scope}[xshift=25mm]
+      \fill[fill=gray!20,draw=textfg] (-\Ax,-\Ay) rectangle (\Ax,\Ay);
+      \foreach \x/\y in {0/-\Cr, +\Cr/0, 0/+\Cr, -\Cr/0} {
+        \fill [color=OwlOrange] (\x,\y) circle (\r);
+        \fill [color=OwlOrange] (\y,\x) circle (\r);
       }
-      \draw[grid lines] (-\Ax,-\Ay) grid[step=\gridstep] (\Ax,\Ay);
       \draw (0,0) circle (\Cr);
       \tikzmath{\tick=0.15; \x = \Ax + 2*\tick;}
       \draw[->] (\x, -\Ay - 0.5*\tick) -- (\x, \Ay + 2*\tick);
       \foreach \y in {-\Ay,0,\Ay} {
         \draw (\x, \y) -- (\x + \tick, \y);
       }
-      \draw (\x + 0.7*\tick, -\Ay) node [anchor=west] {$-α_{\Tag{Nyquist}}$};
+      \draw (\x + 0.7*\tick, -\Ay) node [anchor=west] {$-\NyquistFreq$};
       \draw (\x + 0.7*\tick,    0) node [anchor=west] {$0$};
-      \draw (\x + 0.7*\tick, +\Ay) node [anchor=west] {$+α_{\Tag{Nyquist}}$};
+      \draw (\x + 0.7*\tick, +\Ay) node [anchor=west] {$+\NyquistFreq$};
     \end{scope}
   \end{tikzpicture}
-  \caption{Discrete spatial frequencies (indicated by colored circles) where
-    the phase wrapping is the most severe for the non-paraxial propagation
-    transfer function. The $N\times N$ grid indicates the positions of the
-    discrete frequencies. The circle indicates the smallest of the cutoff
-    frequency of the angular spectrum and of the evanescent waves limit at
-    $1/λ$ for the 3 possible cases.}
+  \caption{Spatial frequencies (indicated by colored circles) where the phase
+    wrapping is the most severe for the non-paraxial propagation transfer
+    function. For the 3 possible cases, the grayed square indicates the area
+    sampled by the DFT and the circle indicates the cutoff frequency
+    $\CutoffFreq$ of the angular spectrum assumed to be less the evanescent
+    waves limit at $1/λ$.}
   \label{fig:phase-wrapping-non-paraxial-transfer}
 \end{figure}
 
-We have shown that:
-\begin{displaymath}
-  \max_{\substack{\V{j} \in Ω\\δ\V{j} \in δΩ}}
-  \Abs*{\phi[\V{j} + δ\V{j}] - \phi[\V{j}]}
-  \simeq
-  k\,\Abs{Δz}\,\varepsilon^{2}\,
-  \frac{\min(L,N/2)}{\sqrt{1 - (\varepsilon\,L)^{2}}}
-  \quad\text{with\ }L = \max_{\V{j} \in Ω}\Norm{\V{j}} ≤ N/\sqrt{2}
-\end{displaymath}
-Hence:
-\begin{displaymath}
-  \Abs*{\phi[\V{j} + δ\V{j}] - \phi[\V{j}]} ≤ π
-  \quad\forall \V{j} \in Ω,\ \forall δ\V{j} \in δΩ
-\end{displaymath}
-amounts to:
-\begin{align*}
-  \Abs{Δz} ≤
-  \frac{\pi\,\sqrt{1 - (\varepsilon\,L)^{2}}}{k\,\varepsilon^{2}\,\min(L,N/2)}
-  &= \frac{λ\,\sqrt{1 - (\varepsilon\,L)^{2}}}{2\,\varepsilon^{2}\,\min(L,N/2)}
-  &&\text{since\ }k = 2\,π/λ\\
-  &= \frac{N^{2}\,δx^{2}\,\sqrt{1 - (\varepsilon\,L)^{2}}}{2\,λ\,\min(L,N/2)}
-  &&\text{since\ }\varepsilon = λ\,δα = \frac{λ}{N\,δx}
-\end{align*}
-2 possibilities:
-\begin{itemize}
-\item If $L = \max_{\V{j} \in Ω}\Norm{\V{j}} < N/\sqrt{2}$, then the limit is
-  $\Abs{Δz} ≤ 0$.
-\item If $L = \max_{\V{j} \in Ω}\Norm{\V{j}} = N/\sqrt{2}$, then the limit is
-  $\displaystyle\Abs{Δz} ≤ \frac{N\,δx^{2}}{λ}\,\sqrt{1 - \tfrac{1}{2}\,(\varepsilon\,N)^{2}}$. (Q.E.D.)
-\end{itemize}
+
+\subsubsection{Propagation by the paraxial transfer function}
+
+In the paraxial conditions, the propagation transfer function is given by Eq.~\eqref{eq:paraxial-transfer-function}
+which correspond to frequencies much smaller than $1/λ$:
+\begin{equation}
+  \FT{h}_{z}(\V{α}) \underset{\Norm*{\V{α}} \ll 1/λ}{≈}
+  \mathe^{\mathi\,k\,z}\,
+  \mathe^{-\mathi\,π\,λ\,z\,\Norm*{\V{α}}^{2}}.
+\end{equation}
+
+The worst frequencies for the quadratic phase term
+$\phi(\V{α}) = π\,λ\,z\,\Norm*{\V{α}}^{2}$ are such
+\begin{align}
+  δ\phi_{\Tag{max}}
+  &=\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} \\
+  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}\Norm*{\V{α}}^{2}\\
+  &= π\,λ\,\Abs*{z}\,\Paren[\Big]{δα^{2} + 2\,δα\,\max_{\V{α} \in Ξ}\Norm*{\V{α}}_{\infty}}\\
+  &≈ 2\,π\,λ\,\Abs*{z}\,δα\,\max_{\V{α} \in Ξ}\Norm*{\V{α}}_{\infty}\\
+  &= 2\,π\,λ\,\Abs*{z}\,δα\,\min\Paren{\NyquistFreq,\CutoffFreq,1/λ}
+\end{align}
+which (as expected) correspond to the conditions in Eq.~\eqref{eq:nonparaxial-angular-spectrum-sampling-conditions} at low-frequencies.
+
+\subsection{Propagation by the Fresnel transform}
 
 
 \subsection{Discrete computations}
@@ -1910,16 +1927,15 @@ The sampled angular spectrum is given by:
     |δx\,δy|\notag\\
   &= |δx\,δy|\,\bigl(\mathbf{F}·\boldsymbol{u}_{z}\bigr)[\ell_{1},\ell_{2}]
 \end{align}
-where $\mathbf{F}$ is the forward DFT operator (see
-Appendix~\ref{sec:DFT-operator}), $\boldsymbol{u}_{z}$ is the sampled field
-$u_{z}(x,y)$ with sampling step sizes $δx$ and $δy$ along the $x$ and $y$
-dimensions, and the square brackets are used to index the sampled quantities
-(as in the first line of the above equation). According to the properties of
-the DFT, the discrete angular spectrum $\FT{\boldsymbol{u}}_{z}$ is sampled
-with steps $δα=1/(N_{1}\,δx)$ and $δβ=1/(N_{2}\,δy)$. In the following, we
-assume that the sampling steps and the number of samples are the same along the
-two transverse Cartesian axes so that: $N_{1} = N_{2} = N$ and $δx = δy$ and
-thus:
+where $\mathbf{F}$ is the forward DFT operator (see Appendix~\ref{sec:DFT}),
+$\boldsymbol{u}_{z}$ is the sampled field $u_{z}(x,y)$ with sampling step sizes
+$δx$ and $δy$ along the $x$ and $y$ dimensions, and the square brackets are
+used to index the sampled quantities (as in the first line of the above
+equation). According to the properties of the DFT, the discrete angular
+spectrum $\FT{\boldsymbol{u}}_{z}$ is sampled with steps $δα=1/(N_{1}\,δx)$ and
+$δβ=1/(N_{2}\,δy)$. In the following, we assume that the sampling steps and the
+number of samples are the same along the two transverse Cartesian axes so that:
+$N_{1} = N_{2} = N$ and $δx = δy$ and thus:
 \begin{equation}
   \label{eq:discrete-angular-spectrum}
   \FT{\boldsymbol{u}}_{z} = |δx|^{2}\,\mathbf{F}·\boldsymbol{u}_{z},
