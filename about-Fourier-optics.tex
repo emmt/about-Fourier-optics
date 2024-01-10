@@ -113,8 +113,11 @@
 
 \newcommand*{\gammabar}{\overline{γ}}
 
-\newcommand{\NyquistFreq}{α_{\Tag{Nyquist}}}
-\newcommand{\CutoffFreq}{α_{\Tag{max}}}
+\newcommand{\Freq}[1]{α_{\Tag{#1}}}
+\newcommand{\NyquistFreq}{\Freq{samp}}
+\newcommand{\CutoffFreq}{\Freq{cut}}
+\newcommand{\MaxFreq}{\Freq{max}}
+\newcommand{\LimitFreq}{\Freq{lim}}
 
 \renewcommand{\baselinestretch}{1.15}
 %------------------------------------------------------------------------------
@@ -1650,152 +1653,169 @@ The angular spectrum propagation method is similar to the propagation by
 convolution computed by means of FFT's, the only difference is that the
 propagation transfer function $\FT{h}_{z}(\V{α})$ is directly sampled instead
 of being given by a DFT of the sampled propagation kernel $h_{z}(\V{x})$.
+This numerical approximation of the optical propagation writes:
+\begin{align}
+  \V{u}_{z}
+  &= \Paren*{δα^{2}\,\M{F}^{\star}}\cdot
+    \Diag\Paren*{\FT{\V{h}}_{z}}\cdot
+    \Paren*{δx^{2}\,\M{F}}\cdot \V{u}_{0}\notag\\
+  &= \underbrace{
+    \frac{1}{N^{2}}\cdot\M{F}^{\star}\cdot
+    \Diag\Paren*{\FT{\V{h}}_{z}}\cdot\M{F}
+    }_{\text{propagator}}\cdot \V{u}_{0}
+    \label{eq:numerical-angular-spectrum-propagation}
+\end{align}
+since $δx\,δα = 1/N$ for the approximation of the Fourier transform by the DFT
+operator $\M{F}$ and with $\Diag(\FT{\V{h}}_{z})$ the linear operator
+implementing element-wise multiplication by $\FT{\V{h}}_{z}$ the propagation
+transfer function sampled at discrete frequencies $\V{α}[\V{j}] = δα\,\V{j}$.
+
+The first condition that must hold to apply this method is that the Nyquist
+frequency for a $N\times N$ grid of discrete spatial frequencies:
+\begin{equation}
+  \label{eq:Nyquist-frequency}
+  \NyquistFreq = (N/2)\,δα = \frac{1}{2\,δx}
+\end{equation}
+must not be smaller than the cutoff frequency $\CutoffFreq$ of the input
+angular spectrum:
+\begin{equation}
+  \label{eq:cutoff-constraint}
+  \NyquistFreq ≥ \CutoffFreq
+  \quad\Longrightarrow\quad
+  δx ≤ \frac{1}{2\,\CutoffFreq}
+\end{equation}
+\oops{Note that, taking the intensity, that is the squared modulus of the
+  complex amplitude, effectively doubles the cutoff frequency.}
+
+As before but in the frequency space, another condition to approximate the
+integral over frequencies for the final Fourier transform by a Riemann sum is
+that the frequency sampling step $δα$ be fine enough to correctly sample the
+variation of the propagation transfer function $\FT{h}_{z}(\V{α})$. This
+depends on the considered case, non-paraxial or paraxial as examined next.
 
 \subsubsection{Propagation by the non-paraxial transfer function}
 
-Propagation of the angular spectrum:
-\begin{displaymath}
-  \FT{u}_{z + Δz}(\V{α}) =
-  \FT{h}_{Δz}(\V{α})\,
-  \FT{u}_{z}(\V{α})
-  \quad\text{with}\quad
-  \FT{h}_{Δz}(\V{α}) =
-  \mathe^{\mathi\,k\,Δz\,\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}
-\end{displaymath}
-is numerically approximated by:
-\begin{align}
-  \V{u}_{z + Δz}
-  &= \Paren*{δα^{2}\,\M{F}^{\star}}\cdot
-    \Diag\Paren*{\mathe^{\mathi\,\phi}}\cdot
-    \Paren*{δx^{2}\,\M{F}}\cdot \V{u}_{z}\notag\\
-  &= \underbrace{
-    \frac{1}{N^{2}}\cdot\M{F}^{\star}\cdot
-    \Diag\Paren*{\mathe^{\mathi\,\phi}}\cdot\M{F}
-    }_{\text{propagator}}\cdot \V{u}_{z}
-\end{align}
-since $δx\,δα = 1/N$ for the approximation of the Fourier transform by the DFT
-operator $\M{F}$ and with a frequency-wise phase shift $\phi$ given by:
+The non-paraxial transfer function given in
+Eq.~\eqref{eq:propagation-transfer-function} is:
 \begin{equation}
-  \phi(\V{α})
-  = k\,z\,\sqrt{1 - \Norm{λ\,\V{α}}^{2}}
+  \FT{h}_{z}(\V{α}) = \mathe^{\mathi\,k\,z\,\sqrt{1 - \Norm*{λ\,\V{α}}^{2}}}.
 \end{equation}
-with $\varepsilon = λ\,δα = λ/(N\,δx)$, usually $\varepsilon \ll 1$.
-
-
-\subsubsection{Short range limit of the angular spectrum}
-
-For the DFT to be a good approximation of the continuous Fourier transform, the
-sampled functions must vary slowly between consecutive samples. In particular
-for the phase shift:
+Evanescent waves whose frequencies are greater than $1/λ$ are rapidly vanishing
+and negligible for $\Abs{z}$ greater or equal a few wavelengths. Hence, we
+shall only consider propagating waves, that is spatial frequencies such that
+$\Norm*{\V{α}} < 1/λ$. For these frequencies, the variations of the phase
 \begin{equation}
-  \label{eq:phase-sampling-condition}
+  \label{eq:non-paraxial_transfer_function_phase}
+  \phi(\V{α}) = k\,z\,\sqrt{1 - \Norm*{λ\,\V{α}}^{2}}
+\end{equation}
+of the transfer function between contiguous discrete frequencies must not be
+greater than $π$ which imposes that:
+\begin{equation}
+  \label{eq:non-paraxial_phase_variation_condition}
   \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} ≤ π
 \end{equation}
 must hold for any $\V{α} \in Ξ$ and any $δ\V{α} \in δΞ$ with:
 \begin{equation}
   δΞ = \Brace*{(±δα,0),(0,±δα)}
 \end{equation}
-the offsets to the closest spatial frequencies (the blue dots in
+the offsets to contiguous spatial frequencies (the blue dots in
 Fig.~\ref{fig:closest-nodes}) and with:
 \begin{equation}
   Ξ = \Brace*{
-    \V{α} \in \Set{R}^{2} \Given \Norm{\V{α}} < \CutoffFreq
-    \text{\ and\ } \Norm{\V{α}}_{\infty} ≤ \NyquistFreq
+    \V{α} \in \Set{R}^{2} \Given
+    \Norm{\V{α}}_{\infty} ≤ \NyquistFreq
+    \text{\ and\ }
+    \Norm{\V{α}} < \min(\CutoffFreq,1/λ)
   }\\
 \end{equation}
-the domain where spatial frequencies are below the cutoff frequency
-$\CutoffFreq$ of the angular spectrum $\FT{u}_{z}$ and the Nyquist frequency:
-\begin{equation}
-  \label{eq:Nyquist-frequency}
-  \NyquistFreq = \frac{1}{2}\,N\,δα = \frac{1}{2\,δx}
-\end{equation}
-for a $N\times N$ grid of discrete spatial frequencies. Note that
-$\CutoffFreq$ may be infinite.
+the domain of spatial frequencies to consider with $\NyquistFreq$ the Nyquist
+frequency defined in Eq.~\eqref{eq:Nyquist-frequency} and
+$\min(\CutoffFreq,1/λ)$ the maximal frequency of waves existing in the input
+angular spectrum and that can propagate.
 
 Assuming the spectral sampling step $δα = 1/(N\,δx)$ is small enough, the
-maximal absolute phase difference value can be estimated following the same
-steps as in
-section~\ref{sec:Rayleigh-Sommerfeld-diffraction:sampling-constraint}:
+maximal absolute phase difference can be estimated following the same steps as
+in section~\ref{sec:Rayleigh-Sommerfeld-diffraction:sampling-constraint}:
 \begin{align}
   δ\phi_{\Tag{max}}
   &=\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
   \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} \\
   &\simeq \max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
   \Abs*{\Inner*{\frac{\partial \phi(\V{α})}{\partial \V{α}}}{δ\V{α}}}\\
-  &= k\,\Abs*{z}\,λ^{2}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  &= 2\,π\,\Abs*{z}\,λ\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
   \Abs*{\frac{\Inner*{\V{α}}{δ\V{α}}}{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}\\
-  &= k\,\Abs*{z}\,λ^{2}\,\max_{\V{α} \in Ξ}
+  &= 2\,π\,\Abs*{z}\,λ\,\max_{\V{α} \in Ξ}
     \frac{\max_{δ\V{α} \in δΞ}\Abs*{\Inner*{\V{α}}{δ\V{α}}}}
     {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}\\
-  &= k\,\Abs*{z}\,λ^{2}\,δα\,\max_{\V{α} \in Ξ}
+  &= 2\,π\,\Abs*{z}\,λ\,δα\,\max_{\V{α} \in Ξ}
     \frac{\Norm*{\V{α}}_{\infty}}
     {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}.
     \label{eq:δϕ_max:nonparaxial}
 \end{align}
-Introducing $L = \max_{\V{α} \in Ξ}\Norm{\V{α}} ≤ N/\sqrt{2}$
-and noting that $L ≤ N/\sqrt{2}$ due to the finite number of samples along a
-lateral dimension, there are different cases to consider:
-\begin{itemize}
-\item If
-      $\max_{\V{α} \in Ξ}\Norm{\V{α}} = \min(\CutoffFreq,\sqrt{2}\,\NyquistFreq) ≥ 1/λ$,
-      then the sampled spatial frequencies include evanescent waves and
-      $\sqrt{1 - \Norm{λ\,\V{α}}^{2}}$ may be arbitrarily close to zero for
-      $\Norm*{\V{α}}_{\infty} > 0$. Hence, the condition in
-      Eq.~\eqref{eq:phase-sampling-condition} cannot hold and phase wrapping is
-      irreversible.
-\item Otherwise, maximizing the right-hand-side in
-      Eq.~\eqref{eq:δϕ_max:nonparaxial} amounts to finding the frequencies in
-      $Ξ$ such that $\Norm*{\V{α}}_{\infty}$ and $\Norm*{\V{α}}$ are both
-      maximized. The 3 possibilities are illustrated by
-      Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer}. If
-      $\sqrt{2}\,\NyquistFreq < \min(1/λ,\CutoffFreq)$, then the worst
-      spatial frequencies are indicated by blue dots in the leftmost panel of
-      Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
-      \begin{equation}
-        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
-        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
-        = \frac{\NyquistFreq}{\sqrt{1 - 2\,λ^{2}\,\NyquistFreq^{2}}};
-      \end{equation}
-      else if $\NyquistFreq ≤ \CutoffFreq < 1/λ$, then the worst
-      spatial frequencies are indicated by green dots in the central panel of
-      Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
-      \begin{equation}
-        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
-        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
-        = \frac{\NyquistFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}};
-      \end{equation}
-      finally, if $\CutoffFreq < \min(1/λ,\NyquistFreq)$, then the worst
-      spatial frequencies are indicated by orange dots in the rightmost panel
-      of Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
-      \begin{equation}
-        \label{eq:max-term:3rd-case:nonparaxial}
-        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
-        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
-        = \frac{\CutoffFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}.
-      \end{equation}
-      Combining these 3 possibilities:
-      \begin{equation}
-        \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
-        {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
-        = \frac{\min(\CutoffFreq,\NyquistFreq)}{\sqrt{1 - λ^{2}\,\min(\CutoffFreq,\sqrt{2}\,\NyquistFreq)^{2}}}.
-      \end{equation}
-      In principle, to avoid aliasing, the sampling step must be chosen so that
-      the Nyquist frequency is not less than the cutoff frequency, that is
-      $\NyquistFreq ≥ \CutoffFreq$, so that the above right-hand side is given
-      by Eq.~\eqref{eq:max-term:3rd-case:nonparaxial}. In this case the
-      sampling conditions are:
-      \begin{equation}
-        \label{eq:nonparaxial-angular-spectrum-sampling-conditions}
-        \begin{cases}
-          \displaystyle
-          \frac{2\,λ\,\Abs*{z}\,δα\,\CutoffFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}
-          =\frac{2\,λ\,\Abs*{z}\,\CutoffFreq}{N\,δx\,\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}
-          ≤ 1\\[2ex]
-          \displaystyle
-          \CutoffFreq ≤ \NyquistFreq = \frac{N}{2\,δx}
-        \end{cases}
-      \end{equation}
-\end{itemize}
+If
+$\max_{\V{α} \in Ξ}\Norm{\V{α}} = \min(\CutoffFreq,\sqrt{2}\,\NyquistFreq) ≥ 1/λ$,
+then $\sqrt{1 - \Norm{λ\,\V{α}}^{2}}$ may be arbitrarily close to zero for
+$\Norm*{\V{α}}_{\infty} > 0$. Hence, the condition in
+Eq.~\eqref{eq:non-paraxial_phase_variation_condition} cannot hold and phase
+wrapping is irreversible. Otherwise, maximizing the right-hand-side in
+Eq.~\eqref{eq:δϕ_max:nonparaxial} amounts to finding the frequencies in $Ξ$
+such that $\Norm*{\V{α}}_{\infty}$ and $\Norm*{\V{α}}$ are both maximized. The
+3 possibilities are illustrated by
+Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer}. If
+$\sqrt{2}\,\NyquistFreq < \min(1/λ,\CutoffFreq)$, then the worst spatial
+frequencies are indicated by blue dots in the leftmost panel of
+Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
+\begin{equation}
+  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+  = \frac{\NyquistFreq}{\sqrt{1 - 2\,λ^{2}\,\NyquistFreq^{2}}};
+\end{equation}
+else if $\NyquistFreq ≤ \CutoffFreq < 1/λ$, then the worst
+spatial frequencies are indicated by green dots in the central panel of
+Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
+\begin{equation}
+  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+  = \frac{\NyquistFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}};
+\end{equation}
+finally, if $\CutoffFreq < \min(1/λ,\NyquistFreq)$, then the worst
+spatial frequencies are indicated by orange dots in the rightmost panel
+of Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
+\begin{equation}
+  \label{eq:max-term:3rd-case:nonparaxial}
+  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+  = \frac{\CutoffFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}.
+\end{equation}
+Combining these 3 possibilities:
+\begin{equation}
+  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
+  = \frac{\min(\CutoffFreq,\NyquistFreq)}{\sqrt{1 - λ^{2}\,\min(\CutoffFreq,\sqrt{2}\,\NyquistFreq)^{2}}}.
+\end{equation}
+In principle, to avoid aliasing, the sampling step must be chosen so that
+the Nyquist frequency is not less than the cutoff frequency, that is
+$\NyquistFreq ≥ \CutoffFreq$, so that the above right-hand side is given
+by Eq.~\eqref{eq:max-term:3rd-case:nonparaxial}. In this case the
+sampling conditions are:
+\begin{equation}
+  \label{eq:nonparaxial-angular-spectrum-sampling-conditions}
+  \begin{cases}
+    \displaystyle
+    \frac{2\,λ\,\CutoffFreq\,\Abs*{z}\,δα}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}
+    =\frac{2\,λ\,\CutoffFreq\,\Abs*{z}}{N\,δx\,\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}
+    ≤ 1\\[2ex]
+    \displaystyle
+    δx ≤ \frac{1}{2\,\CutoffFreq}
+  \end{cases}
+\end{equation}
+which can be combined in a bracketing condition for the sampling step $δx$:
+\begin{equation}
+  \label{eq:nonparaxial-angular-spectrum-sampling-bracketing}
+  \frac{2\,λ\,\Abs*{z}\,\CutoffFreq}{N\,\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}
+  ≤ δx ≤ \frac{1}{2\,\CutoffFreq}.
+\end{equation}
+
 
 \begin{figure}
   \centering
@@ -1860,17 +1880,18 @@ lateral dimension, there are different cases to consider:
   \caption{Spatial frequencies (indicated by colored circles) where the phase
     wrapping is the most severe for the non-paraxial propagation transfer
     function. For the 3 possible cases, the grayed square indicates the area
-    sampled by the DFT and the circle indicates the cutoff frequency
-    $\CutoffFreq$ of the angular spectrum assumed to be less the evanescent
-    waves limit at $1/λ$.}
+    sampled by the DFT with $\NyquistFreq$ the Nyquist frequency, and the
+    circle indicates the cutoff frequency $\CutoffFreq$ of the angular spectrum
+    assumed to be less the evanescent waves limit at $1/λ$.}
   \label{fig:phase-wrapping-non-paraxial-transfer}
 \end{figure}
 
 
 \subsubsection{Propagation by the paraxial transfer function}
 
-In the paraxial conditions, the propagation transfer function is given by Eq.~\eqref{eq:paraxial-transfer-function}
-which correspond to frequencies much smaller than $1/λ$:
+In the paraxial conditions, the propagation transfer function is given by
+Eq.~\eqref{eq:paraxial-transfer-function} which corresponds to frequencies much
+smaller than $1/λ$:
 \begin{equation}
   \FT{h}_{z}(\V{α}) \underset{\Norm*{\V{α}} \ll 1/λ}{≈}
   \mathe^{\mathi\,k\,z}\,
@@ -1883,12 +1904,27 @@ $\phi(\V{α}) = π\,λ\,z\,\Norm*{\V{α}}^{2}$ are such
   δ\phi_{\Tag{max}}
   &=\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
   \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} \\
-  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}\Norm*{\V{α}}^{2}\\
+  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  \Abs*{\Norm*{\V{α} + δ\V{α}}^{2} - \Norm*{\V{α}}^{2}}\\
+  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  \Abs*{\Norm*{δ\V{α}}^{2} + 2\,\Inner{\V{α}}{δ\V{α}}}\\
   &= π\,λ\,\Abs*{z}\,\Paren[\Big]{δα^{2} + 2\,δα\,\max_{\V{α} \in Ξ}\Norm*{\V{α}}_{\infty}}\\
   &≈ 2\,π\,λ\,\Abs*{z}\,δα\,\max_{\V{α} \in Ξ}\Norm*{\V{α}}_{\infty}\\
   &= 2\,π\,λ\,\Abs*{z}\,δα\,\min\Paren{\NyquistFreq,\CutoffFreq,1/λ}
 \end{align}
 which (as expected) correspond to the conditions in Eq.~\eqref{eq:nonparaxial-angular-spectrum-sampling-conditions} at low-frequencies.
+
+\begin{equation}
+  \label{eq:2}
+  \begin{cases}
+    \displaystyle
+    \CutoffFreq \ll 1/λ\\[1ex]
+    \displaystyle
+    \CutoffFreq ≤ \NyquistFreq\\[1ex]
+    \displaystyle
+    2\,λ\,\CutoffFreq\,\Abs*{z}\,δα = \frac{2\,λ\,\CutoffFreq\,\Abs*{z}}{N\,δx} ≤ 1
+  \end{cases}
+\end{equation}
 
 \subsection{Propagation by the Fresnel transform}
 
