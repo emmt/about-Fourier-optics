@@ -350,10 +350,11 @@ comparison.
 \subsubsection{Planar diffraction seen as a convolution}
 \label{sec:planar-diffraction-seen-as-a-convolution}
 
-We consider the case where $\Sigma_{0}$ is an infinite plane and, without loss
-of generality, define the $z$-axis of the Cartesian coordinate system to be
-perpendicular to $\Sigma_{0}$ and oriented so that $z$ increases as the waves
-physically propagate. In other words, the wave vector
+We consider the case where $\Sigma_{0}$ is an infinite plane and call
+\textbf{optical axis} the perpendicular to $\Sigma_{0}$ oriented in the
+direction of the physical propagation of waves. Without loss of generality, we
+choose the Cartesian coordinate system to be such that the $z$-axis coincides
+with the optical axis. In other words, the wave vector
 $\V{k} = (k_{x},k_{y},k_{z})$ of any propagating wave is such that $k_{z} > 0$.
 Since the space between $\Sigma_{0}$ and $\V{r}_{1}$ is homogeneous and devoid
 of sources, propagation between $\V{r}_{0} ∈ \Sigma_{0}$ and $\V{r}_{1}$ shall
@@ -370,7 +371,7 @@ this point, it is useful to introduce:
   \label{eq:u_z}
   u_{z}(\V{x}) = u_{z}(x,y) ≡ u(x,y,z)
 \end{equation}
-to express the field $u(\V{r})$ in a \textbf{transverse plane} of the $z$-axis
+to express the field $u(\V{r})$ in a \textbf{transverse plane} of the optical axis
 as a two-dimensional function of $\V{x} = (x,y)$, the lateral position in this
 plane. Hereinafter, this notation will be used to emphasize that a function in
 a transverse plane at given $z$ is considered. Using the same convention for
@@ -409,8 +410,8 @@ $z_{1}$.
              & Angular spectrum, Fourier transform of $u_{z}(\V{x})$\\
   \end{tabular}
   \caption{Notations. All coordinates are Cartesian coordinates with the
-    convention that the $z$-axis is oriented so that $z$ increases as the waves
-    physically propagate.}
+    convention that the $z$-axis, corresponding to the optical axis, is
+    oriented so that $z$ increases as the waves physically propagate.}
   \label{tab:notations}
 \end{table}
 
@@ -463,7 +464,7 @@ expression of the propagation transfer function $\FT{h}_{Δz}(\V{α})$:
 
 \item \textbf{Successive propagation steps.} We expect that propagation can be
       split in successive propagation steps with the same result. For this
-      property to hold, it is sufficient that propagation along the $z$-axis by
+      property to hold, it is sufficient that propagation along the optical axis by
       $Δz_{1}$ and then by $Δz_{2}$ be the same as propagation by
       $Δz_{1} + Δz_{2}$ whatever $Δz_{1}$ and $Δz_{2}$.
       In other words:
@@ -577,7 +578,7 @@ at $z = z_{0}$:
 %  σ = \sign(k_{z}) = \pm1
 %\end{equation}
 %with $k_{z} = \V{k}·\V{e}_{z}$ the algebraic projection of the wave vector
-%$\V{k}$ on the $z$-axis. We introduce $σ = \pm1$ to account for whether
+%$\V{k}$ on the optical axis. We introduce $σ = \pm1$ to account for whether
 %the transverse planes are ordered following the physical propagation of the
 %wave or in the opposite direction:
 %As recalled by \citet{Konijnenberg+2022-optics}, note that the sign of $k_{z}$
@@ -1385,7 +1386,7 @@ Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}, the propagation distance is:
   \label{eq:r(x)}
   r(\V{x}) = \sqrt{\Norm*{\V{x}}^{2} + z^{2}}
 \end{equation}
-with $z > 0$ the distance along the $z$-axis between the input and output
+with $z > 0$ the distance along the optical axis between the input and output
 transverse planes. To avoid irreversible phase wrapping, the phase difference
 between two adjacent nodes of the sampling grid must not be greater than $π$
 which yields the condition $k\,δr_{\Tag{max}} ≤ π$ or equivalently
@@ -1523,9 +1524,9 @@ This condition may be expressed as an upper bound on the sampling step:
 with $D$ the lateral size of $Ω$. In the near field, that is for $z \ll D$, the
 bound is the Shannon sampling step to correctly sample all propagating waves
 which have spatial frequencies up to $1/λ$. In the far field, that is for
-$z \gg D$, the bound is the propagation distance along the $z$-axis times the
-angular diffraction limit $λ/D$ for an aperture of size $D$. Note that, even
-though the angular spectrum $\FT{u}_{0}(\V{α})$ of the field in the input
+$z \gg D$, the bound is the propagation distance along the optical axis times
+the angular diffraction limit $λ/D$ for an aperture of size $D$. Note that,
+even though the angular spectrum $\FT{u}_{0}(\V{α})$ of the field in the input
 transverse plane has a cutoff frequency much smaller than
 $1/(2\,δx_{\Tag{max}})$, the constraint $δx ≤ δx_{\Tag{max}}$ still applies to
 avoid undersampling the kernel before computing its discrete Fourier transform.
