@@ -371,11 +371,12 @@ this point, it is useful to introduce:
   \label{eq:u_z}
   u_{z}(\V{x}) = u_{z}(x,y) ≡ u(x,y,z)
 \end{equation}
-to express the field $u(\V{r})$ in a \textbf{transverse plane} of the optical axis
-as a two-dimensional function of $\V{x} = (x,y)$, the lateral position in this
-plane. Hereinafter, this notation will be used to emphasize that a function in
-a transverse plane at given $z$ is considered. Using the same convention for
-the propagation kernel, Eq.~\eqref{eq:planar-linear-propagation} writes:
+to express the field $u(\V{r})$ in a \textbf{transverse plane} of the optical
+axis as a two-dimensional function of $\V{x} = (x,y)$, the transverse position
+in this plane. Hereinafter, this notation will be used to emphasize that a
+function in a transverse plane at given $z$ is considered. Using the same
+convention for the propagation kernel, Eq.~\eqref{eq:planar-linear-propagation}
+writes:
 \begin{equation}
   \label{eq:convolutive-propagation}
   u_{z_{1}}(\V{x}_{1}) =
@@ -403,7 +404,7 @@ $z_{1}$.
     %         & $σ = +1$ if wave is propagating toward $z > 0$, \\
     %         & $σ = -1$ otherwise\\
     $\V{r} = (x,y,z)$ & Position in 3-dimensional space\\
-    $\V{x} = (x,y)$ & Lateral position in a transverse plane\\
+    $\V{x} = (x,y)$ & Transverse position in a transverse plane\\
     $\V{α} = (α,β)$ & Spatial frequency\\
     $u_{z}(\V{x}) = u_{z}(x,y) = u(x,y,z)$ & Field in a transverse plane\\
     $\FT{u}_{z}(\V{α}) = \FT{u}_{z}(α,β)$
@@ -541,8 +542,8 @@ the Fourier transform of the field:
 Remarkably, the Helmholtz equation is much simpler for the Fourier transform of
 the field than for the field because it only presents derivatives along $z$. In
 effect, by using the Fourier transform, the partial derivatives along the
-lateral coordinates have been replaced by simple multiplications by powers of
-the spatial frequencies.
+transverse coordinates have been replaced by simple multiplications by powers
+of the spatial frequencies.
 
 Integrating Eq.~\eqref{eq:angular-spectrum-Helmholtz} for $z$ from $z_{0}$ to
 $z_{1}$ gives the following general solution for the Fourier transform of the
@@ -695,10 +696,10 @@ Section~\ref{sec:Rayleigh-Sommerfeld-diffraction}.
     \right.
   \end{equation}
   In this representation, the spatial frequencies multiplied by the wavelength,
-  $λ\,\V{α}$, are the cosines of the angles of the wave vector $\V{k}$ with
-  the lateral unit vectors $\V{e}_{x}$ and $\V{e}_{y}$. For that reason,
-  the Fourier spectrum $\FT{u}_{z}(\V{α})$ is called the \textbf{angular
-    spectrum} of the field in the transverse plane at $z$. In
+  $λ\,\V{α}$, are the cosines of the angles of the wave vector $\V{k}$ with the
+  transverse unit vectors $\V{e}_{x}$ and $\V{e}_{y}$. For that reason, the
+  Fourier spectrum $\FT{u}_{z}(\V{α})$ is called the \textbf{angular spectrum}
+  of the field in the transverse plane at $z$. In
   Appendix~\ref{sec:plane-waves-superposition}, the Helmholtz equation is
   solved assuming that the field is a superposition of plane waves.
   \citet{Konijnenberg+2022-optics} propose another resolution of the Helmholtz
@@ -1009,7 +1010,7 @@ Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}:
 In the denominator of the right-hand side expression of
 Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}, the first term of the series is
 sufficient but, in the complex exponential, at least the two first terms must
-be kept to account for the phase changes with the lateral position
+be kept to account for the phase changes with the transverse position
 $\V{x} = (x,y)$. More specifically, the third and subsequent terms of the
 series can be neglected in the $\mathe^{\mathi\,k\,r}$ term if the following
 condition holds:
@@ -1188,7 +1189,7 @@ latter method is exactly equivalent to a 2-step Fresnel transform.
 
 \subsection{Sampling}
 
-For numerical computations, the continuous functions of the lateral position
+For numerical computations, the continuous functions of the transverse position
 and spatial frequency are sampled on a regular Cartesian grid. We further
 assume that the number of samples and the sampling steps are the same along the
 2 dimensions of the sampled transverse plane. This subsection briefly
@@ -1216,10 +1217,10 @@ To simplify the notation and avoid ambiguities, we use square brackets to
 indicate sampling, bold-face lower-case letters for vectors (indexed
 collections of values), and bold-face upper-case letters for linear operators
 (matrices). For example, $u_{z}(\V{x})$ is the field in the transverse plane at
-longitudinal position $z$ and lateral position $\V{x}$, while
+longitudinal position $z$ and transverse position $\V{x}$, while
 $u_{z}[\V{j}] \equiv u_{z}(\V{x}[\V{j}])$ is the sampled field at grid index
 $\V{j}$. As another example, $u_{z}\from\Set{R}^{2}\to\Set{C}$ is the field as
-a continuous function of the lateral position, while
+a continuous function of the transverse position, while
 $\V{u}_{z} \in \Set{C}^{N^{2}}$ is the sampled field, that is the vector whose
 entries are $u_{z}[\V{j}]$ for all $\V{j} \in \Set{J}^{2}$.
 
@@ -1322,7 +1323,7 @@ These issues are discussed next.
 
 To limit the number of operations, the sum in the discrete convolution in
 Eq.~\eqref{eq:discrete-convolution} shall only be performed for
-$\V{x}[\V{j}'] \in Ω_{0}$ where $Ω_{0}$ includes the lateral positions where
+$\V{x}[\V{j}'] \in Ω_{0}$ where $Ω_{0}$ includes the transverse positions where
 the field $u_{0}$ in the input transverse plane is non-zero. At least:
 \begin{equation}
   \label{eq:input-field-support}
@@ -1337,12 +1338,12 @@ The discrete convolution shall also only be computed for nodes $\V{j}$ where
 the field in the output transverse plane is non-zero. Due to diffraction, it is
 not possible to strictly impose such a restriction but we may assume that a
 mask is placed in the output transverse plane so that we can define $Ω_{z}$
-which includes the lateral positions where the field in the output transverse
-plane is non-zero \emph{after} the mask. Said otherwise, we assume that we are
-only interested in having the field in the output transverse plane for a
-limited support $Ω_{z}$. For practical reasons and since we are interested in
-making as few operations as possible, the supports $Ω_{0}$ and $Ω_{z}$ must
-have finite sizes and shall be as small as possible.
+which includes the transverse positions where the field in the output
+transverse plane is non-zero \emph{after} the mask. Said otherwise, we assume
+that we are only interested in having the field in the output transverse plane
+for a limited support $Ω_{z}$. For practical reasons and since we are
+interested in making as few operations as possible, the supports $Ω_{0}$ and
+$Ω_{z}$ must have finite sizes and shall be as small as possible.
 
 For a faster computation of the discrete convolution, the discrete Fourier
 transform (DFT) may be used, but to avoid aliasing, the size of the grid must
@@ -1398,8 +1399,8 @@ $r$ between 2 adjacent nodes in the sampling grid:
   = \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}} \Abs*{r(\V{x} + δ\V{x}) - r(\V{x})}
 \end{equation}
 with $Ω = Ω_{z} - Ω_{0}$ the discrete kernel support accounting for all
-differences in lateral positions between the input and output transverse planes
-and:
+differences in transverse positions between the input and output transverse
+planes and:
 \begin{equation}
   \label{eq:δΩ}
   δΩ = \Brace*{(±δx,0),(0,±δx)}
@@ -1499,7 +1500,7 @@ yields:
 which is non-negative, hence $δr(\ell)$ is increasing with $\ell$. The maximal
 value for $δr$ is thus found at
 $\ell_{\Tag{max}} = \max_{\V{x} \in Ω} \Norm*{\V{x}}_{\infty} = D/2$ with $D$
-the lateral size of $Ω$ and finally:
+the transverse size of $Ω$ and finally:
 \begin{equation}
   \label{eq:δr_max,end}
   δr_{\Tag{max}} \approx \frac{δx\,D/2}{\sqrt{z^{2} + (D/2)^{2}}}
@@ -1521,9 +1522,9 @@ This condition may be expressed as an upper bound on the sampling step:
     \Abs{z}\,λ/D & \text{when $\Abs{z} \gg D$}\\
   \end{cases}
 \end{equation}
-with $D$ the lateral size of $Ω$. In the near field, that is for $z \ll D$, the
-bound is the Shannon sampling step to correctly sample all propagating waves
-which have spatial frequencies up to $1/λ$. In the far field, that is for
+with $D$ the transverse size of $Ω$. In the near field, that is for $z \ll D$,
+the bound is the Shannon sampling step to correctly sample all propagating
+waves which have spatial frequencies up to $1/λ$. In the far field, that is for
 $z \gg D$, the bound is the propagation distance along the optical axis times
 the angular diffraction limit $λ/D$ for an aperture of size $D$. Note that,
 even though the angular spectrum $\FT{u}_{0}(\V{α})$ of the field in the input
@@ -1604,7 +1605,7 @@ $\Norm*{δ\V{x}} = δx$ for any $δ\V{x} \in δΩ$ with $δΩ$ defined in
 Eq.~\eqref{eq:δΩ}, right-hand side~\eqref{eq:max-quadratic-diff,b} follows from
 Eq.~\eqref{eq:max<x,δx>}, and right-hand side~\eqref{eq:max-quadratic-diff,c}
 follows from $\max_{\V{x} \in Ω}\Norm*{\V{x}}_{\infty} = D/2$ with $D$ the
-lateral size of $Ω$. Note that, contrarily to the computations in
+transverse size of $Ω$. Note that, contrarily to the computations in
 Eq.~\eqref{eq:δr,approx}, there are no approximations here. The maximal
 absolute difference of the quadratic phase
 \begin{equation}
@@ -2065,8 +2066,8 @@ in Eq.~\eqref{eq:DFT-sampling-condition,nD} holds which imposes that:
   \label{eq:9}
   \frac{k\,δx_{0}\,δx_{1}}{Δz} = ±\frac{2\,π}{N}
 \end{equation}
-with $N$ the number of samples along a lateral dimension. The sampling step in
-the output plane is thus given by:
+with $N$ the number of samples along a transverse dimension. The sampling step
+in the output plane is thus given by:
 \begin{equation}
   \label{eq:one-step-sampling-rule}
   δx_{1} = \frac{λ\,\Abs*{Δz}}{N\,δx_{0}}
@@ -2074,7 +2075,7 @@ the output plane is thus given by:
 and the double integral is approximated by $δx_{0}^{2}\,\M{F}$ if $Δz > 0$ and
 by $δx_{0}^{2}\,\M{F}^{\star}$ if $Δz < 0$ with $\M{F}$ the two-dimensional
 discrete Fourier transform operator (see Appendix~\ref{sec:DFT}). Note that,
-with this latter convention, the lateral axes ($x$ and $y$) keep their
+with this latter convention, the transverse axes ($x$ and $y$) keep their
 orientation.
 
 Using bold lowercase symbols to represent sampled quantities and bold uppercase
