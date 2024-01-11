@@ -225,91 +225,98 @@ with $k = 2\,π\,n\,ν/c = 2\,π/λ$ the wave-number, $λ= c/(n\,ν)$ the wavele
 in the medium, and $∇^{2}u = ∂^{2}u/∂x^{2} + ∂^{2}u/∂y^{2} + ∂^{2}u/∂z^{2}$ the
 Laplacian of $u$.
 
-Two important specific solutions to the Helmholtz equation are described next,
-the plane and spherical waves, before considering more general solutions.
+\subsection{Elementary solutions to Helmholtz equation}
+\label{sec:elementary-solutions}
 
-\begin{examplebox}{Plane wave.}
-  With the convention in Eq.~\eqref{eq:complex-amplitude}, the field produced
-  by a plane wave writes:
-  \begin{equation}
-    \label{eq:plane-wave-field}
-    U(\V{r},t) = a\,\Re\Bigl(\mathe^{\mathi\,\V{k}·\V{r} - \mathi\,2\,π\,ν\,t}\Bigr)
-  \end{equation}
-  with $a = U(\V{0},0)$ and $\V{k} = (k_{x},k_{y},k_{z})$ the wave vector of
-  amplitude $\Norm*{\V{k}} = k$ and whose direction is that of the propagation
-  of the wave. The corresponding complex amplitude is:
-  \begin{equation}
-    \label{eq:plane-wave-complex-amplitude}
-    u(\V{r}) = a\,\mathe^{\mathi\,\V{k}·\V{r}},
-  \end{equation}
-  whose Laplacian is:
-  \begin{equation}
-    \label{eq:plane-wave-Laplacian}
-    ∇^{2}u(\V{r})
-    = -\bigl(k_{x}^{2} + k_{y}^{2} + k_{z}^{2}\bigr)\,a\,\mathe^{\mathi\,\V{k}·\V{r}}
-    = -k^{2}\,u(\V{r})
-  \end{equation}
-  hence a plane wave is solution of the Helmholtz
-  equation~\eqref{eq:Helmholtz}.
-\end{examplebox}
+Before considering the diffraction by a surface, two important elementary
+solutions to the Helmholtz equation, the plane and spherical waves, are
+described here.
 
-\begin{examplebox}{Spherical wave.}
-  % \paragraph{Spherical wave.}
-  With the convention in Eq.~\eqref{eq:complex-amplitude}, the field produced
-  by a spherical wave writes:
-  \begin{equation}
-    \label{eq:spherical-wave-field}
-    U(\V{r},t) = a\,\Re\Biggl(\frac{
-      \mathe^{\mathi\,k·\Norm*{\V{r} - \V{r}_{0}} - \mathi\,2\,π\,ν\,t}
-    }{
-      \Norm*{\V{r} - \V{r}_{0}}
-    }\Biggr)
-  \end{equation}
-  for some constant $a$ and with $\V{r}_{0} = (x_{0}, y_{0}, z_{0})$ the origin
-  of the spherical wave. The factor in $1/\Norm*{\V{r} - \V{r}_{0}}$ is to
-  account for the dilution of the power with the radius of the sphere. Note
-  that the expression is singular in $\V{r} = \V{r}_{0}$ where the field is not
-  defined. The complex amplitude of the spherical wave is:
-  \begin{equation}
-    \label{eq:spherical-wave-complex-amplitude}
-    u(\V{r}) = \frac{a}{\Norm*{\V{r} - \V{r}_{0}}}\,
-    \mathe^{\mathi\,k·\Norm*{\V{r} - \V{r}_{0}}}.
-  \end{equation}
-  The derivatives in $x$ of $u(\V{r})$ with $\V{r} = (x, y, z)$ are:
-  \begin{align}
-    \frac{∂u(\V{r})}{∂x}
-    % &= a\,\mathe^{\mathi\,k·\Norm*{\V{r} - \V{r}_{0}}}\,
-    % \Paren*{
-    %   \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
-    %   - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{3}}
-    % }\,\bigl(x - x_{0}\bigr)\notag\\
-    &= \Paren*{
-      \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}}
-      - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
-      }\,\bigl(x - x_{0}\bigr)\,u(\V{r}),
-      \label{eq:spherical-wave-du/dx}
-    \\
-    \frac{∂^{2} u(\V{r})}{∂x^{2}}
-     &= \left(
-       \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}}
-       - \frac{3\,\mathi\,k\,(x - x_{0})^{2}}{\Norm*{\V{r} - \V{r}_{0}}^{3}}
-       - \frac{k^{2}\,(x - x_{0})^{2}}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
-       \right.\notag\\
-    &\left.
-      \phantom{xxx} - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
-      + \frac{3\,(x - x_{0})^{2}}{\Norm*{\V{r} - \V{r}_{0}}^{4}}
-      \right)\,u(\V{r}),
-      \label{eq:spherical-wave-d^2u/dx^2}
-  \end{align}
-  and similar expressions for the derivatives in $y$ and $z$. Combining the
-  second derivatives yields:
-  \begin{equation}
-    \label{eq:spherical-wave-Laplacian}
-    ∇^{2}u(\V{r}) = -k^{2}\,u(\V{r})
-  \end{equation}
-  hence a spherical wave is solution of the Helmholtz
-  equation~\eqref{eq:Helmholtz}.
-\end{examplebox}
+\subsubsection{Plane wave}
+\label{sec:plane_wave}
+
+With the convention in Eq.~\eqref{eq:complex-amplitude}, the field produced
+by a plane wave writes:
+\begin{equation}
+  \label{eq:plane-wave-field}
+  U(\V{r},t) = a\,\Re\Bigl(\mathe^{\mathi\,\V{k}·\V{r} - \mathi\,2\,π\,ν\,t}\Bigr)
+\end{equation}
+with $a = U(\V{0},0)$ and $\V{k} = (k_{x},k_{y},k_{z})$ the wave-vector of
+amplitude $\Norm*{\V{k}} = k$ and whose direction is that of the propagation
+of the wave. The corresponding complex amplitude is:
+\begin{equation}
+  \label{eq:plane-wave-complex-amplitude}
+  u(\V{r}) = a\,\mathe^{\mathi\,\V{k}·\V{r}},
+\end{equation}
+whose Laplacian is:
+\begin{equation}
+  \label{eq:plane-wave-Laplacian}
+  ∇^{2}u(\V{r})
+  = -\bigl(k_{x}^{2} + k_{y}^{2} + k_{z}^{2}\bigr)\,a\,\mathe^{\mathi\,\V{k}·\V{r}}
+  = -k^{2}\,u(\V{r})
+\end{equation}
+hence a plane wave is solution of the Helmholtz
+equation~\eqref{eq:Helmholtz}.
+
+
+\subsubsection{Spherical wave}
+\label{sec:spherical_wave}
+
+With the convention in Eq.~\eqref{eq:complex-amplitude}, the field produced
+by a spherical wave writes:
+\begin{equation}
+  \label{eq:spherical-wave-field}
+  U(\V{r},t) = a\,\Re\Biggl(\frac{
+    \mathe^{\mathi\,k·\Norm*{\V{r} - \V{r}_{0}} - \mathi\,2\,π\,ν\,t}
+  }{
+    \Norm*{\V{r} - \V{r}_{0}}
+  }\Biggr)
+\end{equation}
+for some constant $a$ and with $\V{r}_{0} = (x_{0}, y_{0}, z_{0})$ the origin
+of the spherical wave. The factor in $1/\Norm*{\V{r} - \V{r}_{0}}$ is to
+account for the dilution of the power with the radius of the sphere. Note that
+the expression is singular in $\V{r} = \V{r}_{0}$ where the field is not
+defined. The complex amplitude of the spherical wave is:
+\begin{equation}
+  \label{eq:spherical-wave-complex-amplitude}
+  u(\V{r}) = \frac{a}{\Norm*{\V{r} - \V{r}_{0}}}\,
+  \mathe^{\mathi\,k·\Norm*{\V{r} - \V{r}_{0}}}.
+\end{equation}
+The derivatives in $x$ of $u(\V{r})$ with $\V{r} = (x, y, z)$ are:
+\begin{align}
+  \frac{∂u(\V{r})}{∂x}
+  % &= a\,\mathe^{\mathi\,k·\Norm*{\V{r} - \V{r}_{0}}}\,
+  % \Paren*{
+  %   \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
+  %   - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{3}}
+  % }\,\bigl(x - x_{0}\bigr)\notag\\
+  &= \Paren*{
+    \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}}
+    - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
+    }\,\bigl(x - x_{0}\bigr)\,u(\V{r}),
+    \label{eq:spherical-wave-du/dx}
+  \\
+  \frac{∂^{2} u(\V{r})}{∂x^{2}}
+   &= \left(
+     \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}}
+     - \frac{3\,\mathi\,k\,(x - x_{0})^{2}}{\Norm*{\V{r} - \V{r}_{0}}^{3}}
+     - \frac{k^{2}\,(x - x_{0})^{2}}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
+     \right.\notag\\
+  &\left.
+    \phantom{xxx} - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
+    + \frac{3\,(x - x_{0})^{2}}{\Norm*{\V{r} - \V{r}_{0}}^{4}}
+    \right)\,u(\V{r}),
+    \label{eq:spherical-wave-d^2u/dx^2}
+\end{align}
+and similar expressions for the derivatives in $y$ and $z$. Combining the
+second derivatives yields:
+\begin{equation}
+  \label{eq:spherical-wave-Laplacian}
+  ∇^{2}u(\V{r}) = -k^{2}\,u(\V{r})
+\end{equation}
+hence a spherical wave is solution of the Helmholtz
+equation~\eqref{eq:Helmholtz}.
+
 
 
 \subsection{Diffraction by a surface}
