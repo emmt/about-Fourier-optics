@@ -225,6 +225,34 @@ with $k = 2\,π\,n\,ν/c = 2\,π/λ$ the wave-number, $λ= c/(n\,ν)$ the wavele
 in the medium, and $∇^{2}u = ∂^{2}u/∂x^{2} + ∂^{2}u/∂y^{2} + ∂^{2}u/∂z^{2}$ the
 Laplacian of $u$.
 
+\begin{table}[t]
+  \centering
+  \begin{tabular}{ll}
+    Notation & Description \\
+    \hline
+    $n$ & Refractive index of the medium\\
+    $c$ & Propagation speed in the void\\
+    $ν$ & Temporal frequency of wave\\
+    $λ= c/(n\,ν)$ & Wavelength in the medium\\
+    $k = 2\,π/λ$ & Wave number\\
+    $\V{k} = (k_{x},k_{y},k_{z})$ & Wave vector (with $k_{z} > 0$)\\
+    %$σ = \mathrm{sign}(k_{z})$
+    %         & $σ = +1$ if wave is propagating toward $z > 0$, \\
+    %         & $σ = -1$ otherwise\\
+    $\V{r} = (x,y,z)$ & Position in 3-dimensional space\\
+    $\V{x} = (x,y)$ & Transverse position in a transverse plane\\
+    $\V{α} = (α_{x},α_{y})$ & Spatial frequency\\
+    $u_{z}(\V{x}) = u_{z}(x,y) = u(x,y,z)$ & Field in a transverse plane\\
+    $\FT{u}_{z}(\V{α}) = \FT{u}_{z}(α_{x},α_{y})$
+             & Angular spectrum, Fourier transform of $u_{z}(\V{x})$\\
+  \end{tabular}
+  \caption{Notations. All coordinates are Cartesian coordinates with the
+    convention that the $z$-axis, corresponding to the optical axis, is
+    oriented so that $z$ increases as the waves physically propagate.}
+  \label{tab:notations}
+\end{table}
+
+
 \subsection{Elementary solutions to Helmholtz equation}
 \label{sec:elementary-solutions}
 
@@ -317,35 +345,61 @@ second derivatives yields:
 hence a spherical wave is solution of the Helmholtz
 equation~\eqref{eq:Helmholtz}.
 
-
-
 \subsection{Diffraction by a surface}
 
-To determine the field $u(\V{r}_{1})$ at position $\V{r}_{1}$ caused by given
-sources and using the Helmholtz equation~\eqref{eq:Helmholtz}, boundary
-conditions are needed. To that end, we may assume known the field at a closed
-surface $\Sigma_{0}$ such that all considered sources are inside the volume
-delimited by $\Sigma_{0}$ while $\V{r}_{1}$ is outside this volume.
-$\Sigma_{0}$ may also be an infinite surface splitting the space in two with
-the sources on one side and $\V{r}_{1}$ on the other side. Solving the
-Helmholtz equation for $u(\V{r}_{1})$ with such boundary conditions amounts to
-propagating the field from $\Sigma_{0}$ to $\V{r}_{1}$. All considered sources
-being \emph{behind} $\Sigma_{0}$ from the point of view of $\V{r}_{1}$ and the
-Helmholtz equation being linear in the field at $u(\V{r})$, the resulting field
-$\V{r}_{1}$ must be a linear combination of all contributions from the
-\emph{emitting surface} $\Sigma_{0}$:
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[scale=1]
+    \tikzmath{
+      \radius=3;
+      \r=0.1; % points radius
+    }
+    \coordinate (r') at (-15:\radius);
+    \coordinate (r) at (5.5,0.7);
+    \clip (0.5,-2) rectangle (7,2.6);
+    \fill[fill=OwlBlue!20] (0.5,-2) rectangle (7,2.6);
+    \filldraw[fill=OwlGreen!20,draw=OwlGreen,very thick] (0,0) circle (\radius);
+    %\draw (-60:1) node[below right] {$Σ$};
+    \draw [->,>=latex,draw=OwlOrange,very thick] (r') -- (r);
+    \path[fill=OwlGreen] (r') circle (\r) node[below right] {$\V{r}' \in Σ$};
+    \path[fill=OwlBlue] (r) circle (\r) node[above right] {$\V{r}$};
+    \draw [<-,>=latex] (-30:\radius) -- (-30:\radius-0.4) -- ++(-0.4,0) node[left] {$Σ$};
+    \draw (1.3,1.9) node[align=center] {all\\sources};
+    \draw (4.7,1.9) node[align=center]{homogeneous medium\\(free of sources)};
+  \end{tikzpicture}
+  \caption{Boundary conditions for the diffraction by a surface. The field
+    $u(\V{r}')$ is assumed known at a surface $Σ$ splitting space in 2 parts:
+    all sources are on one side (in green), the other side is homogeneous
+    medium (in blue). The light is propagating (orange arrow) from
+    $\V{r}' \in Σ$ to $\V{r}$ in the homogeneous medium.}
+  \label{fig:boundary-conditions}
+\end{figure}
+
+To determine the field $u(\V{r})$ at position $\V{r}$ caused by given sources
+and using the Helmholtz equation~\eqref{eq:Helmholtz}, boundary conditions are
+needed. To that end, we may assume known the field at a closed surface $Σ$ such
+that all considered sources are inside the volume delimited by $Σ$ while
+$\V{r}$ is outside this volume. $Σ$ may also be an infinite surface splitting
+the space in two with the sources on one side of $Σ$ and $\V{r}$ on the other
+side. Figure~\ref{fig:boundary-conditions} shows such boundary conditions.
+Solving the Helmholtz equation for $u(\V{r})$ with such boundary conditions
+amounts to propagating the field from $Σ$ to $\V{r}$. All considered sources
+being \emph{behind} $Σ$ from the point of view of $\V{r}$ and the Helmholtz
+equation being linear in the field at $u(\V{r})$, the resulting field $\V{r}$
+must be a linear combination of all contributions from the \emph{emitting
+  surface} $Σ$:
 \begin{equation}
   \label{eq:linear-propagation}
-  u(\V{r}_{1}) =
-  \iint\limits_{\mathclap{\V{r}_{0} ∈ \Sigma_{0}}} h(\V{r}_{1},\V{r}_{0})\,u(\V{r}_{0})\,\mathd^{2}\Sigma_{0},
+  u(\V{r}) =
+  \iint\limits_{\mathclap{\V{r}' ∈ Σ}} h(\V{r},\V{r}')\,u(\V{r}')\,\mathd^{2}Σ,
 \end{equation}
-where $h(\V{r}_{1},\V{r}_{0})$ is a \textbf{propagation kernel}.
+where $h(\V{r},\V{r}')$ is a \textbf{propagation kernel}.
 
 
 \subsection{Diffraction by a planar surface}
 
-Many simplifications occur if $\Sigma_{0}$ is a planar surface. If this is not
-the case, Kirchhoff diffraction equation can still be used
+Many simplifications occur if the surface $Σ$ is planar. If this is not the
+case, Kirchhoff diffraction equation can still be used
 \citep{Goodman-1996-Fourier_optics} but is really not suitable for fast
 computations. In the following, we develop the theory for a wave diffracted by
 a planar surface. This amounts to deal with the \textbf{angular spectrum} for
@@ -357,22 +411,63 @@ comparison.
 \subsubsection{Planar diffraction seen as a convolution}
 \label{sec:planar-diffraction-seen-as-a-convolution}
 
-We consider the case where $\Sigma_{0}$ is an infinite plane and call
-\textbf{optical axis} the perpendicular to $\Sigma_{0}$ oriented in the
-direction of the physical propagation of waves. Without loss of generality, we
-choose the Cartesian coordinate system to be such that the $z$-axis coincides
-with the optical axis. In other words, the wave vector
+\begin{figure}
+  \centering
+  \begin{tikzpicture}[view3d,scale=1]
+    \tikzmath{
+      \r=0.1; % points radius
+      \h=1.5;% plane side half-height
+      \w=1.7;% plane side half-width
+      \x0=0.8;\y0=1.0;\z0=0;
+      \x1=1.1;\y1=0.7;\z1=\z0+3.3;
+    }
+    % Tail of z-axis.
+    \draw (0,0,\z0-3) -- (0,0,\z0);
+    % Surface #0.
+    \fill[fill=OwlGreen!20,opacity=0.7] (-\w,-\h,\z0) rectangle (\w,\h,\z0);
+    \draw[->] (0,0,\z0) -- (\x0,0,\z0) node[midway,above]{$x'$};
+    \draw[->] (0,0,\z0) -- (0,\y0,\z0) node[midway,left]{$y'$};
+    \draw[dotted] (\x0,0,\z0) -- (\x0,\y0,\z0) -- (0,\y0,\z0);
+    \path[fill=OwlGreen] (\x0,\y0,\z0) circle[radius=\r] node[above right] {$\V{r}'$};
+    \draw (0,0,\z0) node{$\times$} node[below left]{$z'$};
+    \draw (0.3-\w,0.3-\h,\z0) node{$Σ$};
+    % Middle part of z-axis.
+    \draw (0,0,\z0) -- (0,0,\z1);
+    \draw[->=latex,draw=OwlOrange,very thick] (\x0,\y0,\z0+0.1) -- (\x1,\y1,\z1-0.1);
+    % Surface #1.
+    \fill[fill=OwlBlue!20,opacity=0.7] (-\w,-\h,\z1) rectangle (\w,\h,\z1);
+    %\draw (-\h,-\h,\z1) rectangle (\h,\h,\z1);
+    \draw[->] (0,0,\z1) -- (\x1,0,\z1) node[midway,above]{$x$};
+    \draw[->] (0,0,\z1) -- (0,\y1,\z1) node[midway,left]{$y$};
+    \draw[dotted] (\x1,0,\z1) -- (\x1,\y1,\z1) -- (0,\y1,\z1);
+    \path[fill=OwlBlue] (\x1,\y1,\z1) circle[radius=\r] node[above right] {$\V{r}$};
+    \draw (0,0,\z1) node{$\times$} node[below left]{$z$};
+    % Tip of z-axis.
+    \draw[->] (0,0,\z1) -- (0,0,\z1+4.5)
+    node[near end, above, sloped, align=center, font=\footnotesize]{optical axis}
+    node[right]{$z$};
+    \end{tikzpicture}
+    \caption{Diffraction by a planar surface. The transverse plane (in green)
+      at position $z'$ along the optical axis is the surface $Σ$ where the
+      field is known.}
+  \label{fig:planar_diffraction}
+\end{figure}
+
+We consider the case where $Σ$ is an infinite plane and call \textbf{optical
+  axis} the perpendicular to $Σ$ oriented in the direction of the physical
+propagation of waves (see Fig.~\ref{fig:planar_diffraction}). Without loss of
+generality, we choose the Cartesian coordinate system to be such that the
+$z$-axis coincides with the optical axis. In other words, the wave vector
 $\V{k} = (k_{x},k_{y},k_{z})$ of any propagating wave is such that $k_{z} > 0$.
-Since the space between $\Sigma_{0}$ and $\V{r}_{1}$ is homogeneous and devoid
-of sources, propagation between $\V{r}_{0} ∈ \Sigma_{0}$ and $\V{r}_{1}$ shall
-only depend on the relative position $\V{r}_{1} - \V{r}_{0}$. In other words,
-the propagation kernel must be \textbf{shift-invariant} and
-Eq.~\eqref{eq:linear-propagation} becomes:
+Since the space between $Σ$ and $\V{r}$ is homogeneous and devoid of sources,
+propagation between $\V{r}' ∈ Σ$ and $\V{r}$ shall only depend on the relative
+position $\V{r} - \V{r}'$. In other words, the propagation kernel must be
+\textbf{shift-invariant} and Eq.~\eqref{eq:linear-propagation} becomes:
 \begin{equation}
   \label{eq:planar-linear-propagation}
-  u(\V{r}_{1}) = \iint h(\V{r}_{1} - \V{r}_{0})\,u(\V{r}_{0})\,\mathd x_{0}\,\mathd y_{0},
+  u(\V{r}) = \iint h(\V{r} - \V{r}')\,u(\V{r}')\,\mathd x'\,\mathd y',
 \end{equation}
-where $(x_{0},y_{0},z_{0})$ are the Cartesian coordinates of $\V{r}_{0}$. At
+where $(x',y',z')$ are the Cartesian coordinates of $\V{r}'$. At
 this point, it is useful to introduce:
 \begin{equation}
   \label{eq:u_z}
@@ -386,46 +481,19 @@ convention for the propagation kernel, Eq.~\eqref{eq:planar-linear-propagation}
 writes:
 \begin{equation}
   \label{eq:convolutive-propagation}
-  u_{z_{1}}(\V{x}_{1}) =
-  \iint h_{z_{1} - z_{0}}(\V{x}_{1} - \V{x}_{0})\,
-  u_{z_{0}}(\V{x}_{0})\,\mathd\V{x}_{0}.
+  u_{z}(\V{x}) =
+  \iint h_{z - z'}(\V{x} - \V{x}')\,
+  u_{z'}(\V{x}')\,\mathd\V{x}'.
 \end{equation}
 In words, the fields diffracted by a transverse plane is the
-\textbf{two-dimensional convolution} of the field $u_{z_{0}}$ in the transverse
-plane at $z_{0}$ by a shift-invariant propagation kernel
-$h_{z_{1} - z_{0}}(\V{x})$ between this plane and the transverse plane at
-$z_{1}$.
-
-\begin{table}[t]
-  \centering
-  \begin{tabular}{ll}
-    Notation & Description \\
-    \hline
-    $n$ & Refractive index of the medium\\
-    $c$ & Propagation speed in the void\\
-    $ν$ & Temporal frequency of wave\\
-    $λ= c/(n\,ν)$ & Wavelength in the medium\\
-    $k = 2\,π/λ$ & Wave number\\
-    $\V{k} = (k_{x},k_{y},k_{z})$ & Wave vector (with $k_{z} > 0$)\\
-    %$σ = \mathrm{sign}(k_{z})$
-    %         & $σ = +1$ if wave is propagating toward $z > 0$, \\
-    %         & $σ = -1$ otherwise\\
-    $\V{r} = (x,y,z)$ & Position in 3-dimensional space\\
-    $\V{x} = (x,y)$ & Transverse position in a transverse plane\\
-    $\V{α} = (α_{x},α_{y})$ & Spatial frequency\\
-    $u_{z}(\V{x}) = u_{z}(x,y) = u(x,y,z)$ & Field in a transverse plane\\
-    $\FT{u}_{z}(\V{α}) = \FT{u}_{z}(α_{x},α_{y})$
-             & Angular spectrum, Fourier transform of $u_{z}(\V{x})$\\
-  \end{tabular}
-  \caption{Notations. All coordinates are Cartesian coordinates with the
-    convention that the $z$-axis, corresponding to the optical axis, is
-    oriented so that $z$ increases as the waves physically propagate.}
-  \label{tab:notations}
-\end{table}
+\textbf{two-dimensional convolution} of the field $u_{z'}$ in the transverse
+plane at $z'$ by a shift-invariant propagation kernel
+$h_{z - z'}(\V{x})$ between this plane and the transverse plane at
+$z$.
 
 
 \subsubsection{The angular spectrum solution}
-\label{sec:angular-spectrum}
+\label{sec:angular_spectrum_solution}
 
 The fact that the diffraction by a planar surface writes as a convolution in
 the transverse plane suggests to take the two-dimensional Fourier transform of
@@ -437,8 +505,10 @@ the complex amplitude $u_{z}(\V{x})$ in the transverse plane at position $z$:
   \mathd\V{x}
 \end{equation}
 with $\V{α} = (α_{x},α_{y})$ the Fourier spatial frequency conjugate to the
-position $\V{x} = (x,y)$ in the transverse plane. The inverse Fourier transform
-writes:
+position $\V{x} = (x,y)$ in the transverse plane. For reasons explained in
+Section~\ref{sec:angular_spectrum_interpretation}, $\FT{u}_{z}(\V{α})$ is
+called the \textbf{angular spectrum}. The inverse Fourier transform of the
+angular spectrum gives back the field:
 \begin{equation}
   \label{eq:angular-spectrum-inverse}
   u_{z}(\V{x}) = \iint \FT{u}_{z}(\V{α})\,
@@ -448,13 +518,13 @@ writes:
 
 Taking the two-dimensional Fourier transform of both sides of
 Eq.~\eqref{eq:convolutive-propagation}, the propagation of the Fourier
-transform of the field from the transverse plane at $z_{0}$ to the transverse
-plane at $z_{1}$ simplifies to:
+transform of the field from the transverse plane at $z'$ to the transverse
+plane at $z$ simplifies to:
 \begin{equation}
   \label{eq:angular-spectrum-propagation}
   \tcboxmath{
-    \FT{u}_{z_{1}}(\V{α})
-    = \FT{h}_{z_{1} - z_{0}}(\V{α})\,\FT{u}_{z_{0}}(\V{α})
+    \FT{u}_{z}(\V{α})
+    = \FT{h}_{z - z'}(\V{α})\,\FT{u}_{z'}(\V{α})
   }
 \end{equation}
 with $\FT{h}_{Δz}(\V{α})$ the \emph{propagation transfer function}, that is the
@@ -464,8 +534,8 @@ transverse planes separated by $Δz$.
 A number of necessary properties can be inferred without knowing the exact
 expression of the propagation transfer function $\FT{h}_{Δz}(\V{α})$:
 \begin{itemize}
-\item \textbf{No propagation.} If $z_{1} = z_{0}$, the field shall remain
-      unchanged, hence necessarily:
+\item \textbf{No propagation.} If $z = z'$, the field shall remain unchanged,
+      hence necessarily:
       \begin{equation}
         \label{eq:no-propagation}
         \FT{h}_{0}(\V{α}) = 1,\quad ∀\V{α}.
@@ -474,33 +544,33 @@ expression of the propagation transfer function $\FT{h}_{Δz}(\V{α})$:
 \item \textbf{Successive propagation steps.} We expect that propagation can be
       split in successive propagation steps with the same result. For this
       property to hold, it is sufficient that propagation along the optical
-      axis by $Δz_{1}$ and then by $Δz_{2}$ be the same as propagation by
-      $Δz_{1} + Δz_{2}$ whatever $Δz_{1}$ and $Δz_{2}$. In other words:
+      axis by $Δz$ and then by $Δz'$ be the same as propagation by
+      $Δz + Δz'$ whatever $Δz$ and $Δz'$. In other words:
       \begin{equation}
         \label{eq:successive-propagations}
-        \FT{h}_{Δz_{1}}(\V{α})\,
-        \FT{h}_{Δz_{2}}(\V{α}) =
-        \FT{h}_{Δz_{1} + Δz_{2}}(\V{α}),
-        \quad ∀\V{α},Δz_{1}, Δz_{2}.
+        \FT{h}_{Δz}(\V{α})\,
+        \FT{h}_{Δz'}(\V{α}) =
+        \FT{h}_{Δz + Δz'}(\V{α}),
+        \quad ∀\V{α}, Δz, Δz'.
       \end{equation}
 
 \item \textbf{Reverse propagation.} Ignoring possible divisions by zero, the
       propagation in Eq.~\eqref{eq:angular-spectrum-propagation} can be
       mathematically inverted to recover the Fourier transform of the field in
-      the transverse plane at $z_{0}$ given the Fourier transform of the field
-      in the transverse plane at $z_{1}$:
+      the transverse plane at $z'$ given the Fourier transform of the field
+      in the transverse plane at $z$:
       \begin{displaymath}
-        \FT{u}_{z_{0}}(\V{α})
-        = \frac{\FT{u}_{z_{1}}(\V{α})}{\FT{h}_{z_{1} - z_{0}}(\V{α})}.
+        \FT{u}_{z'}(\V{α})
+        = \frac{\FT{u}_{z}(\V{α})}{\FT{h}_{z - z'}(\V{α})}.
       \end{displaymath}
-      Besides, just exchanging $z_{0}$ and $z_{1}$ in
+      Besides, just exchanging $z'$ and $z$ in
       Eq.~\eqref{eq:angular-spectrum-propagation} yields:
       \begin{displaymath}
-        \FT{u}_{z_{0}}(\V{α}) =
-        \FT{u}_{z_{1}}(\V{α})\,\FT{h}_{z_{0} - z_{1}}(\V{α}).
+        \FT{u}_{z'}(\V{α}) =
+        \FT{u}_{z}(\V{α})\,\FT{h}_{z' - z}(\V{α}).
       \end{displaymath}
       These two relations must hold whatever the propagated field and the
-      transverse positions $z_{0}$ and $z_{1}$, hence necessarily:
+      transverse positions $z'$ and $z$, hence necessarily:
       \begin{equation}
         \label{eq:reverse-propagation}
         \FT{h}_{-Δz}(\V{α})
@@ -552,33 +622,33 @@ effect, by using the Fourier transform, the partial derivatives along the
 transverse coordinates have been replaced by simple multiplications by powers
 of the spatial frequencies.
 
-Integrating Eq.~\eqref{eq:angular-spectrum-Helmholtz} for $z$ from $z_{0}$ to
-$z_{1}$ gives the following general solution for the Fourier transform of the
-field in the transverse plane at $z_{1}$:
+Integrating Eq.~\eqref{eq:angular-spectrum-Helmholtz} for $z$ from $z'$ to
+$z$ gives the following general solution for the Fourier transform of the
+field in the transverse plane at $z$:
 \begin{equation}
   \label{eq:angular-spectrum-general-solution}
-  \FT{u}_{z_{1}}(\V{α}) =
+  \FT{u}_{z}(\V{α}) =
   \begin{cases}
     a_{+}(\V{α})\,\mathe^{+\mathi\,k\,Δz\,
     \sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}}\\
     \quad+\ a_{-}(\V{α})\,\mathe^{-\mathi\,k\,Δz\,
     \sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}}
-    & \text{if $λ\,\Norm*{\V{α}} ≤ 1$,}\\[2ex]
+    & \text{if $\Norm*{\V{α}} ≤ 1/λ$,}\\[2ex]
     a_{+}(\V{α})\,\mathe^{+k\,Δz\,
     \sqrt{λ^{2}\,\Norm*{\V{α}}^{2} - 1}}\\
     \quad+\ a_{-}(\V{α})\,\mathe^{-k\,Δz\,
     \sqrt{λ^{2}\,\Norm*{\V{α}}^{2} - 1}}
-    & \text{if $λ\,\Norm*{\V{α}} > 1$,}
+    & \text{if $\Norm*{\V{α}} > 1/λ$,}
   \end{cases}
 \end{equation}
-with $Δz = z_{1} - z_{0}$ and where $a_{+}(\V{α})$ and $a_{-}(\V{α})$ are
-functions to be determined by the boundary conditions. Taking $z_{1} = z_{0}$
+with $Δz = z - z'$ and where $a_{+}(\V{α})$ and $a_{-}(\V{α})$ are
+functions to be determined by the boundary conditions. Taking $z = z'$
 in both hand-sides of the general solution in
 Eq.~\eqref{eq:angular-spectrum-general-solution} yields the boundary conditions
-at $z = z_{0}$:
+at $z = z'$:
 \begin{equation}
-  \label{eq:solution-at-z_0}
-  a_{+}(\V{α}) + a_{-}(\V{α}) = \FT{u}_{z_{0}}(\V{α}).
+  \label{eq:solution_for_Δz=0}
+  a_{+}(\V{α}) + a_{-}(\V{α}) = \FT{u}_{z'}(\V{α}).
 \end{equation}
 
 %\begin{equation}
@@ -598,8 +668,8 @@ at $z = z_{0}$:
 According to our convention that $z$ increases as the waves physically
 propagate, then:
 \begin{itemize}
-\item $Δz = z_{1} - z_{0} > 0$ corresponds to \textbf{forward propagation}, \ie
-      the wave is physically propagating from $z_{0}$ to $z_{1} = z_{0} + Δz$;
+\item $Δz = z - z' > 0$ corresponds to \textbf{forward propagation}, \ie
+      the wave is physically propagating from $z'$ to $z = z' + Δz$;
 \item $Δz < 0$ corresponds to \textbf{reverse propagation}.
 \end{itemize}
 To eliminate un-physical solutions, we consider the case of forward
@@ -608,11 +678,11 @@ propagation, \ie $Δz > 0$. There are two regimes to examine:
 \item If $\Norm*{\V{α}} ≤ 1/λ$, the convention in
       Eq.~\eqref{eq:complex-amplitude} implies that the phase of the
       propagating wave is increasing with the distance of propagation, hence
-      $a_{-} = 0$ and, from Eq.~\eqref{eq:solution-at-z_0},
-      $a_{+} = \FT{u}_{z_{0}}$. The solution then writes:
+      $a_{-} = 0$ and, from Eq.~\eqref{eq:solution_for_Δz=0},
+      $a_{+} = \FT{u}_{z'}$. The solution then writes:
       \begin{equation}
         \label{eq:low-freq-angular-spectrum}
-        \FT{u}_{z_{1}}(\V{α}) = \FT{u}_{z_{0}}(\V{α})\,\mathe^{
+        \FT{u}_{z}(\V{α}) = \FT{u}_{z'}(\V{α})\,\mathe^{
           \mathi\,k\,Δz\,
           \sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}
         }.
@@ -620,11 +690,11 @@ propagation, \ie $Δz > 0$. There are two regimes to examine:
 
 \item If $\Norm*{\V{α}} > 1/λ$, the amplitude of the wave must not increase
       with the distance of propagation, hence $a_{+} = 0$ and, from
-      Eq.~\eqref{eq:solution-at-z_0}, $a_{-} = \FT{u}_{z_{0}}$. The solution
+      Eq.~\eqref{eq:solution_for_Δz=0}, $a_{-} = \FT{u}_{z'}$. The solution
       then writes:
       \begin{equation}
         \label{eq:high-freq-angular-spectrum}
-        \FT{u}_{z_{1}}(\V{α}) = \FT{u}_{z_{0}}(\V{α})\,\mathe^{
+        \FT{u}_{z}(\V{α}) = \FT{u}_{z'}(\V{α})\,\mathe^{
           -k\,Δz\,
           \sqrt{λ^{2}\,\Norm*{\V{α}}^{2} - 1}
         }.
@@ -672,57 +742,74 @@ sign of $Δz$. As shown later, this is not the case for the Rayleigh-Sommerfeld
 diffraction integral presented in
 Section~\ref{sec:Rayleigh-Sommerfeld-diffraction}.
 
-\begin{examplebox}{Angular spectrum}
-  Combining Eqs.~\eqref{eq:angular-spectrum-inverse},
-  \eqref{eq:angular-spectrum-propagation}, and
-  \eqref{eq:propagation-transfer-function}, the field in the transverse plane
-  at position $z > 0$ knowing (the Fourier transform of) the field in the
-  transverse plane at $z = 0$ writes:
-  \begin{align}
-    u_{z}(\V{x})
-    &= \iint \FT{u}_{0}(\V{α})\,\FT{h}_{z}(\V{α})\,
-      \mathe^{+\mathi\,2\,π\,\V{α}·\V{x}}\,\mathd\V{α}\notag\\
-    &= \iint \FT{u}_{0}(\V{α})\,
-      \mathe^{+\mathi\,\Paren*{
-      2\,π\,\V{α}·\V{x} +
-      k\,z\,\sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}
-      }}\,\mathd\V{α}
-      \label{eq:planar-waves-superposition}
-  \end{align}
-  which can be seen as the superposition of plane waves, see
-  Eq.~\eqref{eq:plane-wave-complex-amplitude}, weighted by
-  $\FT{u}_{0}(\V{α})$ and whose wave vectors $\V{k} = (k_{x},k_{y},k_{z})$
-  are given by:
-  \begin{equation}
-    \label{eq:spatial-frequencies}
-    \left\{
-      \begin{array}{l}
-        \V{k}_{\perp} = (k_{x},k_{y}) = 2\,π\,(α_{x},α_{y}) = 2\,π\,\V{α}\\[2ex]
-        k_{z} = k\,\sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}
-      \end{array}
-    \right.
-  \end{equation}
-  In this representation, the spatial frequencies multiplied by the wavelength,
-  $λ\,\V{α}$, are the cosines of the angles of the wave vector $\V{k}$ with the
-  transverse unit vectors $\V{e}_{x}$ and $\V{e}_{y}$. For that reason, the
-  Fourier spectrum $\FT{u}_{z}(\V{α})$ is called the \textbf{angular spectrum}
-  of the field in the transverse plane at $z$. In
-  Appendix~\ref{sec:plane-waves-superposition}, the Helmholtz equation is
-  solved assuming that the field is a superposition of plane waves.
-  \citet{Konijnenberg+2022-optics} propose another resolution of the Helmholtz
-  equation directly based on the interpretation that the inverse Fourier
-  transform of the angular spectrum, Eq.~\eqref{eq:angular-spectrum-inverse},
-  is readily a superposition of plane waves for which the propagation is known,
-  \cf Eq.~\eqref{eq:plane-wave-complex-amplitude}.
-\end{examplebox}
+
+\subsubsection{Interpretation of the angular spectrum}
+\label{sec:angular_spectrum_interpretation}
+
+Combining Eqs.~\eqref{eq:angular-spectrum-inverse},
+\eqref{eq:angular-spectrum-propagation}, and
+\eqref{eq:propagation-transfer-function}, the field in the transverse plane at
+position $z > 0$ knowing (the Fourier transform of) the field in the transverse
+plane $Σ$ at $z' = 0$ writes:
+\begin{align}
+  u_{z}(\V{x})
+  &= \iint \FT{u}_{0}(\V{α})\,\FT{h}_{z}(\V{α})\,
+    \mathe^{+\mathi\,2\,π\,\V{α}·\V{x}}\,\mathd\V{α}\notag\\
+  &= \iint \FT{u}_{0}(\V{α})\,
+    \mathe^{+\mathi\,\Paren*{
+    2\,π\,\V{α}·\V{x} +
+    k\,z\,\sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}
+    }}\,\mathd\V{α}.
+    \label{eq:planar_waves_superposition,a}
+\end{align}
+We now introduce the vector $\V{k}(\V{α}) = (k_{x},k_{y},k_{z})$ whose
+Cartesian coordinates are given by:
+\begin{equation}
+  \label{eq:spatial-frequencies}
+  \left\{
+    \begin{array}{l}
+      \V{k}_{\perp}(\V{α}) = (k_{x},k_{y}) = 2\,π\,(α_{x},α_{y}) = 2\,π\,\V{α}\\[2ex]
+      k_{z} = k\,\sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}
+    \end{array}
+  \right.
+\end{equation}
+It can be easily shown that $\Norm*{\V{k}(\V{α})} = k$ with $k = 2\,π/λ$ the
+assumed wave-number. Using $\V{k}(\V{α})$, the complex exponent in the
+right-hand side of Eq.~\ref{eq:planar_waves_superposition,a} can be rewritten
+to yield:
+\begin{align}
+  u_{z}(\V{x})
+  &= \iint \FT{u}_{0}(\V{α})\,\mathe^{\mathi\,\V{k}(\V{α})·\V{x}}\,\mathd\V{α}
+    \label{eq:planar_waves_superposition}
+\end{align}
+which is readily a superposition of plane waves of wave vector $\V{k}(\V{α})$,
+see Eq.~\eqref{eq:plane-wave-complex-amplitude}, and weighted by
+$\FT{u}_{0}(\V{α})$. In this representation, the spatial frequencies multiplied
+by the wavelength, $λ\,\V{α}$, are the cosines of the angles of the wave-vector
+$\V{k}(\V{α})$ with the transverse unit vectors $\V{e}_{x}$ and $\V{e}_{y}$.
+For that reason, the Fourier spectrum $\FT{u}_{z}(\V{α})$ is called the
+\textbf{angular spectrum} of the field in the transverse plane at $z$.
+
+In the next section, one of the Rayleigh-Sommerfeld solution for the
+diffraction integral for the complex amplitude is given but obtaining this
+result is much more complex than via the angular spectrum. In
+Appendix~\ref{sec:plane-waves-superposition}, the Helmholtz equation is solved
+assuming that the field is a superposition of plane waves. The obtained
+solution is, of course, the same but the initial assumption is not proven.
+\citet{Konijnenberg+2022-optics} propose another resolution of the Helmholtz
+equation directly based on the interpretation that the inverse Fourier
+transform of the angular spectrum, Eq.~\eqref{eq:angular-spectrum-inverse}, is
+a superposition of plane waves for which the propagation is known, \cf
+Eq.~\eqref{eq:plane-wave-complex-amplitude}.
+
 
 \subsubsection{Rayleigh-Sommerfeld diffraction}
 \label{sec:Rayleigh-Sommerfeld-diffraction}
 
 The field in the transverse plane at $z > 0$ caused by the propagation of the
-field in the the transverse plane at $z = 0$ can be computed by the
+field in the the transverse plane $Σ$ at $z' = 0$ can be computed by the
 \oops{(type I?)} Rayleigh-Sommerfeld diffraction integral
-\citep{Sommerfeld.1896.diffraction, Born+2002-principles_of_optics,
+\citep{Born+2002-principles_of_optics,
   Goodman-1996-Fourier_optics}:
 \begin{equation}
   \label{eq:Rayleigh-Sommerfeld-diffraction}
@@ -731,8 +818,8 @@ field in the the transverse plane at $z = 0$ can be computed by the
   \,\mathd x'\,\mathd y'
 \end{equation}
 where $r' = \sqrt{\Paren*{x - x'}^{2} + \Paren*{y - y'}^{2} + z^{2}}$ and for
-$z > 0$. Note that the term $\mathe^{\mathi\,k\,r'}/r'$ corresponds to a
-spherical wave emitted by a source at $(x',y',0)$.
+$z > z' = 0$. Note that the term $\mathe^{\mathi\,k\,r'}/r'$ corresponds to a
+spherical wave emitted by a source at $(x',y',z' = 0)$.
 
 Rayleigh-Sommerfeld diffraction integral has the form expected by
 Eq.~\eqref{eq:linear-propagation} with the propagation kernel:
@@ -751,12 +838,14 @@ before, this function is indeed shift-invariant. Note that the term
 $1/\Paren*{2\,π\,r}$ accounts for evanescent waves and is negligible at
 propagating distances longer than a few wavelengths.
 
-As rigorously proven by \citet{Lalor.1968.angular_spectrum_validity}, the
-inverse Fourier transform of the angular spectrum transfer function
-$\FT{h}_{z}(\V{α})$ given in Eq.~\eqref{eq:propagation-transfer-function} is
-the propagation kernel $h_{z}(\V{x})$ given in
-Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel} however for $z ≥ 0$, \oops{that is
-  for forward propagation}.
+Long after \citet{Sommerfeld.1896.diffraction} had found the
+solution~\eqref{eq:Rayleigh-Sommerfeld-diffraction} to the diffraction by a
+planar surface, \citet{Lalor.1968.angular_spectrum_validity} (at Emil Wolf's
+instigation) rigorously proved that the inverse Fourier transform of the
+angular spectrum transfer function $\FT{h}_{z}(\V{α})$ given in
+Eq.~\eqref{eq:propagation-transfer-function} was indeed the propagation kernel
+$h_{z}(\V{x})$ given in Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel} however for
+$z ≥ 0$, that is for forward propagation.
 
 
 \subsection{Paraxial approximation: Fresnel diffraction}
@@ -824,13 +913,13 @@ Fourier transform of a two-dimensional Gaussian shaped function:
   }
 \end{equation}
 which is also a Gaussian shaped function. Equation~\eqref{eq:FT-of-Gaussian}
-holds for any $q > 0$. By analytic continuation, we assume that
-Eq.~\eqref{eq:FT-of-Gaussian} also holds for any $q ∈ \Set{C}^{\star}$ such
-that $\Re(q) ≥ 0$. In particular\footnote{The more general case of
-  $q ∈ \Set{C}^{\star}$ such that $\Re(q) ≥ 0$ is suitable to derive the
-  equations of propagation for a Gaussian beam.}, taking $q = \mathi\,ρ$ with
-$ρ ∈ \Set{R}^{\star}$ in Eq.~\eqref{eq:FT-of-Gaussian} yields the (inverse)
-Fourier transform of a two-dimensional quadratic phase factor:
+holds for any $q > 0$. By analytic continuation, we assume that it also holds
+for any $q ∈ \Set{C}^{\star}$ such that $\Re(q) ≥ 0$. In
+particular\footnote{The more general case of $q ∈ \Set{C}^{\star}$ such that
+  $\Re(q) ≥ 0$ is suitable to derive the equations of propagation for a
+  Gaussian beam.}, taking $q = \mathi\,ρ$ with $ρ ∈ \Set{R}^{\star}$ in
+Eq.~\eqref{eq:FT-of-Gaussian} yields the (inverse) Fourier transform of a
+two-dimensional quadratic phase factor:
 \begin{equation}
   \label{eq:FT-of-quadratic-phase-factor}
   \iint \mathe^{-\mathi\,π\,ρ\,\Norm*{\V{x}}^{2}}\,
@@ -864,18 +953,19 @@ propagation kernel in the paraxial approximation:
 As shown next, the condition $\Norm*{\V{α}} \ll 1/λ$ for
 Eq.~\eqref{eq:paraxial-transfer-function} is equivalent to
 $\Norm*{Δ\V{x}} \ll \Abs*{Δz}$ for Eq.~\eqref{eq:Fresnel-kernel}. Propagation
-by this kernel implements \textbf{Fresnel diffraction}:
+by this kernel implements Fresnel diffraction expressed by the \textbf{Fresnel
+  diffraction integral}:
 \begin{equation}
   \label{eq:Fresnel-diffraction-integral}
   \tcboxmath{
-    u_{z_{1}}\Paren*{\V{x}_{1}}
+    u_{z}\Paren*{\V{x}}
     = \frac{\mathe^{\mathi\,k\,Δz}}{\mathi\,λ\,Δz}\,
-      \iint u_{z_{0}}\Paren*{\V{x}_{0}}\,
-      \mathe^{\frac{\mathi\,π\,\Norm*{\V{x}_{1} - \V{x}_{0}}^{2}}{λ\,Δz}}\,
-      \mathd\V{x}_{0}
+      \iint u_{z'}\Paren*{\V{x}'}\,
+      \mathe^{\frac{\mathi\,π\,\Norm*{\V{x} - \V{x}'}^{2}}{λ\,Δz}}\,
+      \mathd\V{x}'
   }
 \end{equation}
-with $Δz = z_{1} - z_{0}$.
+with $Δz = z - z'$.
 
 
 \subsubsection{Modulation of a plane carrier wave}
@@ -963,11 +1053,11 @@ writes:
   -\mathi\,π\,λ\,
   \Norm*{\V{α}}^{2}\,\FT{a}_{z}(\V{α}).
 \end{equation}
-Integration of this equation for $z$ from $z_{0}$ to $z_{1} = z_{0} + Δz$ yields:
+Integration of this equation for from $z'$ to $z = z' + Δz$ yields:
 \begin{equation}
   \label{eq:paraxial-modulation-spectrum-propagation}
-  \FT{a}_{z_{1}}(\V{α}) =
-  \FT{a}_{z_{0}}(\V{α})\,
+  \FT{a}_{z}(\V{α}) =
+  \FT{a}_{z'}(\V{α})\,
   \mathe^{-\mathi\,π\,λ\,Δz\,\Norm*{\V{α}}^{2}}.
 \end{equation}
 From Eq.~\eqref{eq:plane-wave-modulation} and by linearity of the transverse
@@ -979,8 +1069,8 @@ Fourier transform, it is easy to show that:
 and thus:
  \begin{equation}
   \label{eq:paraxial-spectrum-propagation}
-  \FT{u}_{z_{1}}(\V{α}) =
-  \FT{u}_{z_{0}}(\V{α})\,\mathe^{
+  \FT{u}_{z}(\V{α}) =
+  \FT{u}_{z'}(\V{α})\,\mathe^{
     \mathi\,\Paren*{k - π\,λ\,\Norm*{\V{α}}^{2}}\,Δz
   }.
 \end{equation}
@@ -1001,9 +1091,9 @@ Finally, it is interesting to derive an expression of the propagation kernel in
 paraxial conditions by approximating the Rayleigh-Sommerfeld propagation kernel
 $h_{z}$ given in Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}, hence neglecting
 evanescent waves, for small diffraction angles. For small diffraction angles,
-$\Norm*{Δ\V{x}}$ is small compared to $\Abs*{Δz}$ and the following series can
-be used to approximate $r$ the propagation distance used in
-Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}:
+that is for $\Norm*{Δ\V{x}} \ll \Abs*{Δz}$ with $Δ\V{x} = \V{x} - \V{x}'$ and
+$Δz = z - z'$, the following series can be used to approximate $r$ the
+propagation distance used in Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}:
 \begin{align}
   r
   &= \sqrt{\Norm*{Δ\V{x}}^{2} + Δz^{2}} \notag \\
@@ -1073,27 +1163,27 @@ Introducing the quadratic phase factor:
   \QuadPhaseFact_{ρ}(\V{x})
   = \exp\Paren*{\mathi\,π\,ρ\,\Norm*{\V{x}}^{2}}
 \end{equation}
-and developping the term $\Norm*{\V{x}_{1} - \V{x}_{0}}^{2}$ in the Fresnel
+and developping the term $\Norm*{\V{x} - \V{x}'}^{2}$ in the Fresnel
 propagation kernel given by Eq.~\eqref{eq:Fresnel-kernel}, the
-field in the transverse plane at $z_{1}$ can be written as:
+field in the transverse plane at $z$ can be written as:
 \begin{equation}
   \label{eq:Fresnel-diffraction-integral-alt}
-  u_{z_{1}}\Paren*{\V{x}_{1}}
+  u_{z}\Paren*{\V{x}}
   = \frac{\mathe^{\mathi\,k\,Δz}}{\mathi\,λ\,Δz}\,
-  \QuadPhaseFact_{\frac{1}{λ\,Δz}}\Paren*{\V{x}_{1}}\,
+  \QuadPhaseFact_{\frac{1}{λ\,Δz}}\Paren*{\V{x}}\,
   \iint \Brack*{
-    u_{z_{0}}\Paren*{\V{x}_{0}}\,
-    \QuadPhaseFact_{\frac{1}{λ\,Δz}}\Paren*{\V{x}_{0}}
+    u_{z'}\Paren*{\V{x}'}\,
+    \QuadPhaseFact_{\frac{1}{λ\,Δz}}\Paren*{\V{x}'}
   }\,
-  \mathe^{-\frac{\mathi\,2\,π}{λ\,Δz}\,\V{x}_{1}·\V{x}_{0}}\,
-  \mathd\V{x}_{0}
+  \mathe^{-\frac{\mathi\,2\,π}{λ\,Δz}\,\V{x}·\V{x}'}\,
+  \mathd\V{x}'
 \end{equation}
-with $Δz = z_{1} - z_{0}$. Note that the two-dimensional integral is the
-Fourier transform\footnote{if $Δz > 0$, inverse Fourier transform if $Δz < 0$}
-of the term inside the square brackets at the \emph{frequency}
-$\V{α} = \V{x}_{1}/\Paren*{λ\,\Abs*{Δz}}$. This formula and the angular
-spectrum are two possible methods to numerically compute the propagation by
-means of fast Fourier transforms (FFTs).
+with $Δz = z - z'$. Note that the two-dimensional integral is the Fourier
+transform\footnote{if $Δz > 0$, inverse Fourier transform if $Δz < 0$} of the
+term inside the square brackets at the \emph{frequency}
+$\V{α} = \V{x}/\Paren*{λ\,\Abs*{Δz}}$. This formula and the angular spectrum
+are two possible methods to numerically compute the propagation by means of
+fast Fourier transforms (FFTs).
 
 
 \subsubsection{Planar wave in the paraxial approximation.}
@@ -1102,7 +1192,7 @@ In the paraxial approximation, the wave-vector $\V{k} = (k_{x},k_{y},k_{z})$ of
 a planar wave is such that $\Abs*{k_{x}} \ll \Abs*{k_{z}}$ and
 $\Abs*{k_{y}} \ll \Abs*{k_{z}}$. Hence and because of the choice of the
 orientation of the $z$-axis which implies that $k_{z} > 0$, $k_{z} ≈ k$. Using
-the planar wave decomposition of Eq.~\eqref{eq:planar-waves-superposition}, a
+the planar wave decomposition of Eq.~\eqref{eq:planar_waves_superposition}, a
 planar wave
 \begin{equation}
   \label{eq:paraxial-planar-wave}
@@ -1656,7 +1746,7 @@ in practice, the Fresnel approximation works quite well for propagation
 distances much smaller than that.
 
 \subsection{Angular spectrum propagation}
-\label{sec:angular-spectrum-propagation}
+\label{sec:angular_spectrum_propagation}
 
 The angular spectrum propagation method is similar to the propagation by
 convolution computed by means of FFT's, the only difference is that the
@@ -2592,7 +2682,7 @@ is the disk of radius $k$ centered at $(0,0)$.
 Note that, in Eq.~\eqref{eq:plane-waves-superposition}, the choice of the axes
 of the Cartesian frame are arbitrary and that boundary conditions may apply to
 yield a more specific expression for the propagating field. See for example
-Section~\ref{sec:angular-spectrum} ``\emph{Angular Spectrum}'' where, using the
+Section~\ref{sec:angular_spectrum_solution} ``\emph{Angular Spectrum}'' where, using the
 angular spectrum, the very general solution in
 Eq.~\eqref{eq:plane-waves-superposition} can be restricted and simplified if we
 assume known the field in a plane defined by, say, $z = z_{0}$.
