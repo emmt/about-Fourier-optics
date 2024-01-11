@@ -450,9 +450,9 @@ plane at $z_{1}$ simplifies to:
     = \FT{h}_{z_{1} - z_{0}}(\V{α})\,\FT{u}_{z_{0}}(\V{α})
   }
 \end{equation}
-with $\FT{h}_{Δz}(\V{α})$ the \emph{propagation transfer function}, that is
-the Fourier transform of $h_{Δz}(\V{x})$, the planar propagation kernel
-between transverse planes separated by $Δz$.
+with $\FT{h}_{Δz}(\V{α})$ the \emph{propagation transfer function}, that is the
+Fourier transform of $h_{Δz}(\V{x})$, the planar propagation kernel between
+transverse planes separated by $Δz$.
 
 A number of necessary properties can be inferred without knowing the exact
 expression of the propagation transfer function $\FT{h}_{Δz}(\V{α})$:
@@ -466,10 +466,9 @@ expression of the propagation transfer function $\FT{h}_{Δz}(\V{α})$:
 
 \item \textbf{Successive propagation steps.} We expect that propagation can be
       split in successive propagation steps with the same result. For this
-      property to hold, it is sufficient that propagation along the optical axis by
-      $Δz_{1}$ and then by $Δz_{2}$ be the same as propagation by
-      $Δz_{1} + Δz_{2}$ whatever $Δz_{1}$ and $Δz_{2}$.
-      In other words:
+      property to hold, it is sufficient that propagation along the optical
+      axis by $Δz_{1}$ and then by $Δz_{2}$ be the same as propagation by
+      $Δz_{1} + Δz_{2}$ whatever $Δz_{1}$ and $Δz_{2}$. In other words:
       \begin{equation}
         \label{eq:successive-propagations}
         \FT{h}_{Δz_{1}}(\V{α})\,
@@ -857,8 +856,8 @@ propagation kernel in the paraxial approximation:
 \end{equation}
 As shown next, the condition $\Norm*{\V{α}} \ll 1/λ$ for
 Eq.~\eqref{eq:paraxial-transfer-function} is equivalent to
-$\Norm*{Δ\V{x}} \ll \Abs*{Δz}$ for Eq.~\eqref{eq:Fresnel-kernel}.
-Propagation by this kernel implements \textbf{Fresnel diffraction}:
+$\Norm*{Δ\V{x}} \ll \Abs*{Δz}$ for Eq.~\eqref{eq:Fresnel-kernel}. Propagation
+by this kernel implements \textbf{Fresnel diffraction}:
 \begin{equation}
   \label{eq:Fresnel-diffraction-integral}
   \tcboxmath{
@@ -983,8 +982,8 @@ approximation of the angular spectrum propagation transfer function given in
 Eq.~\eqref{eq:paraxial-transfer-function}. Hence, the approximation of
 neglecting the second derivatives in $z$ of the modulation field which leads to
 Eq.~\eqref{eq:paraxial-approximation} is equivalent to the approximation
-$\sqrt{1 - \Norm*{λ\,\V{α}}^{2}} ≈ 1 - \Norm*{λ\,\V{α}}^{2}/2$ that
-holds at low frequencies such that $\Norm*{\V{α}} \ll 1/λ$ and used to obtain
+$\sqrt{1 - \Norm*{λ\,\V{α}}^{2}} ≈ 1 - \Norm*{λ\,\V{α}}^{2}/2$ that holds at
+low frequencies such that $\Norm*{\V{α}} \ll 1/λ$ and used to obtain
 Eq.~\eqref{eq:paraxial-transfer-function} more directly.
 
 
@@ -995,8 +994,8 @@ Finally, it is interesting to derive an expression of the propagation kernel in
 paraxial conditions by approximating the Rayleigh-Sommerfeld propagation kernel
 $h_{z}$ given in Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}, hence neglecting
 evanescent waves, for small diffraction angles. For small diffraction angles,
-$\Norm*{Δ\V{x}}$ is small compared to $\Abs*{Δz}$ and the following series
-can be used to approximate $r$ the propagation distance used in
+$\Norm*{Δ\V{x}}$ is small compared to $\Abs*{Δz}$ and the following series can
+be used to approximate $r$ the propagation distance used in
 Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}:
 \begin{align}
   r
@@ -1092,8 +1091,8 @@ means of fast Fourier transforms (FFTs).
 
 \subsubsection{Planar wave in the paraxial approximation.}
 
-In the paraxial approximation, the wave-vector $\V{k} = (k_{x},k_{y},k_{z})$
-of a planar wave is such that $\Abs*{k_{x}} \ll \Abs*{k_{z}}$ and
+In the paraxial approximation, the wave-vector $\V{k} = (k_{x},k_{y},k_{z})$ of
+a planar wave is such that $\Abs*{k_{x}} \ll \Abs*{k_{z}}$ and
 $\Abs*{k_{y}} \ll \Abs*{k_{z}}$. Hence and because of the choice of the
 orientation of the $z$-axis which implies that $k_{z} > 0$, $k_{z} ≈ k$. Using
 the planar wave decomposition of Eq.~\eqref{eq:planar-waves-superposition}, a
@@ -1365,9 +1364,9 @@ applying the inverse DFT. \oops{(Not clear and supports are assumed centered in
 In the considered conditions and assuming square supports to simplify, the
 direct computation of the discrete convolution by
 Eq.~\eqref{eq:discrete-convolution} takes about
-$2\,L_{0}^{2}\,L_{z}^{2} \sim 2\,L^{4}$ operations with $L$ the typical
-value of $L_{0}$ and $L_{z}$. Computation by fast Fourier transform (FFT) takes
-about $3\,N^{2}\,\log_{2}N^{2} \sim 3\,(3\,L)^{2}\,\log_{2}((3\,L)^{2}) \sim 54\,L^{2}\,\log_{2}L$
+$2\,L_{0}^{2}\,L_{z}^{2} \sim 2\,L^{4}$ operations with $L$ the typical value
+of $L_{0}$ and $L_{z}$. Computation by fast Fourier transform (FFT) takes about
+$3\,N^{2}\,\log_{2}N^{2} \sim 3\,(3\,L)^{2}\,\log_{2}((3\,L)^{2}) \sim 54\,L^{2}\,\log_{2}L$
 operations. For large\footnote{not so large in fact, since the FFT-based method
   is faster for $L ≥ 10$ ignoring overheads} $L$'s, the FFT-based method is
 much faster despite the larger size of the required grid.
@@ -1655,8 +1654,8 @@ distances much smaller than that.
 The angular spectrum propagation method is similar to the propagation by
 convolution computed by means of FFT's, the only difference is that the
 propagation transfer function $\FT{h}_{z}(\V{α})$ is directly sampled instead
-of being given by a DFT of the sampled propagation kernel $h_{z}(\V{x})$.
-This numerical approximation of the optical propagation writes:
+of being given by a DFT of the sampled propagation kernel $h_{z}(\V{x})$. This
+numerical approximation of the optical propagation writes:
 \begin{align}
   \V{u}_{z}
   &= \Paren*{δα^{2}\,\M{F}^{\star}}\cdot
@@ -1796,11 +1795,11 @@ Combining these 3 possibilities:
   {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
   = \frac{\min(\CutoffFreq,\NyquistFreq)}{\sqrt{1 - λ^{2}\,\min(\CutoffFreq,\sqrt{2}\,\NyquistFreq)^{2}}}.
 \end{equation}
-In principle, to avoid aliasing, the sampling step must be chosen so that
-the Nyquist frequency is not less than the cutoff frequency, that is
-$\NyquistFreq ≥ \CutoffFreq$, so that the above right-hand side is given
-by Eq.~\eqref{eq:max-term:3rd-case:nonparaxial}. In this case the
-sampling conditions are:
+In principle, to avoid aliasing, the sampling step must be chosen so that the
+Nyquist frequency is not less than the cutoff frequency, that is
+$\NyquistFreq ≥ \CutoffFreq$, so that the above right-hand side is given by
+Eq.~\eqref{eq:max-term:3rd-case:nonparaxial}. In this case the sampling
+conditions are:
 \begin{equation}
   \label{eq:nonparaxial-angular-spectrum-sampling-conditions}
   \begin{cases}
@@ -2040,8 +2039,8 @@ $1/λ$ which writes:
 \paragraph{Single-FFT Fresnel propagation.}
 \label{sec:single-FFT-Fresnel-propagation}
 In the paraxial approximation (Fresnel diffraction), the propagation kernel is
-given by Eq.~\eqref{eq:Fresnel-kernel} and the resulting field in
-transverse plane at $z_{1} = z_{0} + Δz$ is:
+given by Eq.~\eqref{eq:Fresnel-kernel} and the resulting field in transverse
+plane at $z_{1} = z_{0} + Δz$ is:
 \begin{align}
   u_{z_{1}}(\V{x}_{1})
   &= \iint u_{z_{0}}(\V{x}_{0})\,h_{Δz}(\V{x}_{1} - \V{x}_{0})\,
@@ -2059,10 +2058,10 @@ transverse plane at $z_{1} = z_{0} + Δz$ is:
     \mathe^{-\mathi\,k\,\frac{\Inner{\V{x}_{1}}{\V{x}_{0}}}{Δz}}\,
     \mathd\V{x}_{0}
 \end{align}
-where the integral in the last right-hand side is
-similar to taking the Fourier transform of the term in square brackets. This
-integral can thus be computed by a single DFT provided the sampling condition
-in Eq.~\eqref{eq:DFT-sampling-condition,nD} holds which imposes that:
+where the integral in the last right-hand side is similar to taking the Fourier
+transform of the term in square brackets. This integral can thus be computed by
+a single DFT provided the sampling condition in
+Eq.~\eqref{eq:DFT-sampling-condition,nD} holds which imposes that:
 \begin{equation}
   \label{eq:9}
   \frac{k\,δx_{0}\,δx_{1}}{Δz} = ±\frac{2\,π}{N}
