@@ -816,39 +816,61 @@ Eq.~\eqref{eq:plane-wave-complex-amplitude}.
 \subsubsection{Rayleigh-Sommerfeld diffraction}
 \label{sec:Rayleigh-Sommerfeld-diffraction}
 
-The field in the transverse plane at $z > 0$ caused by the propagation of the
-field in the the transverse plane $Σ$ at $z' = 0$ can be computed by the
-\oops{(type I?)} Rayleigh-Sommerfeld diffraction integral
-\citep{Born+2002-principles_of_optics,
-  Goodman-1996-Fourier_optics}:
+The field in a transverse plane at $z > z'$ caused by the diffraction of
+the field in a finite size aperture $\mathcal{A}$ of the transverse plane $Σ$
+at $z'$ is given by the Rayleigh-Sommerfeld diffraction integrals. The
+Rayleigh-Sommerfeld diffraction integral of the first kind writes
+\citep{Born+2002-principles_of_optics}:
 \begin{equation}
   \label{eq:Rayleigh-Sommerfeld-diffraction}
-  u_{z}(x,y) = \frac{-1}{2\,π}\,\iint u_{0}(x',y')\,
-  \frac{\partial}{\partial z}\Paren*{\frac{\mathe^{\mathi\,k\,r'}}{r'}}
+  u(x,y,z) = \frac{1}{2\,π}\,\iint_{\mathcal{A}} u(x',y',z')\,
+  \frac{\partial}{\partial z'}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}
   \,\mathd x'\,\mathd y'
 \end{equation}
-where $r' = \sqrt{\Paren*{x - x'}^{2} + \Paren*{y - y'}^{2} + z^{2}}$ and for
-$z > z' = 0$. Note that the term $\mathe^{\mathi\,k\,r'}/r'$ corresponds to a
-spherical wave emitted by a source at $(x',y',z' = 0)$.
+where $s = \sqrt{\Paren*{x - x'}^{2} + \Paren*{y - y'}^{2} + (z - z')^{2}}$ and
+for $z > z'$. Note that the term $\mathe^{\mathi\,k\,s}/s$ corresponds to a
+spherical wave proceeding from a source at $(x',y',z')$.
 
-Rayleigh-Sommerfeld diffraction integral has the form expected by
-Eq.~\eqref{eq:linear-propagation} with the propagation kernel:
+Rayleigh-Sommerfeld diffraction integral has the form of
+Eq.~\eqref{eq:linear-propagation} whose propagation kernel can be computed as
+follows:
+\begin{align}
+  \label{eq:5}
+  h\Paren[\big]{(x,y,z),(x',y',z')}
+  &= \frac{1}{2\,π}\,
+    \frac{\partial}{\partial z'}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}\notag\\
+  &= \frac{1}{2\,π}\,
+    \frac{\partial}{\partial s}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}\,
+    \frac{\partial s}{\partial z'}\notag\\
+  &= \frac{1}{2\,π}\,\frac{\mathe^{\mathi\,k\,s}}{s}\,
+    \Paren*{\mathi\,k - \frac{1}{s}}\,
+    \frac{z' - z}{s}\notag\\
+  &= \frac{\Paren*{z - z'}\,\mathe^{\mathi\,k\,s}}{s^{2}}\,
+    \Paren*{\frac{1}{\mathi\,λ} + \frac{1}{2\,π\,s}}
+\end{align}
+for $z > z'$ and
+$s = \sqrt{\Paren*{x - x'}^{2} + \Paren*{y - y'}^{2} + (z - z')^{2}}$. As
+predicted before for the diffraction by a planar surface, this function is
+shift-invariant and Rayleigh-Sommerfeld diffraction integral is a convolution
+in the transverse plane $Σ$.
+
+Using the notation of Eq.~\eqref{eq:convolutive-propagation},
+Rayleigh-Sommerfeld propagation kernel simplifies to:
 \begin{equation}
   \label{eq:Rayleigh-Sommerfeld-kernel}
   \tcboxmath{
-    h_{z}(x,y)
-    = \frac{-1}{2\,π}\,\frac{\partial}{\partial z}
-    \Paren*{\frac{\mathe^{\mathi\,k\,r}}{r}}
-    = \frac{z\,\mathe^{\mathi\,k\,r}}{r^{2}}\,\Paren*{\frac{1}{\mathi\,λ} + \frac{1}{2\,π\,r}}
+    h_{z}(\V{x})
+    = \frac{z\,\mathe^{\mathi\,k\,r}}{r^{2}}\,
+    \Paren*{\frac{1}{\mathi\,λ} + \frac{1}{2\,π\,r}}
   }
 \end{equation}
-for $z > 0$ and with $r = \sqrt{x^{2} + x^{2} + z^{2}}$ the distance of
-propagation, and $λ$ the wavelength in the propagation medium. As claimed
-before, this function is indeed shift-invariant. Note that the term
-$1/\Paren*{2\,π\,r}$ accounts for evanescent waves and is negligible at
-propagating distances longer than a few wavelengths.
+with $\V{x} = (x,y)$, $z > 0$, $r = \sqrt{\Norm{\V{x}}^{2} + z^{2}}$ the distance of propagation,
+and $λ$ the wavelength in the propagation medium. The term $1/\Paren*{2\,π\,r}$
+accounts for evanescent waves and can be neglected at propagating distances
+longer than a few wavelengths.
 
-Long after \citet{Sommerfeld.1896.diffraction} had found the
+Long after \citet{Rayleigh.1897.diffraction} and
+\citet{Sommerfeld.1896.diffraction} had found the
 solution~\eqref{eq:Rayleigh-Sommerfeld-diffraction} to the diffraction by a
 planar surface, \citet{Lalor.1968.angular_spectrum_validity} (at Emil Wolf's
 instigation) rigorously proved that the inverse Fourier transform of the
