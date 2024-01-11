@@ -405,9 +405,9 @@ $z_{1}$.
     %         & $σ = -1$ otherwise\\
     $\V{r} = (x,y,z)$ & Position in 3-dimensional space\\
     $\V{x} = (x,y)$ & Transverse position in a transverse plane\\
-    $\V{α} = (α,β)$ & Spatial frequency\\
+    $\V{α} = (α_{x},α_{y})$ & Spatial frequency\\
     $u_{z}(\V{x}) = u_{z}(x,y) = u(x,y,z)$ & Field in a transverse plane\\
-    $\FT{u}_{z}(\V{α}) = \FT{u}_{z}(α,β)$
+    $\FT{u}_{z}(\V{α}) = \FT{u}_{z}(α_{x},α_{y})$
              & Angular spectrum, Fourier transform of $u_{z}(\V{x})$\\
   \end{tabular}
   \caption{Notations. All coordinates are Cartesian coordinates with the
@@ -429,8 +429,9 @@ the complex amplitude $u_{z}(\V{x})$ in the transverse plane at position $z$:
   \mathe^{-\mathi\,2\,π\,\V{α}·\V{x}}\,
   \mathd\V{x}
 \end{equation}
-with $\V{α} = (α,β)$ the Fourier spatial frequency conjugate to the position
-$\V{x} = (x,y)$ in the transverse plane. The inverse Fourier transform writes:
+with $\V{α} = (α_{x},α_{y})$ the Fourier spatial frequency conjugate to the
+position $\V{x} = (x,y)$ in the transverse plane. The inverse Fourier transform
+writes:
 \begin{equation}
   \label{eq:angular-spectrum-inverse}
   u_{z}(\V{x}) = \iint \FT{u}_{z}(\V{α})\,
@@ -510,24 +511,24 @@ properties~\eqref{eq:no-propagation}, \eqref{eq:successive-propagations}, and
 \eqref{eq:reverse-propagation} hold as can be easily verified. \oops{Is there
   any other possibilities?}
 
-The expression of $\FT{h}_{z}(\V{α})$ can be obtained by solving the
-Helmholtz equation for the Fourier transform of the field. The following
-spatial derivatives of the field $u_{z}(\V{x})$ can be obtained from
-Eq.~\eqref{eq:angular-spectrum-inverse} with $\V{α} = (α,β)$ and
+The expression of $\FT{h}_{z}(\V{α})$ can be obtained by solving the Helmholtz
+equation for the Fourier transform of the field. The following spatial
+derivatives of the field $u_{z}(\V{x})$ can be obtained from
+Eq.~\eqref{eq:angular-spectrum-inverse} with $\V{α} = (α_{x},α_{y})$ and
 $\V{x} = (x,y)$:
 \begin{align}
-  \frac{∂^{m}u_{z}(x,y)}{∂x^{m}}
-  &= (i\,2\,π)^{m}\,\iint \FT{u}_{z}(α,β)\,α^{m}\,
-  \mathe^{+\mathi\,2\,π\,(α\,x + β\,y)}\,
-  \mathdα\,\mathdβ,\\
-  \frac{∂^{m}u_{z}(x,y)}{∂y^{m}}
-  &= (i\,2\,π)^{m}\,\iint \FT{u}_{z}(α,β)\,β^{m}\,
-  \mathe^{+\mathi\,2\,π\,(α\,x + β\,y)}\,
-  \mathdα\,\mathdβ,\\
-  \frac{∂^{m}u_{z}(x,y)}{∂z^{m}}
-  &= \iint \frac{∂^{m}\FT{u}_{z}(α,β)}{∂z^{m}}\,
-  \mathe^{+\mathi\,2\,π\,(α\,x + β\,y)}\,
-  \mathdα\,\mathdβ,
+  \frac{∂^{m}u_{z}(\V{x})}{∂x^{m}}
+  &= (i\,2\,π)^{m}\,\iint \FT{u}_{z}(\V{α})\,α_{x}^{m}\,
+  \mathe^{+\mathi\,2\,π\,\V{α}\cdot\V{x}}\,
+  \mathd\V{α},\\
+  \frac{∂^{m}u_{z}(\V{x})}{∂y^{m}}
+  &= (i\,2\,π)^{m}\,\iint \FT{u}_{z}(\V{α})\,α_{y}^{m}\,
+  \mathe^{+\mathi\,2\,π\,\V{α}\cdot\V{x}}\,
+  \mathd\V{α},\\
+  \frac{∂^{m}u_{z}(\V{x})}{∂z^{m}}
+  &= \iint \frac{∂^{m}\FT{u}_{z}(\V{α})}{∂z^{m}}\,
+  \mathe^{+\mathi\,2\,π\,\V{α}\cdot\V{x}}\,
+  \mathd\V{α},
 \end{align}
 for any $m ∈ ℕ$. Using these expressions (with $m = 2$) and applying the
 Helmholtz equation~\eqref{eq:Helmholtz} to the field $u_{z}(\V{x})$ given in
@@ -690,7 +691,7 @@ Section~\ref{sec:Rayleigh-Sommerfeld-diffraction}.
     \label{eq:spatial-frequencies}
     \left\{
       \begin{array}{l}
-        \V{k}_{\perp} = (k_{x},k_{y}) = 2\,π\,(α,β) = 2\,π\,\V{α}\\[2ex]
+        \V{k}_{\perp} = (k_{x},k_{y}) = 2\,π\,(α_{x},α_{y}) = 2\,π\,\V{α}\\[2ex]
         k_{z} = k\,\sqrt{1 - λ^{2}\,\Norm*{\V{α}}^{2}}
       \end{array}
     \right.
@@ -1957,11 +1958,11 @@ The sampled angular spectrum is given by:
 \begin{align}
   \label{eq:angular-spectrum-dicretization}
   \FT{\boldsymbol{u}}_{z}[\ell_{1},\ell_{2}]
-  &= \FT{u}_{z}(α[\ell_{1}],β[\ell_{2}])\notag\\
-  &= \iint u_{z}(x,y)\,\mathe^{-\mathi\,2\,π\,(α[\ell_{1}]\,x,β[\ell_{2}]\,y)}
+  &= \FT{u}_{z}(α_{x}[\ell_{1}],α_{y}[\ell_{2}])\notag\\
+  &= \iint u_{z}(x,y)\,\mathe^{-\mathi\,2\,π\,(α_{x}[\ell_{1}]\,x,α_{y}[\ell_{2}]\,y)}
     \mathd x\, \mathd y\notag\\
   &≈ \sum_{k_{1},k_{2}} u_{z}(x[j_{1}],y[j_{2}])\,
-    \mathe^{-\mathi\,2\,π\,(α[\ell_{1}]\,x[j_{1}],β[\ell_{2}]\,y[j_{2}])}\,
+    \mathe^{-\mathi\,2\,π\,(α_{x}[\ell_{1}]\,x[j_{1}],α_{y}[\ell_{2}]\,y[j_{2}])}\,
     |δx\,δy|\notag\\
   &= |δx\,δy|\,\bigl(\mathbf{F}·\boldsymbol{u}_{z}\bigr)[\ell_{1},\ell_{2}]
 \end{align}
@@ -1970,8 +1971,8 @@ $\boldsymbol{u}_{z}$ is the sampled field $u_{z}(x,y)$ with sampling step sizes
 $δx$ and $δy$ along the $x$ and $y$ dimensions, and the square brackets are
 used to index the sampled quantities (as in the first line of the above
 equation). According to the properties of the DFT, the discrete angular
-spectrum $\FT{\boldsymbol{u}}_{z}$ is sampled with steps $δα=1/(N_{1}\,δx)$ and
-$δβ=1/(N_{2}\,δy)$. In the following, we assume that the sampling steps and the
+spectrum $\FT{\boldsymbol{u}}_{z}$ is sampled with steps $δα_{x}=1/(N_{1}\,δx)$ and
+$δα_{y}=1/(N_{2}\,δy)$. In the following, we assume that the sampling steps and the
 number of samples are the same along the two transverse Cartesian axes so that:
 $N_{1} = N_{2} = N$ and $δx = δy$ and thus:
 \begin{equation}
@@ -1979,7 +1980,7 @@ $N_{1} = N_{2} = N$ and $δx = δy$ and thus:
   \FT{\boldsymbol{u}}_{z} = |δx|^{2}\,\mathbf{F}·\boldsymbol{u}_{z},
 \end{equation}
 is the discrete angular spectrum with frequency sampling steps
-$δα = δβ = 1/(N\,δx)$. Conversely:
+$δα_{x} = δα_{y} = 1/(N\,δx)$. Conversely:
 \begin{equation}
   \label{eq:inverse-discrete-angular-spectrum}
   \boldsymbol{u}_{z} = |δα|^{2}\,\mathbf{F}^{\star}·\FT{\boldsymbol{u}}_{z},
