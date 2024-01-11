@@ -1349,11 +1349,11 @@ transform (DFT) may be used, but to avoid aliasing, the size of the grid must
 be large enough. Denoting $L_{0}$ and $L_{z}$ the maximum number of samples
 along any dimension of $Ω_{0}$ and $Ω_{z}$, the minimal size of the support of
 the propagation kernel is $L = L_{0} + L_{z} - 1$ to account for all possible
-values of $\V{j} - \V{j}'$ and the minimal output discrete convolution has size
-$L + L_{0} - 1$. Finally, the minimal grid size is:
+values of $\V{j} - \V{j}'$ and the (unwrapped) output discrete convolution has
+size $L + L_{0} - 1$. Finally, to avoid aliasing, the minimal grid size is:
 \begin{equation}
   \label{eq:convolution-grid-size}
-  N ≥ 2\,L_{0} + L_{z} - 2.
+  N ≥ L_{0} + L_{z} - 1.
 \end{equation}
 If the supports, $Ω_{0}$, $Ω_{z}$, and $Ω = Ω_{z} - Ω_{0}$ are not centered,
 the output angular spectrum may be multiplied by a linear phase factor before
