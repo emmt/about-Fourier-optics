@@ -1147,7 +1147,7 @@ condition holds:
   \label{eq:paraxial-condition}
   \frac{\Norm*{Δ\V{x}}^{4}}{8\,\Abs*{Δz}^{3}} \ll λ
   \quad\Longleftrightarrow\quad
-  \Norm*{Δ\V{x}} \ll \Paren*{8\,λ\,\Abs*{Δz}^{3}}^{1/4}.
+  \Norm*{Δ\V{x}} \ll \Paren*{8\,λ\,\Abs*{Δz}^{3}}^{1/4}
 \end{equation}
 which is another expression of the \textbf{paraxial conditions}\footnote{For a
   wavelength $λ= 500\,\text{nm}$, the paraxial conditions in
@@ -1267,7 +1267,7 @@ Eq.~\eqref{eq:paraxial-spherical-wave} is equal to
 $(-\mathi/λ)\,h_{|Δz|}(\V{x})$ with $h_{Δz}$ the Fresnel propagation kernel
 given in Eq.~\eqref{eq:Fresnel-kernel}.
 
-\subsubsection{Gaussian beam in the paraxial approximation}
+\subsubsection{Propagation of Gaussian beams in the paraxial approximation}
 
 
 \subsection{Fraunhofer diffraction}
@@ -1277,7 +1277,7 @@ given in Eq.~\eqref{eq:Fresnel-kernel}.
 
 Equipped with the equations of propagation, we can now consider how to use them
 for modeling optical propagation. There are several possible fast
-methods\footnote{using FFTs for efficiency} to propagate the field:
+methods\footnote{that is using FFTs for efficiency} to propagate the field:
 \begin{itemize}
 \item \textbf{Propagation by discrete convolution.} This method consists in
       approximating the diffraction integral in
@@ -1321,9 +1321,10 @@ latter method is exactly equivalent to a 2-step Fresnel transform.
 For numerical computations, the continuous functions of the transverse position
 and spatial frequency are sampled on a regular Cartesian grid. We further
 assume that the number of samples and the sampling steps are the same along the
-2 dimensions of the sampled transverse plane. This subsection briefly
-introduces the relations between the sampled field and the sampled angular
-spectrum based on the properties developed in Appendix~\ref{sec:DFT}.
+2 transverse dimensions. In other words, we use $N\times N$ grids. This
+subsection briefly introduces the relations between the sampled field and the
+sampled angular spectrum based on the properties developed in
+Appendix~\ref{sec:DFT}.
 
 Following our assumptions, the transverse plane is considered to be sampled on
 a $N\times N$ grid with step $δx$ at positions:
