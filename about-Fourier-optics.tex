@@ -163,7 +163,7 @@ medium with \textbf{no free charges}, Maxwell equations yield:
   \label{eq:inhomogeneous-propagation}
   ∇^{2}\V{U} + 2\,∇\Paren*{\V{U}·∇\log n} = \frac{n^{2}}{c^{2}}\,\frac{∂^{2}\V{U}}{∂t^{2}}.
 \end{equation}
-where $\V{U} \in \Set{R}^{3}$ is either the electric field or the magnetic
+where $\V{U} ∈ \Set{R}^{3}$ is either the electric field or the magnetic
 field as a function of space and time, $n$ is the refractive index of the
 medium, $c$ is the light speed in vacuum, $t$ is the time, $∇$ denotes spatial
 derivative, and $∇^{2}$ is the Laplacian operator.
@@ -361,7 +361,7 @@ equation~\eqref{eq:Helmholtz}.
     \filldraw[fill=OwlGreen!20,draw=OwlGreen,very thick] (0,0) circle (\radius);
     %\draw (-60:1) node[below right] {$Σ$};
     \draw [->,>=latex,draw=OwlOrange,very thick] (r') -- (r);
-    \path[fill=OwlGreen] (r') circle (\r) node[below right] {$\V{r}' \in Σ$};
+    \path[fill=OwlGreen] (r') circle (\r) node[below right] {$\V{r}' ∈ Σ$};
     \path[fill=OwlBlue] (r) circle (\r) node[above right] {$\V{r}$};
     \draw [<-,>=latex] (-30:\radius) -- (-30:\radius-0.4) -- ++(-0.4,0) node[left] {$Σ$};
     \draw (1.3,1.9) node[align=center] {all\\sources};
@@ -371,7 +371,7 @@ equation~\eqref{eq:Helmholtz}.
     $u(\V{r}')$ is assumed known at a surface $Σ$ splitting space in 2 parts:
     all sources are on one side (in green), the other side is homogeneous
     medium (in blue). The light is propagating (orange arrow) from
-    $\V{r}' \in Σ$ to $\V{r}$ in the homogeneous medium.}
+    $\V{r}' ∈ Σ$ to $\V{r}$ in the homogeneous medium.}
   \label{fig:boundary-conditions}
 \end{figure}
 
@@ -429,7 +429,7 @@ comparison.
     \draw[->] (0,0,\z0) -- (0,\y0,\z0) node[midway,left]{$y'$};
     \draw[dotted] (\x0,0,\z0) -- (\x0,\y0,\z0) -- (0,\y0,\z0);
     \path[fill=OwlGreen] (\x0,\y0,\z0) circle[radius=\r] node[above right] {$\V{r}'$};
-    \draw (0,0,\z0) node{$\times$} node[below left]{$z'$};
+    \draw (0,0,\z0) node{$×$} node[below left]{$z'$};
     \draw (0.3-\w,0.3-\h,\z0) node{$Σ$};
     % Middle part of z-axis.
     \draw (0,0,\z0) -- (0,0,\z1);
@@ -441,7 +441,7 @@ comparison.
     \draw[->] (0,0,\z1) -- (0,\y1,\z1) node[midway,left]{$y$};
     \draw[dotted] (\x1,0,\z1) -- (\x1,\y1,\z1) -- (0,\y1,\z1);
     \path[fill=OwlBlue] (\x1,\y1,\z1) circle[radius=\r] node[above right] {$\V{r}$};
-    \draw (0,0,\z1) node{$\times$} node[below left]{$z$};
+    \draw (0,0,\z1) node{$×$} node[below left]{$z$};
     % Tip of z-axis.
     \draw[->] (0,0,\z1) -- (0,0,\z1+4.5)
     node[near end, above, sloped, align=center, font=\footnotesize]{optical axis}
@@ -605,15 +605,15 @@ $\V{x} = (x,y)$:
 \begin{align}
   \frac{∂^{m}u_{z}(\V{x})}{∂x^{m}}
   &= (i\,2\,π)^{m}\,\iint \FT{u}_{z}(\V{α})\,α_{x}^{m}\,
-  \mathe^{+\mathi\,2\,π\,\V{α}\cdot\V{x}}\,
+  \mathe^{+\mathi\,2\,π\,\V{α}·\V{x}}\,
   \mathd\V{α},\\
   \frac{∂^{m}u_{z}(\V{x})}{∂y^{m}}
   &= (i\,2\,π)^{m}\,\iint \FT{u}_{z}(\V{α})\,α_{y}^{m}\,
-  \mathe^{+\mathi\,2\,π\,\V{α}\cdot\V{x}}\,
+  \mathe^{+\mathi\,2\,π\,\V{α}·\V{x}}\,
   \mathd\V{α},\\
   \frac{∂^{m}u_{z}(\V{x})}{∂z^{m}}
   &= \iint \frac{∂^{m}\FT{u}_{z}(\V{α})}{∂z^{m}}\,
-  \mathe^{+\mathi\,2\,π\,\V{α}\cdot\V{x}}\,
+  \mathe^{+\mathi\,2\,π\,\V{α}·\V{x}}\,
   \mathd\V{α},
 \end{align}
 for any $m ∈ ℕ$. Using these expressions (with $m = 2$) and applying the
@@ -824,7 +824,7 @@ Rayleigh-Sommerfeld diffraction integral of the first kind writes
 \begin{equation}
   \label{eq:Rayleigh-Sommerfeld-diffraction}
   u(x,y,z) = \frac{1}{2\,π}\,\iint_{\mathcal{A}} u(x',y',z')\,
-  \frac{\partial}{\partial z'}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}
+  \frac{∂}{∂z'}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}
   \,\mathd x'\,\mathd y'
 \end{equation}
 where $s = \sqrt{\Paren*{x - x'}^{2} + \Paren*{y - y'}^{2} + (z - z')^{2}}$ and
@@ -838,10 +838,10 @@ follows:
   \label{eq:5}
   h\Paren[\big]{(x,y,z),(x',y',z')}
   &= \frac{1}{2\,π}\,
-    \frac{\partial}{\partial z'}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}\notag\\
+    \frac{∂}{∂z'}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}\notag\\
   &= \frac{1}{2\,π}\,
-    \frac{\partial}{\partial s}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}\,
-    \frac{\partial s}{\partial z'}\notag\\
+    \frac{∂}{∂s}\Paren*{\frac{\mathe^{\mathi\,k\,s}}{s}}\,
+    \frac{∂s}{∂z'}\notag\\
   &= \frac{1}{2\,π}\,\frac{\mathe^{\mathi\,k\,s}}{s}\,
     \Paren*{\mathi\,k - \frac{1}{s}}\,
     \frac{z' - z}{s}\notag\\
@@ -1229,7 +1229,7 @@ planar wave
 \begin{equation}
   \label{eq:paraxial-planar-wave}
   u_{z}(x,y)
-  \propto \mathe^{\mathi\,\Paren*{
+  ∝ \mathe^{\mathi\,\Paren*{
       \V{k}_{\perp}·\V{x} +
       z\,\sqrt{k^{2} - \Norm*{\V{k}_{\perp}}^{2}}
     }}
@@ -1246,7 +1246,7 @@ $\V{r}_{0} = (x_{0}, y_{0}, z_{0})$ becomes:
 \begin{equation}
   \label{eq:paraxial-spherical-wave}
   u_{z}(x,y)
-  \propto \frac{
+  ∝ \frac{
     \mathe^{\mathi\,k\,\Norm*{\V{r} - \V{r}_{0}}}
   }{
     \Norm*{\V{r} - \V{r}_{0}}
@@ -1321,18 +1321,18 @@ latter method is exactly equivalent to a 2-step Fresnel transform.
 For numerical computations, the continuous functions of the transverse position
 and spatial frequency are sampled on a regular Cartesian grid. We further
 assume that the number of samples and the sampling steps are the same along the
-2 transverse dimensions. In other words, we use $N\times N$ grids. This
+2 transverse dimensions. In other words, we use $N× N$ grids. This
 subsection briefly introduces the relations between the sampled field and the
 sampled angular spectrum based on the properties developed in
 Appendix~\ref{sec:DFT}.
 
 Following our assumptions, the transverse plane is considered to be sampled on
-a $N\times N$ grid with step $δx$ at positions:
+a $N× N$ grid with step $δx$ at positions:
 \begin{equation}
   \label{eq:x[j]}
-  \V{x}[\V{j}] = δx\times\V{j}
+  \V{x}[\V{j}] = δx×\V{j}
 \end{equation}
-for all $\V{j} \in \Set{J}^{2}$ and where (following FFT conventions):
+for all $\V{j} ∈ \Set{J}^{2}$ and where (following FFT conventions):
 \begin{equation}
   \label{eq:J}
   \Set{J} =
@@ -1348,25 +1348,25 @@ indicate sampling, bold-face lower-case letters for vectors (indexed
 collections of values), and bold-face upper-case letters for linear operators
 (matrices). For example, $u_{z}(\V{x})$ is the field in the transverse plane at
 longitudinal position $z$ and transverse position $\V{x}$, while
-$u_{z}[\V{j}] \equiv u_{z}(\V{x}[\V{j}])$ is the sampled field at grid index
+$u_{z}[\V{j}] ≡ u_{z}(\V{x}[\V{j}])$ is the sampled field at grid index
 $\V{j}$. As another example, $u_{z}\from\Set{R}^{2}\to\Set{C}$ is the field as
 a continuous function of the transverse position, while
-$\V{u}_{z} \in \Set{C}^{N^{2}}$ is the sampled field, that is the vector whose
-entries are $u_{z}[\V{j}]$ for all $\V{j} \in \Set{J}^{2}$.
+$\V{u}_{z} ∈ \Set{C}^{N^{2}}$ is the sampled field, that is the vector whose
+entries are $u_{z}[\V{j}]$ for all $\V{j} ∈ \Set{J}^{2}$.
 
 The \textbf{sampled angular spectrum} at frequency
-$\V{\alpha}[\V{j}] = δα\times\V{j}$ can be computed by using a Riemman sum
+$\V{α}[\V{j}] = δα×\V{j}$ can be computed by using a Riemman sum
 approximation of the continuous Fourier transform integral:
 \begin{align}
- \FT{u}_{z}[\V{j}] = \FT{u}_{z}(\V{\alpha}[\V{j}])
+ \FT{u}_{z}[\V{j}] = \FT{u}_{z}(\V{α}[\V{j}])
   &= \iint
-  \mathe^{-\mathi\,2\,\pi\,\Inner{\V{\alpha}[\V{j}]}{\V{x}}}\,
+  \mathe^{-\mathi\,2\,π\,\Inner{\V{α}[\V{j}]}{\V{x}}}\,
   u_{z}(\V{x})\,
   \mathd\V{x}\notag\\
-  &\approx
-  δx^{2}\,\sum_{\V{j}' \in \Set{J}^{2}}
+  &≈
+  δx^{2}\,\sum_{\V{j}' ∈ \Set{J}^{2}}
   \underbrace{
-    \mathe^{-\mathi\,2\,\pi\,\Inner{\V{\alpha}[\V{j}]}{\V{x}[\V{j}']}}
+    \mathe^{-\mathi\,2\,π\,\Inner{\V{α}[\V{j}]}{\V{x}[\V{j}']}}
   }_{F_{\V{j},\V{j}'}}\,
   \underbrace{
     u_{z}(\V{x}[\V{j}'])
@@ -1376,18 +1376,18 @@ which, using linear algebra notation, yields the following numerical
 approximations for the sampled field and angular spectrum:
 \begin{align}
   \label{eq:sampled-angular-spectrum}
-   \FT{\V{u}}_{z} &= δx^{2}\,\M{F}\cdot\V{u}_{z} \\
+   \FT{\V{u}}_{z} &= δx^{2}\,\M{F}·\V{u}_{z} \\
   \label{eq:sampled-field-from-sampled-angular-spectrum}
-   \V{u}_{z} &= δα^{2}\,\M{F}^{\star}\cdot\FT{\V{u}}_{z}
+   \V{u}_{z} &= δα^{2}\,\M{F}^{\star}·\FT{\V{u}}_{z}
 \end{align}
 where $\M{F}$ is the \emph{discrete Fourier transform} (DFT) operator whose
 entries are given by:
 \begin{equation}
   F_{\V{j},\V{j}'}
-  = \mathe^{-\mathi\,2\,\pi\,\Inner{\V{\alpha}_{\V{j}}}{\V{x}_{\V{j}'}}}
-  = \mathe^{-\mathi\,2\,\pi\,δx\,δα\,\Inner{\V{j}}{\V{j}'}}
+  = \mathe^{-\mathi\,2\,π\,\Inner{\V{α}_{\V{j}}}{\V{x}_{\V{j}'}}}
+  = \mathe^{-\mathi\,2\,π\,δx\,δα\,\Inner{\V{j}}{\V{j}'}}
 \end{equation}
-The $N\times N$ DFT can be computed by the \emph{fast Fourier transform} (FFT)
+The $N× N$ DFT can be computed by the \emph{fast Fourier transform} (FFT)
 in $\mathcal{O}(N^{2}\,\log_{2}N)$ operations. As shown by
 Eqs.~\eqref{eq:DFT-sampling-condition,1D} and
 \eqref{eq:DFT-sampling-condition,nD} in Appendix~\ref{sec:DFT}, having $\M{F}$
@@ -1398,12 +1398,12 @@ inversible imposes:
 \end{equation}
 and thus:
 \begin{equation}
-  F_{\V{j},\V{j}'} = \mathe^{-\mathi\,2\,\pi\,\Inner{\V{j}}{\V{j}'}/N},
+  F_{\V{j},\V{j}'} = \mathe^{-\mathi\,2\,π\,\Inner{\V{j}}{\V{j}'}/N},
 \end{equation}
 and:
 \begin{equation}
-  \Paren*{δx^{2}\,\M{F}}\cdot\Paren*{δα^{2}\,\M{F}^{\star}}
-  = \tfrac{1}{N^{2}}\,\M{F}\cdot\M{F}^{\star} = \M{Id}.
+  \Paren*{δx^{2}\,\M{F}}·\Paren*{δα^{2}\,\M{F}^{\star}}
+  = \tfrac{1}{N^{2}}\,\M{F}·\M{F}^{\star} = \M{Id}.
 \end{equation}
 
 
@@ -1428,7 +1428,7 @@ convolution:
 \begin{equation}
   \label{eq:discrete-convolution}
   u_{z}[\V{j}] = u_{z}(\V{x}[\V{j}])
-  \approx \sum_{\V{j}'}h_{z}[\V{j} - \V{j}']\,u_{0}[\V{j}']\,δx^{2}
+  ≈ \sum_{\V{j}'}h_{z}[\V{j} - \V{j}']\,u_{0}[\V{j}']\,δx^{2}
 \end{equation}
 where
 $h_{z}[\V{j} - \V{j}'] = h_{z}(δx\,(\V{j} - \V{j}')) = h_{z}(\V{x}[\V{j}] - \V{x}[\V{j}'])$
@@ -1453,16 +1453,16 @@ These issues are discussed next.
 
 To limit the number of operations, the sum in the discrete convolution in
 Eq.~\eqref{eq:discrete-convolution} shall only be performed for
-$\V{x}[\V{j}'] \in Ω_{0}$ where $Ω_{0}$ includes the transverse positions where
+$\V{x}[\V{j}'] ∈ Ω_{0}$ where $Ω_{0}$ includes the transverse positions where
 the field $u_{0}$ in the input transverse plane is non-zero. At least:
 \begin{equation}
   \label{eq:input-field-support}
-  %\forall \V{j}' \in \Set{J}^{2},\quad
+  %∀ \V{j}' ∈ \Set{J}^{2},\quad
   u_{0}[\V{j}']
-  % \equiv u_{0}(δx\times\V{j}')
+  % ≡ u_{0}(δx×\V{j}')
   \not= 0
   \quad\Longrightarrow\quad
-  \V{x}[\V{j}'] \in Ω_{0}.
+  \V{x}[\V{j}'] ∈ Ω_{0}.
 \end{equation}
 The discrete convolution shall also only be computed for nodes $\V{j}$ where
 the field in the output transverse plane is non-zero. Due to diffraction, it is
@@ -1509,7 +1509,7 @@ The propagation kernel $h_{z}(\V{x})$ in Rayleigh-Sommerfeld diffraction is
 given by Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel} and the most constraining
 term for the sampling step is the phase of the $\mathe^{\mathi\,k\,r}$ term
 since it varies by more than $π$ radians when the variation of $r$ between
-adjacent samples is greater than $\lambda/2$.
+adjacent samples is greater than $λ/2$.
 
 In Rayleigh-Sommerfeld kernel $h_{z}(\V{x})$ given by
 Eq.~\eqref{eq:Rayleigh-Sommerfeld-kernel}, the propagation distance is:
@@ -1526,7 +1526,7 @@ $r$ between 2 adjacent nodes in the sampling grid:
 \begin{equation}
   \label{eq:δr_max}
   δr_{\Tag{max}}
-  = \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}} \Abs*{r(\V{x} + δ\V{x}) - r(\V{x})}
+  = \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}} \Abs*{r(\V{x} + δ\V{x}) - r(\V{x})}
 \end{equation}
 with $Ω = Ω_{z} - Ω_{0}$ the discrete kernel support accounting for all
 differences in transverse positions between the input and output transverse
@@ -1565,7 +1565,7 @@ Fig.~\ref{fig:closest-nodes}).
     \end{scope}
     \begin{scope}[xshift=+22mm,yshift=-4mm] % caption
       \draw [grid lines] (-\h,-\h) grid[step=2/3*\h] (\h,\h);
-      \draw (\r,0) node[right]{$N\times N$ grid};
+      \draw (\r,0) node[right]{$N× N$ grid};
       \fill [color=OwlGreen] (0,-\s) circle (\r);
       \draw (\r,-\s) node[right]{node at $\V{j}$};
       \fill [color=OwlBlue] (0,-2*\s) circle (\r);
@@ -1574,7 +1574,7 @@ Fig.~\ref{fig:closest-nodes}).
   \end{tikzpicture}
   \caption{Closest nodes on a grid. In green, the considered node at index
     $δ\V{j}$; in blue, its closest neighbors at index $δ\V{j} + δ\V{j}$ with
-    $δ\V{j} \in \Brace{(±1,0),(0,±1)}$.}
+    $δ\V{j} ∈ \Brace{(±1,0),(0,±1)}$.}
   \label{fig:closest-nodes}
 \end{figure}
 
@@ -1583,57 +1583,57 @@ variations of $r$, the following approximation can be made:
 \begin{align}
   \label{eq:δr,approx}
   r(\V{x} + δ\V{x}) - r(\V{x})
-  ≈ \Inner*{\frac{\partial r(\V{x})}{\partial\V{x}}}{δ\V{x}}
+  ≈ \Inner*{\frac{∂r(\V{x})}{∂\V{x}}}{δ\V{x}}
   = \frac{\Inner{\V{x}}{δ\V{x}}}{r(\V{x})}
 \end{align}
 where $\Inner{}{}$ denotes the inner (scalar) product. Hence:
 \begin{align}
   \label{eq:δr_max,i}
   δr_{\Tag{max}}
-  ≈ \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  ≈ \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
   \Abs*{\frac{\Inner{\V{x}}{δ\V{x}}}{r(\V{x})}}
-  &= \max_{\V{x} \in Ω}
-     \frac{\max_{δ\V{x} \in δΩ}\Abs*{\Inner{\V{x}}{δ\V{x}}}}{r(\V{x})}
+  &= \max_{\V{x} ∈ Ω}
+     \frac{\max_{δ\V{x} ∈ δΩ}\Abs*{\Inner{\V{x}}{δ\V{x}}}}{r(\V{x})}
 \end{align}
 From the definition of $δΩ$ in Eq.~\eqref{eq:δΩ}, the numerator in the last
 above right-hand side can be simplified to:
 \begin{equation}
   \label{eq:max<x,δx>}
-  \max_{δ\V{x} \in δΩ}\Abs*{\Inner{\V{x}}{δ\V{x}}} = δx\,\Norm*{\V{x}}_{\infty}
+  \max_{δ\V{x} ∈ δΩ}\Abs*{\Inner{\V{x}}{δ\V{x}}} = δx\,\Norm*{\V{x}}_{∞}
 \end{equation}
-with $\Norm*{\V{x}}_{\infty} = \max\Paren*{\Abs*{x},\Abs*{y}}$ the infinite
+with $\Norm*{\V{x}}_{∞} = \max\Paren*{\Abs*{x},\Abs*{y}}$ the infinite
 norm of $\V{x} = (x,y)$ and then:
 \begin{align}
   \label{eq:δr_max,ii}
   δr_{\Tag{max}}
-  ≈ δx\,\max_{\V{x} \in Ω} \frac{\Norm*{\V{x}}_{\infty}}{r(\V{x})}.
+  ≈ δx\,\max_{\V{x} ∈ Ω} \frac{\Norm*{\V{x}}_{∞}}{r(\V{x})}.
 \end{align}
-Clearly, the nodes that have a given $\Norm*{\V{x}}_{\infty} = \ell$ and yet
-the least $r(\V{x})$ are those such that $\V{x} = (±\ell,0)$ or
-$\V{x} = (0,±\ell)$, hence:
+Clearly, the nodes that have a given $\Norm*{\V{x}}_{∞} = ℓ$ and yet
+the least $r(\V{x})$ are those such that $\V{x} = (±ℓ,0)$ or
+$\V{x} = (0,±ℓ)$, hence:
 \begin{equation}
   \label{eq:δr_max,iii}
   δr_{\Tag{max}}
-  \approx δx\,\max_{\V{x} \in Ω}
-     \frac{\Norm*{\V{x}}_{\infty}}{\sqrt{\Norm*{\V{x}}_{\infty}^{2} + z^{2}}}.
+  ≈ δx\,\max_{\V{x} ∈ Ω}
+     \frac{\Norm*{\V{x}}_{∞}}{\sqrt{\Norm*{\V{x}}_{∞}^{2} + z^{2}}}.
 \end{equation}
 Deriving the function:
 \begin{equation}
   \label{eq:δr}
-  δr(\ell) = \frac{\ell}{\sqrt{\ell^{2} + z^{2}}}
+  δr(ℓ) = \frac{ℓ}{\sqrt{ℓ^{2} + z^{2}}}
 \end{equation}
 yields:
 \begin{equation}
   \label{eq:δr'}
-  δr'(\ell) = \frac{z^{2}}{\Paren*{\ell^{2} + z^{2}}^{3/2}}
+  δr'(ℓ) = \frac{z^{2}}{\Paren*{ℓ^{2} + z^{2}}^{3/2}}
 \end{equation}
-which is non-negative, hence $δr(\ell)$ is increasing with $\ell$. The maximal
+which is non-negative, hence $δr(ℓ)$ is increasing with $ℓ$. The maximal
 value for $δr$ is thus found at
-$\ell_{\Tag{max}} = \max_{\V{x} \in Ω} \Norm*{\V{x}}_{\infty} = D/2$ with $D$
+$ℓ_{\Tag{max}} = \max_{\V{x} ∈ Ω} \Norm*{\V{x}}_{∞} = D/2$ with $D$
 the transverse size of $Ω$ and finally:
 \begin{equation}
   \label{eq:δr_max,end}
-  δr_{\Tag{max}} \approx \frac{δx\,D/2}{\sqrt{z^{2} + (D/2)^{2}}}
+  δr_{\Tag{max}} ≈ \frac{δx\,D/2}{\sqrt{z^{2} + (D/2)^{2}}}
   = \frac{δx/2}{\sqrt{(z/D)^{2} + 1/4}}.
 \end{equation}
 
@@ -1646,7 +1646,7 @@ This condition may be expressed as an upper bound on the sampling step:
 \begin{equation}
   \label{eq:Rayleigh-Sommerfeld-sampling-condition}
   δx ≤ δx_{\Tag{max}} = λ\,\sqrt{(z/D)^{2} + 1/4}
-  \approx
+  ≈
   \begin{cases}
     λ/2 & \text{when $\Abs{z} \ll D$}\\
     \Abs{z}\,λ/D & \text{when $\Abs{z} \gg D$}\\
@@ -1700,54 +1700,54 @@ Eq.~\eqref{eq:Fresnel-kernel} which we recall for convenience:
   h_{z}(\V{x}) = \frac{\mathe^{\mathi\,k\,z}}{\mathi\,λ\,z}\,
   \mathe^{\mathi\,π\,\Norm*{\V{x}}^{2}/(λ\,z)}.
 \end{equation}
-Now the phase is varying as $\phi(\V{x}) = π\,\Norm*{\V{x}}^{2}/(λ\,z)$ a
+Now the phase is varying as $ϕ(\V{x}) = π\,\Norm*{\V{x}}^{2}/(λ\,z)$ a
 quadratic function of the transverse position $\V{x}$. The maximal absolute
 difference of the quadratic phase between adjacent nodes of the grid is:
 \begin{align}
-  δ\phi_{\Tag{max}}
-  &= \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
-  \Abs*{\phi(\V{x} + δ\V{x}) - \phi(\V{x})} \\
+  δϕ_{\Tag{max}}
+  &= \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
+  \Abs*{ϕ(\V{x} + δ\V{x}) - ϕ(\V{x})} \\
   &= \frac{π}{λ\,\Abs{z}}\,
-  \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
   \Abs*{\Norm*{\V{x} + δ\V{x}}^{2} - \Norm*{\V{x}}^{2}}
 \end{align}
 with, as in the previous subsection, $Ω = Ω_{0} - Ω_{z}$ the set of nodes for
 which the kernel must be evaluated and $δΩ$ given in Eq.~\eqref{eq:δΩ} the
-offsets to the adjacent nodes. To estimate $δ\phi_{\Tag{max}}$, we compute:
+offsets to the adjacent nodes. To estimate $δϕ_{\Tag{max}}$, we compute:
 \begin{align}
   \label{eq:max-quadratic-diff}
-  \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
   \Abs*{\Norm*{\V{x} + δ\V{x}}^{2} - \Norm*{\V{x}}^{2}}
-  &= \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  &= \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
   \Abs*{\Norm*{δ\V{x}}^{2} + 2\,\Inner{\V{x}}{δ\V{x}}}\\
   \label{eq:max-quadratic-diff,a}
-  &= \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  &= \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
   \Abs*{δx^{2} + 2\,\Inner{\V{x}}{δ\V{x}}}\\
-  &= δx^{2} + 2\,\max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
+  &= δx^{2} + 2\,\max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
   \Abs*{\Inner{\V{x}}{δ\V{x}}}\\
   \label{eq:max-quadratic-diff,b}
-  &= δx^{2} + 2\,δx\,\max_{\V{x} \in Ω}\Norm*{\V{x}}_{\infty}\\
+  &= δx^{2} + 2\,δx\,\max_{\V{x} ∈ Ω}\Norm*{\V{x}}_{∞}\\
   \label{eq:max-quadratic-diff,c}
   &= δx^{2} + δx\,D
 \end{align}
 where right-hand side~\eqref{eq:max-quadratic-diff,a} follows from
-$\Norm*{δ\V{x}} = δx$ for any $δ\V{x} \in δΩ$ with $δΩ$ defined in
+$\Norm*{δ\V{x}} = δx$ for any $δ\V{x} ∈ δΩ$ with $δΩ$ defined in
 Eq.~\eqref{eq:δΩ}, right-hand side~\eqref{eq:max-quadratic-diff,b} follows from
 Eq.~\eqref{eq:max<x,δx>}, and right-hand side~\eqref{eq:max-quadratic-diff,c}
-follows from $\max_{\V{x} \in Ω}\Norm*{\V{x}}_{\infty} = D/2$ with $D$ the
+follows from $\max_{\V{x} ∈ Ω}\Norm*{\V{x}}_{∞} = D/2$ with $D$ the
 transverse size of $Ω$. Note that, contrarily to the computations in
 Eq.~\eqref{eq:δr,approx}, there are no approximations here. The maximal
 absolute difference of the quadratic phase
 \begin{equation}
   \label{eq:max-quadratic-diff}
-  δ\phi_{\Tag{max}}
-  = \max_{\substack{\V{x} \in Ω\\δ\V{x} \in δΩ}}
-  \Abs*{\phi(\V{x} + δ\V{x}) - \phi(\V{x})}
+  δϕ_{\Tag{max}}
+  = \max_{\substack{\V{x} ∈ Ω\\δ\V{x} ∈ δΩ}}
+  \Abs*{ϕ(\V{x} + δ\V{x}) - ϕ(\V{x})}
   = \frac{π\,(D + δx)\,δx}{λ\,\Abs{z}}
   ≈ \frac{π\,D\,δx}{λ\,\Abs{z}},
 \end{equation}
 the latter approximation since $D \gg δx$ in general. The condition
-$δ\phi_{\Tag{max}} ≤ π$ amounts to:
+$δϕ_{\Tag{max}} ≤ π$ amounts to:
 \begin{equation}
   \label{eq:}
   \frac{D\,δx}{λ\,\Abs{z}} ≤ 1
@@ -1788,13 +1788,13 @@ of being given by a DFT of the sampled propagation kernel $h_{z}(\V{x})$. This
 numerical approximation of the optical propagation writes:
 \begin{align}
   \V{u}_{z}
-  &= \Paren*{δα^{2}\,\M{F}^{\star}}\cdot
-    \Diag\Paren*{\FT{\V{h}}_{z}}\cdot
-    \Paren*{δx^{2}\,\M{F}}\cdot \V{u}_{0}\notag\\
+  &= \Paren*{δα^{2}\,\M{F}^{\star}}·
+    \Diag\Paren*{\FT{\V{h}}_{z}}·
+    \Paren*{δx^{2}\,\M{F}}· \V{u}_{0}\notag\\
   &= \underbrace{
-    \frac{1}{N^{2}}\cdot\M{F}^{\star}\cdot
-    \Diag\Paren*{\FT{\V{h}}_{z}}\cdot\M{F}
-    }_{\text{propagator}}\cdot \V{u}_{0}
+    \frac{1}{N^{2}}·\M{F}^{\star}·
+    \Diag\Paren*{\FT{\V{h}}_{z}}·\M{F}
+    }_{\text{propagator}}· \V{u}_{0}
     \label{eq:numerical-angular-spectrum-propagation}
 \end{align}
 since $δx\,δα = 1/N$ for the approximation of the Fourier transform by the DFT
@@ -1803,7 +1803,7 @@ implementing element-wise multiplication by $\FT{\V{h}}_{z}$ the propagation
 transfer function sampled at discrete frequencies $\V{α}[\V{j}] = δα\,\V{j}$.
 
 The first condition that must hold to apply this method is that the Nyquist
-frequency for a $N\times N$ grid of discrete spatial frequencies:
+frequency for a $N× N$ grid of discrete spatial frequencies:
 \begin{equation}
   \label{eq:Nyquist-frequency}
   \NyquistFreq = (N/2)\,δα = \frac{1}{2\,δx}
@@ -1838,15 +1838,15 @@ shall only consider propagating waves, that is spatial frequencies such that
 $\Norm*{\V{α}} < 1/λ$. For these frequencies, the variations of the phase
 \begin{equation}
   \label{eq:non-paraxial_transfer_function_phase}
-  \phi(\V{α}) = k\,z\,\sqrt{1 - \Norm*{λ\,\V{α}}^{2}}
+  ϕ(\V{α}) = k\,z\,\sqrt{1 - \Norm*{λ\,\V{α}}^{2}}
 \end{equation}
 of the transfer function between contiguous discrete frequencies must not be
 greater than $π$ which imposes that:
 \begin{equation}
   \label{eq:non-paraxial_phase_variation_condition}
-  \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} ≤ π
+  \Abs*{ϕ(\V{α} + δ\V{α}) - ϕ(\V{α})} ≤ π
 \end{equation}
-must hold for any $\V{α} \in Ξ$ and any $δ\V{α} \in δΞ$ with:
+must hold for any $\V{α} ∈ Ξ$ and any $δ\V{α} ∈ δΞ$ with:
 \begin{equation}
   δΞ = \Brace*{(±δα,0),(0,±δα)}
 \end{equation}
@@ -1854,8 +1854,8 @@ the offsets to contiguous spatial frequencies (the blue dots in
 Fig.~\ref{fig:closest-nodes}) and with:
 \begin{equation}
   Ξ = \Brace*{
-    \V{α} \in \Set{R}^{2} \Given
-    \Norm{\V{α}}_{\infty} ≤ \NyquistFreq
+    \V{α} ∈ \Set{R}^{2} \Given
+    \Norm{\V{α}}_{∞} ≤ \NyquistFreq
     \text{\ and\ }
     \Norm{\V{α}} < \min(\CutoffFreq,1/λ)
   }\\
@@ -1869,36 +1869,36 @@ Assuming the spectral sampling step $δα = 1/(N\,δx)$ is small enough, the
 maximal absolute phase difference can be estimated following the same steps as
 in section~\ref{sec:Rayleigh-Sommerfeld-diffraction:sampling-constraint}:
 \begin{align}
-  δ\phi_{\Tag{max}}
-  &=\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
-  \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} \\
-  &\simeq \max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
-  \Abs*{\Inner*{\frac{\partial \phi(\V{α})}{\partial \V{α}}}{δ\V{α}}}\\
-  &= 2\,π\,\Abs*{z}\,λ\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  δϕ_{\Tag{max}}
+  &=\max_{\substack{\V{α} ∈ Ξ\\δ\V{α} ∈ δΞ}}
+  \Abs*{ϕ(\V{α} + δ\V{α}) - ϕ(\V{α})} \\
+  &\simeq \max_{\substack{\V{α} ∈ Ξ\\δ\V{α} ∈ δΞ}}
+  \Abs*{\Inner*{\frac{∂ϕ(\V{α})}{∂\V{α}}}{δ\V{α}}}\\
+  &= 2\,π\,\Abs*{z}\,λ\,\max_{\substack{\V{α} ∈ Ξ\\δ\V{α} ∈ δΞ}}
   \Abs*{\frac{\Inner*{\V{α}}{δ\V{α}}}{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}\\
-  &= 2\,π\,\Abs*{z}\,λ\,\max_{\V{α} \in Ξ}
-    \frac{\max_{δ\V{α} \in δΞ}\Abs*{\Inner*{\V{α}}{δ\V{α}}}}
+  &= 2\,π\,\Abs*{z}\,λ\,\max_{\V{α} ∈ Ξ}
+    \frac{\max_{δ\V{α} ∈ δΞ}\Abs*{\Inner*{\V{α}}{δ\V{α}}}}
     {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}\\
-  &= 2\,π\,\Abs*{z}\,λ\,δα\,\max_{\V{α} \in Ξ}
-    \frac{\Norm*{\V{α}}_{\infty}}
+  &= 2\,π\,\Abs*{z}\,λ\,δα\,\max_{\V{α} ∈ Ξ}
+    \frac{\Norm*{\V{α}}_{∞}}
     {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}.
     \label{eq:δϕ_max:nonparaxial}
 \end{align}
 If
-$\max_{\V{α} \in Ξ}\Norm{\V{α}} = \min(\CutoffFreq,\sqrt{2}\,\NyquistFreq) ≥ 1/λ$,
+$\max_{\V{α} ∈ Ξ}\Norm{\V{α}} = \min(\CutoffFreq,\sqrt{2}\,\NyquistFreq) ≥ 1/λ$,
 then $\sqrt{1 - \Norm{λ\,\V{α}}^{2}}$ may be arbitrarily close to zero for
-$\Norm*{\V{α}}_{\infty} > 0$. Hence, the condition in
+$\Norm*{\V{α}}_{∞} > 0$. Hence, the condition in
 Eq.~\eqref{eq:non-paraxial_phase_variation_condition} cannot hold and phase
 wrapping is irreversible. Otherwise, maximizing the right-hand-side in
 Eq.~\eqref{eq:δϕ_max:nonparaxial} amounts to finding the frequencies in $Ξ$
-such that $\Norm*{\V{α}}_{\infty}$ and $\Norm*{\V{α}}$ are both maximized. The
+such that $\Norm*{\V{α}}_{∞}$ and $\Norm*{\V{α}}$ are both maximized. The
 3 possibilities are illustrated by
 Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer}. If
 $\sqrt{2}\,\NyquistFreq < \min(1/λ,\CutoffFreq)$, then the worst spatial
 frequencies are indicated by blue dots in the leftmost panel of
 Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
 \begin{equation}
-  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  \max_{\V{α} ∈ Ξ} \frac{\Norm*{\V{α}}_{∞}}
   {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
   = \frac{\NyquistFreq}{\sqrt{1 - 2\,λ^{2}\,\NyquistFreq^{2}}};
 \end{equation}
@@ -1906,7 +1906,7 @@ else if $\NyquistFreq ≤ \CutoffFreq < 1/λ$, then the worst
 spatial frequencies are indicated by green dots in the central panel of
 Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
 \begin{equation}
-  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  \max_{\V{α} ∈ Ξ} \frac{\Norm*{\V{α}}_{∞}}
   {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
   = \frac{\NyquistFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}};
 \end{equation}
@@ -1915,13 +1915,13 @@ spatial frequencies are indicated by orange dots in the rightmost panel
 of Fig.~\ref{fig:phase-wrapping-non-paraxial-transfer} and:
 \begin{equation}
   \label{eq:max-term:3rd-case:nonparaxial}
-  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  \max_{\V{α} ∈ Ξ} \frac{\Norm*{\V{α}}_{∞}}
   {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
   = \frac{\CutoffFreq}{\sqrt{1 - λ^{2}\,\CutoffFreq^{2}}}.
 \end{equation}
 Combining these 3 possibilities:
 \begin{equation}
-  \max_{\V{α} \in Ξ} \frac{\Norm*{\V{α}}_{\infty}}
+  \max_{\V{α} ∈ Ξ} \frac{\Norm*{\V{α}}_{∞}}
   {\Abs*{\sqrt{1 - \Norm{λ\,\V{α}}^{2}}}}
   = \frac{\min(\CutoffFreq,\NyquistFreq)}{\sqrt{1 - λ^{2}\,\min(\CutoffFreq,\sqrt{2}\,\NyquistFreq)^{2}}}.
 \end{equation}
@@ -2031,17 +2031,17 @@ smaller than $1/λ$:
 \end{equation}
 
 The worst frequencies for the quadratic phase term
-$\phi(\V{α}) = π\,λ\,z\,\Norm*{\V{α}}^{2}$ are such
+$ϕ(\V{α}) = π\,λ\,z\,\Norm*{\V{α}}^{2}$ are such
 \begin{align}
-  δ\phi_{\Tag{max}}
-  &=\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
-  \Abs*{\phi(\V{α} + δ\V{α}) - \phi(\V{α})} \\
-  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  δϕ_{\Tag{max}}
+  &=\max_{\substack{\V{α} ∈ Ξ\\δ\V{α} ∈ δΞ}}
+  \Abs*{ϕ(\V{α} + δ\V{α}) - ϕ(\V{α})} \\
+  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} ∈ Ξ\\δ\V{α} ∈ δΞ}}
   \Abs*{\Norm*{\V{α} + δ\V{α}}^{2} - \Norm*{\V{α}}^{2}}\\
-  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} \in Ξ\\δ\V{α} \in δΞ}}
+  &= π\,λ\,\Abs*{z}\,\max_{\substack{\V{α} ∈ Ξ\\δ\V{α} ∈ δΞ}}
   \Abs*{\Norm*{δ\V{α}}^{2} + 2\,\Inner{\V{α}}{δ\V{α}}}\\
-  &= π\,λ\,\Abs*{z}\,\Paren[\Big]{δα^{2} + 2\,δα\,\max_{\V{α} \in Ξ}\Norm*{\V{α}}_{\infty}}\\
-  &≈ 2\,π\,λ\,\Abs*{z}\,δα\,\max_{\V{α} \in Ξ}\Norm*{\V{α}}_{\infty}\\
+  &= π\,λ\,\Abs*{z}\,\Paren[\Big]{δα^{2} + 2\,δα\,\max_{\V{α} ∈ Ξ}\Norm*{\V{α}}_{∞}}\\
+  &≈ 2\,π\,λ\,\Abs*{z}\,δα\,\max_{\V{α} ∈ Ξ}\Norm*{\V{α}}_{∞}\\
   &= 2\,π\,λ\,\Abs*{z}\,δα\,\min\Paren{\NyquistFreq,\CutoffFreq,1/λ}
 \end{align}
 which (as expected) correspond to the conditions in Eq.~\eqref{eq:nonparaxial-angular-spectrum-sampling-conditions} at low-frequencies.
@@ -2086,14 +2086,14 @@ Fourier Transforms (FFTs).
 The sampled angular spectrum is given by:
 \begin{align}
   \label{eq:angular-spectrum-dicretization}
-  \FT{\boldsymbol{u}}_{z}[\ell_{1},\ell_{2}]
-  &= \FT{u}_{z}(α_{x}[\ell_{1}],α_{y}[\ell_{2}])\notag\\
-  &= \iint u_{z}(x,y)\,\mathe^{-\mathi\,2\,π\,(α_{x}[\ell_{1}]\,x,α_{y}[\ell_{2}]\,y)}
+  \FT{\boldsymbol{u}}_{z}[ℓ_{1},ℓ_{2}]
+  &= \FT{u}_{z}(α_{x}[ℓ_{1}],α_{y}[ℓ_{2}])\notag\\
+  &= \iint u_{z}(x,y)\,\mathe^{-\mathi\,2\,π\,(α_{x}[ℓ_{1}]\,x,α_{y}[ℓ_{2}]\,y)}
     \mathd x\, \mathd y\notag\\
   &≈ \sum_{k_{1},k_{2}} u_{z}(x[j_{1}],y[j_{2}])\,
-    \mathe^{-\mathi\,2\,π\,(α_{x}[\ell_{1}]\,x[j_{1}],α_{y}[\ell_{2}]\,y[j_{2}])}\,
+    \mathe^{-\mathi\,2\,π\,(α_{x}[ℓ_{1}]\,x[j_{1}],α_{y}[ℓ_{2}]\,y[j_{2}])}\,
     |δx\,δy|\notag\\
-  &= |δx\,δy|\,\bigl(\mathbf{F}·\boldsymbol{u}_{z}\bigr)[\ell_{1},\ell_{2}]
+  &= |δx\,δy|\,\bigl(\mathbf{F}·\boldsymbol{u}_{z}\bigr)[ℓ_{1},ℓ_{2}]
 \end{align}
 where $\mathbf{F}$ is the forward DFT operator (see Appendix~\ref{sec:DFT}),
 $\boldsymbol{u}_{z}$ is the sampled field $u_{z}(x,y)$ with sampling step sizes
@@ -2423,7 +2423,7 @@ $δx_{0} = 0.1\,$mm, $\Abs*{Δz} = 10\,$cm, and $N = 1024$, conditions in
 Eqs.~\eqref{eq:2-step-Fresnel-cond-1} and \eqref{eq:2-step-Fresnel-cond-2} are
 $\Abs*{\gammabar} ≥ 48.8$ and $-47.8 ≤ \gammabar ≤ 49.8$. Combining the two
 yields $48.8 ≤ \gammabar ≤ 49.8$ which is quite restrictive and leads to have
-$δx_{1} \in [4.88,4.98]\,$mm.
+$δx_{1} ∈ [4.88,4.98]\,$mm.
 
 
 \paragraph{Angular spectrum propagation with magnification.}
@@ -2615,10 +2615,10 @@ for any input field $u_\Tag{out}$ (before the lens) and with $ℓ ≥ 0$ an opti
 path length accounting for the thickness of the lens:
 \begin{equation}
   \label{eq:lens-thickness}
-  \ell = \frac{n_{\Tag{glass}}}{n}\,\ell_{\Tag{c}}
+  ℓ = \frac{n_{\Tag{glass}}}{n}\,ℓ_{\Tag{c}}
 \end{equation}
 with $n$ and $n_{\Tag{glass}}$ the respective refractive indices of the
-propagation medium and of the lens material and where $\ell_{\Tag{c}}$ is the
+propagation medium and of the lens material and where $ℓ_{\Tag{c}}$ is the
 physical thickness of the lens at its center.
 
 \oops{What if the lens is tilted? Answer: move the point source at the actual
@@ -2645,18 +2645,18 @@ fourth term is constant. Hence all these terms must be constant, so that
 Helmholtz equation amounts to:
 \begin{displaymath}
   \begin{cases}
-    f''_{x}(x) = \rho_{x}\,f_{x}(x)\\
-    f''_{y}(y) = \rho_{y}\,f_{y}(y)\\
-    f''_{z}(z) = \rho_{z}\,f_{z}(z)\\
+    f''_{x}(x) = ρ_{x}\,f_{x}(x)\\
+    f''_{y}(y) = ρ_{y}\,f_{y}(y)\\
+    f''_{z}(z) = ρ_{z}\,f_{z}(z)\\
   \end{cases}
   \quad\text{subject to}\quad
-  \rho_{x} + \rho_{y} + \rho_{z} + k^{2} = 0
+  ρ_{x} + ρ_{y} + ρ_{z} + k^{2} = 0
 \end{displaymath}
-with $(\rho_{x},\rho_{y},\rho_{z}) ∈ \mathbb{\V{R}}^{3}$. For a given
+with $(ρ_{x},ρ_{y},ρ_{z}) ∈ \mathbb{\V{R}}^{3}$. For a given
 component, say $f_{x}$, the possible solutions depend on the sign
-of $\rho_{x}$:
+of $ρ_{x}$:
 \begin{itemize}
-\item If $\rho_{x} > 0$, introducing $μ_{x} = \sqrt{\rho_{x}} > 0$, the
+\item If $ρ_{x} > 0$, introducing $μ_{x} = \sqrt{ρ_{x}} > 0$, the
       solution is a linear combination of $\exp(μ_{x}\,x)$ and of
       $\exp(-μ_{x}\,x)$. These particular solutions are amplified exponentially
       while they propagate in a direction such that $x$ is respectively
@@ -2669,9 +2669,9 @@ of $\rho_{x}$:
       which is rapidly vanishing with the distance $|x - x_{0}|$ and is called
       an \textbf{evanescent wave}.
 
-\item If $\rho_{x} ≤ 0$, the solution is a linear combination of
-      $\exp(\mathi\,k_{x}\,x)$ with $k_{x} = ±\sqrt{-\rho_{x}}$ so that
-      $k_{x}^{2} = -\rho_{x}$. In that case, $f_{x}(x)$ is a sinusoidal
+\item If $ρ_{x} ≤ 0$, the solution is a linear combination of
+      $\exp(\mathi\,k_{x}\,x)$ with $k_{x} = ±\sqrt{-ρ_{x}}$ so that
+      $k_{x}^{2} = -ρ_{x}$. In that case, $f_{x}(x)$ is a sinusoidal
       function of $x$ with wave number $|k_{x}|$.
 \end{itemize}
 
