@@ -1304,6 +1304,186 @@ equivalent to a 2-step Fresnel transform.
 
 \subsection{Sampling}
 
+\oops{
+  \begin{itemize}
+  \item Geometrical considerations give bounds on the frequencies. The unit-norm vector
+        for the planar wave combination is
+        $\V{v} = \V{k}/k = \Paren*{v_{x},v_{y},\sqrt{1 - v_{x}^{2} - v_{y}^{2}}}$
+        where $v_{x} = \sin θ_{x}$ and $v_{y} = \sin θ_{y}$ are the sine of the angles of
+        $\V{k}$ with the $z$--axis in the $(x,z)$ and $(y,z)$ longitudinal planes.
+        It can be seen that, for any rays coming from the aperture at $z =0$ and emerging from
+        the aperture at $z$, the tangents of these angles are constrained by:
+        \begin{align}
+          \label{eq:1}
+          \tan θ_{x} ∈ \Brack*{\frac{x_{\Tag{max}} - x'_{\Tag{min}}}{z},
+          \frac{x_{\Tag{min}} - x'_{\Tag{max}}}{z}},\\
+          \tan θ_{y} ∈ \Brack*{\frac{y_{\Tag{max}} - y'_{\Tag{min}}}{z},
+          \frac{y_{\Tag{min}} - y'_{\Tag{max}}}{z}},
+        \end{align}
+        where $[x_{\Tag{min}},x_{\Tag{max}}]\times[y_{\Tag{min}},y_{\Tag{max}}]$ are the
+        bounds of the aperture in the transverse plane at $z$ while
+        $[x'_{\Tag{min}},x'_{\Tag{max}}]\times[y'_{\Tag{min}},y'_{\Tag{max}}]$ are the
+        bounds of the aperture in the transverse plane at $z=0$. Since
+        $\sin\Paren{\tan^{-1}t} = t/\sqrt{1 + t^{2}}$ (for the solution having the same
+        sign as $t$), we have:
+        \begin{align}
+          \label{eq:1}
+          v_{x}
+          & = \sin θ_{x} ∈ \Brack*{
+            p_{z}\Paren*{x_{\Tag{max}} - x'_{\Tag{min}}},
+            p_{z}\Paren*{x_{\Tag{min}} - x'_{\Tag{max}}}},\\
+          v_{y}
+          & = \sin θ_{y} ∈ \Brack*{
+            p_{z}\Paren*{y_{\Tag{max}} - y'_{\Tag{min}}},
+            p_{z}\Paren*{y_{\Tag{min}} - y'_{\Tag{max}}}},
+        \end{align}
+        with:
+        \begin{equation}
+          \label{eq:8}
+          p_{z}(x) = \frac{\Sign(z)\,x}{\sqrt{z^{2} + x^{2}}}.
+        \end{equation}
+        Now, noting that the 2-dimensional frequency is $\V{α} = (v_{x}/λ,v_{y}/λ)$, the maximum
+        amplitude of the frequency range is given by:
+        \begin{align}
+          \label{eq:11}
+          Δα_{\Tag{max}} = \max\bigl(
+          &\Abs*{
+            p_{z}\Paren*{x_{\Tag{max}} - x'_{\Tag{min}}} -
+            p_{z}\Paren*{x_{\Tag{min}} - x'_{\Tag{max}}}},\notag\\
+          &\Abs*{
+            p_{z}\Paren*{y_{\Tag{max}} - y'_{\Tag{min}}} -
+            p_{z}\Paren*{y_{\Tag{min}} - y'_{\Tag{max}}}}
+            \bigr)/λ
+        \end{align}
+        can be computed for the considered setup. Accounting for periodic boundaries
+        conditions\footnote{This means that the limitation is that the width of the
+        interval must correspond to no more than $N$ samples, not that the maximal (resp.
+        minimal) position be at most $N/2$ (resp. at least $-N/2$) samples.}, it is
+        possible to completely avoid aliasing with the angular spectrum computed by an FFT
+        provided that $Δα_{\Tag{max}} < N\,δα$ with $N$ the number of samples along a
+        direction of the grid and $δα$ the sampling step of the sampling frequencies.
+        Hence the constraint can be expressed as $δx < Δα_{\Tag{max}}^{-1}$.
+
+        For centered apertures of diameters $D$ and $D'$, we have $x_{\Tag{min}} = -D/2$,
+        $x_{\Tag{max}} = -D/2$, $x'_{\Tag{min}} = -D'/2$, and
+        $x'_{\Tag{max}} = -D'/2$, and thus:
+        \begin{align}
+          \label{eq:geometrical-delta-x-condition}
+          δx < \frac{λ}{2}\,\sqrt{1 + \Paren*{z/\bar{D}}^{2}}
+        \end{align}
+        with $\bar{D} = (D + D')/2$ the mean diameter of the apertures. This condition
+        reflects that, very near to the emitting aperture (for $z \ll \bar{D}$),
+        oscillations of wavelength $λ$ must be correctly sampled ($λ/2$ is the minimal
+        sampling step for that). Very far from the emitting aperture, the condition
+        becomes $δx/\Abs{z} < \frac{1}{2}\,λ/\bar{D}$ which amounts to correctly sampling
+        the diffraction by an aperture of diameter $\bar{D}$.
+
+        In practice, the possible angles of emerging rays from the output aperture are not
+        just set by geometrical rules but also by the diffraction which adds, say, a few
+        $λ/D$ radians to each end of the angular ranges, with $D$ the largest size of the
+        aperture.
+
+        For small aperture sizes compared to the propagation distance $\Abs{z}$,
+        $p_{z}(x) ≈ x/z$ and the constraint writes...
+
+
+  \item For the 2-step Fresnel transform, geometrical considerations lead to the following
+        constraint for the size of the domain to be sampled in the intermediate transverse
+        plane at $z' = β\,z$:
+        \begin{equation}
+          \label{eq:minimal-intermediate-size}
+          L_{z'} ≥ \Abs{1 - β}\,L_{0} + \Abs{β}\,L_{z},
+        \end{equation}
+        with $L_{0}$ and $L_{z}$ the sizes of the apertures in the initial and final
+        transverse planes. If the apertures are not isotropic, this condition applies for
+        the two lateral dimensions. On the other hand, the FFTs in the 2 steps impose
+        that:
+        \begin{align}
+          \label{eq:1st-step-FFT-sampling-constraint}
+          &N'\,δx_{z'}\,δx_{0} = λ\,\Abs{z'} = λ\,\Abs{z}\,\Abs{β},\\
+          \label{eq:2nd-step-FFT-sampling-constraint}
+          &N''\,δx_{z'}\,δx_{z} = λ\,\Abs{z''} = λ\,\Abs{z}\,\Abs{1 - β},
+        \end{align}
+        with $δx_{0}$, $δx_{z}$, $δx_{z'}$ the sampling steps in the transverse planes at
+        positions $0$, $z$, and $z'$ along the longitudinal axis, and $N'$ and $N''$ the
+        number of samples per transverse axis used for the FFTs in the first and second
+        steps (they are not ncessarily the same as we can use cropping and zero-padding
+        provided there is no aliasing nor truncation). To avoid truncation and aliasing,
+        the following conditions must hold:
+        \begin{align}
+          \label{eq:N'dx_0-size-constraint}
+          N'\,δx_{0} &≥ L_{0},\\
+          \label{eq:N'dx_z'-size-constraint}
+          N'\,δx_{z'} &≥ L_{z'},\\
+          \label{eq:N''dx_z-size-constraint}
+          N''\,δx_{z} &≥ L_{z},\\
+          \label{eq:N''dx_z'-size-constraint}
+          N''\,δx_{z'} &≥ L_{z'}.
+        \end{align}
+        Combining Eqs.~\eqref{eq:minimal-intermediate-size},
+        \eqref{eq:1st-step-FFT-sampling-constraint}, and
+        \eqref{eq:N'dx_z'-size-constraint} yields:
+        \begin{equation}
+          N'\,δx_{z'} = λ\,\Abs{z}\,\Abs{β}/δx_{0} ≥ \Abs{1 - β}\,L_{0} + \Abs{β}\,L_{z}
+        \end{equation}
+        Unless $L_{0} = 0$, $β$ must be non-zero for the above inequality to hold, and
+        thus we can divide the two last right-hand sides by $\Abs{β}$ to obtain:
+        \begin{equation}
+          λ\,\Abs{z}/δx_{0} ≥ \Abs{1 - 1/β}\,L_{0} + L_{z}.
+        \end{equation}
+        In particular, this shows that:
+        \begin{equation}
+          \label{eq:max-dx_0-for-propgating-to-L_z}
+          \boxed{δx_{0} ≤ λ\,\Abs{z}/L_{z}}
+        \end{equation}
+        must hold. Similarly, combining Eqs.~\eqref{eq:minimal-intermediate-size},
+        \eqref{eq:2nd-step-FFT-sampling-constraint}, and
+        \eqref{eq:N''dx_z'-size-constraint} yields:
+        \begin{equation}
+          N''\,δx_{z'} = λ\,\Abs{z}\,\Abs{1 - β}/δx_{z} ≥ \Abs{1 - β}\,L_{0} + \Abs{β}\,L_{z}
+        \end{equation}
+        Unless $L_{z} = 0$, $β$ must be different from one for the above inequality to
+        hold, and thus we can divide the two last right-hand sides by $\Abs{1 - β}$ to
+        obtain:
+        \begin{equation}
+          λ\,\Abs{z}/δx_{z} ≥ L_{0} + \Abs{1 - 1/β}^{-1}\,L_{z}.
+        \end{equation}
+        In particular, this shows that:
+        \begin{equation}
+          \label{eq:max-dx_z-for-propgating-from-L_0}
+          \boxed{δx_{z} ≤ λ\,\Abs{z}/L_{0}}
+        \end{equation}
+        must hold. Even though the Fresnel transform assumes paraxial conditions, that is
+        $\Abs{z} \gg L_{0}$ and $\Abs{z} \gg L_{z}$, conditions in
+        Eqs.~\eqref{eq:max-dx_0-for-propgating-to-L_z} and
+        \eqref{eq:max-dx_z-for-propgating-from-L_0} impose conditions on the smalness of
+        the sampling steps for the considered propagation. These conditions can be
+        summarized by the following condition that must hold for the sampling step
+        $δx_{j}$ of any transverse plane of a numerical simulation:
+        \begin{equation}
+          \label{eq:max-dx_z-for-propgating-from-L_0}
+          δx_{j} ≤ \min_{j' ∈ 𝕊_{j}} λ_{j,j'}\,\Abs{z_{j'} - z_{j}}/L_{j'}
+        \end{equation}
+        where $𝕊_{j}$ is the set of other transverse planes from which the $j$-th plane
+        directly receives a wave or to which the $j$-th plane directly emits a wave,
+        $λ_{j,j'}$ is the wavelength of the medium between the $j$-th and $j'$-th
+        transverse planes, $z_{j'}$ and $L_{j'}$ are respectively the position along the
+        longitudinal axis the transverse size of the aperture in the $j'$-th transverse
+        plane.
+
+        Assuming these conditions hold, then:
+        \begin{equation}
+          \label{eq:14}
+          \frac{L_{z}}{λ\,\Abs{z}/δx_{z} - L_{0}}
+          ≤ \Abs{1 - 1/β} ≤
+          \frac{λ\,\Abs{z}/δx_{0} - L_{z}}{L_{0}}
+        \end{equation}
+        Not that the extreme hand sides impose an additional constraint on the smallness
+        of the sampling steps.
+
+      \end{itemize}
+}
+
 For numerical computations, the continuous functions of the transverse position and
 spatial frequency are sampled on a regular Cartesian grid. We further assume that the
 number of samples and the sampling steps are the same along the 2 transverse dimensions.
