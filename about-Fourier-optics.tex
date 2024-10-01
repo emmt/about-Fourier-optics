@@ -2844,6 +2844,220 @@ Eq.~\eqref{eq:plane-waves-superposition} can be restricted and simplified if we
 assume known the field in a plane defined by, say, $z = z_{0}$.
 
 \newpage
+\section{Tilted paraxial approximation}
+\label{sec:tilted-paraxial-approximation}
+
+Following the idea of a carrier wave, we consider that the propagating field
+$u_{0}(\V{x})$ has a tilted wavefront compared to $a_{0}(\V{x})$:
+\begin{equation}
+  \label{eq:tilted-wavefront}
+  u_{0}(\V{x}) = a_{0}(\V{x})\,\mathe^{\mathi\,2\,π\,\V{β}\T\!\cdot\V{x}}
+\end{equation}
+with $\V{β}$ the wavefront slope. The angular spectrum of $u_{0}(\V{x})$ is then:
+\begin{align}
+  \FT{u}_{0}(\V{α})
+  &= \iint a_{0}(\V{x})\,\mathe^{-\mathi\,2\,π\,(\V{α} - \V{β})\T\!\cdot\V{x}}\,
+    \mathd\V{x}
+    = \FT{a}_{0}(\V{α} - \V{β}),
+\end{align}
+that is the angular spectrum of $a_{0}(\V{x})$ shifted by $\V{β}$. The propagation of the
+field $u_{0}(\V{x})$ then writes:
+\begin{align}
+  u_{z}(\V{x})
+  &= \iint \FT{u}_{0}(\V{α}) \, \FT{h}_{z}(\V{α}) \,
+    \mathe^{\mathi\,2\,π\,\V{α}\T\!\cdot\V{x}}\,
+    \mathd\V{α}\notag\\
+  &= \iint \FT{a}_{0}(\V{α} - \V{β}) \, \FT{h}_{z}(\V{α}) \,
+    \mathe^{\mathi\,2\,π\,\V{α}\T\!\cdot\V{x}}\,
+    \mathd\V{α}\notag\\
+  &= \iint \FT{a}_{0}(\V{α}) \, \FT{h}_{z}(\V{α} + \V{β}) \,
+    \mathe^{\mathi\,2\,π\,(\V{α} + \V{β})\T\!\cdot\V{x}}\,
+    \mathd\V{α}\notag\\
+  &= \mathe^{\mathi\,2\,π\,\V{β}\T\!\cdot\V{x}}\,
+    \iint \FT{a}_{0}(\V{α}) \, \FT{h}_{z}(\V{α} + \V{β}) \,
+    \mathe^{\mathi\,2\,π\,\V{α}\T\!\cdot\V{x}}\,
+    \mathd\V{α}\notag\\
+  &= a_{z}(\V{x};\V{β})\,\mathe^{\mathi\,2\,π\,\V{β}\T\!\cdot\V{x}},
+  \label{eq:tilted-propagation}
+\end{align}
+where:
+% is the field resulting from the propagation of $a_{0}(\V{x})$ along
+\begin{equation}
+  \label{eq:carrier-tilded-propagation}
+  a_{z}(\V{x}) = \iint \FT{a}_{0}(\V{α}) \, \FT{h}_{z}(\V{α} + \V{β}) \,
+  \mathe^{\mathi\,2\,π\,\V{α}\T\!\cdot\V{x}}\,
+  \mathd\V{α}
+\end{equation}
+and with $\FT{h}_{z}(\V{α})$ the angular spectrum transfer function implementing the
+propagation between two transverse planes separated by an algebraic distance of $z$. With
+the convention that $z > 0$ in the direction of wave propagation, the transfer function is
+given by Eq.~\eqref{eq:propagation-transfer-function} and can be expressed as:
+\begin{equation}
+  \FT{h}_{z}(\V{α}) = \mathe^{\mathi\,k\,z\,ρ(\V{α})}
+\end{equation}
+with:
+\begin{equation}
+  ρ(\V{α}) = \sqrt{1 - \Norm{λ\,\V{α}}^{2}}.
+\end{equation}
+Angular spectrum propagation yields a solution to the Helmholtz equations with no
+approximations but it may be simpler to consider a low frequency approximation. Assuming
+$\FT{a}_{0}(\V{α})$ is negligible at high frequencies,
+Eq.~\eqref{eq:carrier-tilted-propagation} suggests to approximate the transfer function
+near the angular frequency $\V{β}$ for a low frequency perturbation $\V{α}$. For that we
+need to approximate $ρ(\V{α} + \V{β})$ for a given $\V{β}$. The gradient and Hessian of
+$ρ(\V{α})$ are:
+\begin{align}
+  \nabla ρ(\V{α})
+  &= \frac{-λ^{2}}{ρ(\V{α})}\,\V{α},\\
+  \nabla^{2} ρ(\V{α})
+  &= \frac{-λ^{2}}{ρ(\V{α})}\,\Id - \frac{λ^{4}}{ρ(\V{α})^{3}}\,\V{α}\cdot\V{α}\T,
+\end{align}
+where $\Id$ is the $2×2$ identity, $\V{α}\T$ denotes the transpose of $\V{α}$, and, thus,
+$\V{α}\cdot\V{α}\T$ is a rank-1 $2×2$ matrix. These derivatives lead to the following 2nd
+order series:
+\begin{align}
+  ρ(\V{α} + \V{β})
+  &= ρ(\V{β}) + \V{α}\T\!\cdot\nabla ρ(\V{β})
+    + \frac{1}{2}\,\V{α}\T\!\cdot\nabla^{2} ρ(\V{β})\cdot\V{α}
+    + \ldots %\mathcal{O}(\Norm{λ\,\V{α}}^{3})
+    \notag\\
+  &= ρ(\V{β})
+    - \frac{λ^{2}\,\V{β}\T\!\cdot\V{α}}{ρ(\V{β})}
+    - \frac{λ^{2}\,\Norm{\V{α}}^{2}}{2\,ρ(\V{β})}
+    - \frac{λ^{4}\,\Paren*{\V{β}\T\!\cdot\V{α}}^{2}}{2\,ρ(\V{β})^{3}}
+    + \ldots %\mathcal{O}(\Norm{λ\,\V{α}}^{3}).
+    \label{eq:rho(alpha+beta):series}
+\end{align}
+If $\Norm{\V{α}}$ and $\Norm{\V{β}}$ are both small compared to $1/λ$, then
+$\Norm{λ\,\V{α}} \ll 1$, $\Norm{λ\,\V{β}} \ll 1$, and $ρ(\V{β}) ≈ 1$. In these conditions,
+the terms of the right-hand side of Eq.~\eqref{eq:rho(alpha+beta):series} can be ordered
+in magnitude as explained next. A first consequence of assuming that
+$\Norm{λ\,\V{α}} \ll 1$ and $\Norm{λ\,\V{β}} \ll 1$ is:
+\begin{equation}
+  \Abs*{λ^{2}\,\V{β}\T\!\cdot\V{α}} ≤ \Norm{λ\,\V{α}}\,\Norm{λ\,\V{β}} \ll 1
+  \quad\Longrightarrow\quad
+  \Abs*{λ^{2}\,\V{β}\T\!\cdot\V{α}}^{2} \ll \Abs*{λ^{2}\,\V{β}\T\!\cdot\V{α}},
+\end{equation}
+hence, and since $ρ(\V{β}) ≈ 1$, the fourth term in the right-hand side of
+Eq.~\eqref{eq:rho(alpha+beta):series} is negligible compared to the second one. Another
+consequence of assuming that $\Norm{λ\,\V{β}} \ll 1$ is:
+\begin{equation}
+  λ^{4}\,\Abs*{\V{β}\T\!\cdot\V{α}}^{2} ≤ \Norm{λ\,\V{α}}^{2}\,\Norm{λ\,\V{β}}^{2}
+  \ll \Norm{λ\,\V{α}}^{2},
+\end{equation}
+which shows that the fourth term in the right-hand side of
+Eq.~\eqref{eq:rho(alpha+beta):series} is negligible compared to the third one. For
+instance, taking $\Norm{λ\,\V{α}} = \Norm{λ\,\V{β}} = 0.3$ yields:
+\begin{align*}
+  ρ(\V{β})
+  &\simeq 0.95,\\
+  \frac{λ^{2}\,\Abs*{\V{β}\T\!\cdot\V{α}}}{ρ(\V{β})}
+  ≤ \frac{\Norm{λ\,\V{α}}\,\Norm{λ\,\V{β}}}{ρ(\V{β})}
+  &\simeq 0.094,\\
+  \frac{λ^{2}\,\Norm{\V{α}}^{2}}{2\,ρ(\V{β})}
+  & \simeq 0.047,\\
+  \frac{λ^{4}\,\Paren*{\V{β}\T\!\cdot\V{α}}^{2}}{2\,ρ(\V{β})^{3}}
+  ≤ \frac{\Norm{λ\,\V{α}}^{2}\,\Norm{λ\,\V{β}}^{2}}{2\,ρ(\V{β})^{3}}
+  &\simeq 0.0047.
+\end{align*}
+To summarize, if $\Norm{\V{α}}$ and $\Norm{\V{β}}$ are both small compared to $1/λ$, the
+fourth term in the right-hand side of Eq.~\eqref{eq:rho(alpha+beta):series} can be
+neglected which leads to the following approximation:
+\begin{equation}
+  \label{eq:rho(alpha+beta):approx}
+  ρ(\V{α} + \V{β}) ≈  ρ(\V{β})
+    - \frac{λ^{2}\,\V{β}\T\!\cdot\V{α}}{ρ(\V{β})}
+    - \frac{\Norm{λ\,\V{α}}^{2}}{2\,ρ(\V{β})}.
+\end{equation}
+Compared to the paraxial approximation, there is a division by $ρ(\V{β}) ≈ 1$ and a linear
+term in $\V{α}$.
+
+Using the approximation in Eq.~\eqref{eq:rho(alpha+beta):approx}, the transfer function
+becomes:
+\begin{equation}
+  \FT{h}_{z}(\V{α} + \V{β})
+  ≈ \mathe^{\mathi\,k\,z\,\Paren*{ ρ(\V{β})
+    - \frac{λ^{2}\,\V{β}\T\!\cdot\V{α}}{ρ(\V{β})}
+    - \frac{\Norm{λ\,\V{α}}^{2}}{2\,ρ(\V{β})}}},
+  \label{eq:tilted-paraxial-transfer-function}
+\end{equation}
+Note that for $\V{β} = \V{0}$, then $ρ(\V{β}) = 1$ and the usual paraxial approximation is
+retrieved, see Eq.~\eqref{eq:paraxial-transfer-function}. Considering the above expression,
+the fourth term in the right-hand side of Eq.~\eqref{eq:rho(alpha+beta):series} cannot be neglected if it induces a significant change of phase. This imposes that:
+\begin{equation}
+  \Abs*{k\,z\,\frac{λ^{4}\,\Paren*{\V{β}\T\!\cdot\V{α}}^{2}}{2\,ρ(\V{β})^{3}}} \ll π
+  \quad\Longrightarrow\quad
+  \Norm{λ\,\V{α}}\,\Norm{λ\,\V{β}} \ll \sqrt{\frac{λ\,ρ(\V{β})^{3}}{z}}
+  \label{eq:tilted-paraxial-condition}
+\end{equation}
+which may be much more restrictive than the conditions, $\Norm{λ\,\V{α}} \ll 1$ and
+$\Norm{λ\,\V{β}} \ll 1$, for the pproximation in Eq.~\eqref{eq:rho(alpha+beta):approx} to
+hold.
+
+The right-hand side of Eq.~\eqref{eq:carrier-tilded-propagation} can be put in the form of
+a convolution of $a_{0}(\V{x})$ by a kernel, say $h_{z}(\V{x}; \V{β})$, resulting from the
+2-dimensional Fourier transform in $\V{α}$ of $\FT{h}_{z}(\V{α} + \V{β})$. Using the
+approximation in Eq.~\eqref{eq:rho(alpha+beta):approx} this kernel writes:
+\begin{align}
+  h_{z}(\V{x}; \V{β})
+  &= \iint \FT{h}_{z}(\V{α} + \V{β})\,\mathe^{\mathi\,2\,π\,\V{α}\T\!\cdot\V{x}}\,
+    \mathd\V{α}\notag\\
+  &≈ ρ(\V{β})\,\frac{\mathe^{\mathi\,ρ(\V{β})\,k\,z}}{\mathi\,λ\,z}
+    \,\mathe^{\frac{\mathi\,π\,ρ(\V{β})}{λ\,z}\,\Norm*{\V{x} - \frac{λ\,z}{ρ(\V{β})}\,\V{β}}^{2}},
+  \label{eq:tilted-paraxial-kernel}
+\end{align}
+where Eq.~\eqref{eq:FT-of-Gaussian} has been used to simplify the integral. Again, note
+that for $\V{β} = \V{0}$, the usual paraxial approximation is retrieved, see
+Eq.~\eqref{eq:Fresnel-kernel}. Using this kernel, and introducing
+$\V{s} = λ\,z\,\V{β}/ρ(\V{β})$ to simply the expressions, the propagation of the field
+writes:
+\begin{align}
+  a_{z}(\V{x};\V{β})
+  &= \iint a_{0}(\V{x}')\,h_{z}(\V{x} - \V{x}'; \V{β})\,\mathd\V{x}'\notag\\
+  &≈ ρ(\V{β})\,\frac{\mathe^{\mathi\,ρ(\V{β})\,k\,z}}{\mathi\,λ\,z}\,
+    \iint a_{0}(\V{x}')\,
+    \mathe^{\frac{\mathi\,π\,ρ(\V{β})}{λ\,z}\,\Norm*{\V{x} - \V{x}' - \V{s}}^{2}}
+    \,\mathd\V{x}'\notag\\
+  &≈ ρ(\V{β})\,\frac{\mathe^{\mathi\,ρ(\V{β})\,k\,z}}{\mathi\,λ\,z}\,
+    \mathe^{\frac{\mathi\,π\,ρ(\V{β})}{λ\,z}\,\Norm{\V{x} - \V{s}}^{2}}\notag\\
+  &\quad ×
+    \iint \Brack*{a_{0}(\V{x}')\,\mathe^{\frac{\mathi\,π\,ρ(\V{β})}{λ\,z}\,\Norm{\V{x}'}^{2}}}\,
+    \mathe^{\frac{-\mathi\,2\,π\,ρ(\V{β})}{λ\,z}\,
+    \Paren{\V{x} - \V{s}}\T\!\cdot\V{x}'}\,\mathd\V{x}',
+    \label{eq:auxiliary-tilted-propagation}
+\end{align}
+which is readily a fumction of $\V{x} - \V{s}$ and where the integral amount to compute
+the 2-dimensional Fourier transform of the term in square brackets which is the auxiliary
+field $a_{0}(\V{x})$ times a quadratic phasor.
+
+Equations.~\eqref{eq:tilted-propagation} and \eqref{eq:auxiliary-tilted-propagation}
+suggest to write the propagated field as:
+\begin{align}
+  u_{z}(\V{x})
+  &≈ a_{z}(\V{x} - \V{s})\,\mathe^{\mathi\,2\,π\,\V{β}\T\!\cdot\V{x}},
+\end{align}
+with  $\V{s} = λ\,z\,\V{β}/ρ(\V{β})$ and:
+\begin{align}
+  a_{z}(\V{x})
+  &= ρ(\V{β})\,\frac{\mathe^{\mathi\,ρ(\V{β})\,k\,z}}{\mathi\,λ\,z}\,
+    \mathe^{\frac{\mathi\,π\,ρ(\V{β})}{λ\,z}\,\Norm{\V{x}}^{2}}\notag\\
+  &\quad ×
+    \iint \Brack*{a_{0}(\V{x}')\,\mathe^{\frac{\mathi\,π\,ρ(\V{β})}{λ\,z}\,\Norm{\V{x}'}^{2}}}\,
+    \mathe^{\frac{-\mathi\,2\,π\,ρ(\V{β})}{λ\,z}\,
+    \V{x}\T\!\cdot\V{x}'}\,\mathd\V{x}'.
+\end{align}
+These equations implement a \emph{tilted paraxial approximation} of the planar
+propagation. The tilted wavefront with respect to the auxiliary field is exactly preserved
+and induces (as expected) a shift of the field by $\V{s}$. Hence, this tilted paraxial
+approximation can help achieving a better precision when the beam is tilted or when
+considering off-centered windows, notably if the same strategy as the 2-step Fresnel
+transform is exploited. Important for numerical computations: the approximation is
+separable in the two axes of the transverse plane.
+
+See work of \citet{Matsushima+2003-optical_diffraction_on_tilted_planes}?
+
+
+\newpage
 \section{The discrete Fourier transform}
 \label{sec:DFT}
 
