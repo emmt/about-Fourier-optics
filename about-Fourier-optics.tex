@@ -256,7 +256,7 @@ medium, and $∇^{2}u = ∂^{2}u/∂x^{2} + ∂^{2}u/∂y^{2} + ∂^{2}u/∂z^{2
 \end{table}
 
 
-\subsection{Elementary solutions to Helmholtz equation}
+\subsection{Elementary solutions to the Helmholtz equation}
 \label{sec:elementary-solutions}
 
 Before considering the diffraction by a surface, two important elementary solutions to the
@@ -344,6 +344,89 @@ derivatives yields:
   ∇^{2}u(\V{r}) = -k^{2}\,u(\V{r})
 \end{equation}
 showing that a spherical wave is solution of the Helmholtz equation~\eqref{eq:Helmholtz}.
+
+
+\subsection{The Helmholtz equation for the modulation of a carrier wave}
+\label{sec:modulation}
+
+The field $u(\V{r})$, with $\V{r} \equiv (x,y,z)$, can be expressed as:
+\begin{equation}
+  \label{eq:plane-wave-modulation}
+  u(\V{r}) = a(\V{r})\,b(\V{r}),
+\end{equation}
+with $a(\V{r})$ an unknown modulation field and $b(\V{r})$ a chosen carrier wave. The
+second derivatives of $u(\V{r})$ in $x$ then write:
+\begin{equation}
+  \label{eq:d^2(a*b)/dx^2}
+  \frac{∂^{2} u}{∂x^{2}}
+  = \frac{∂^{2} a}{∂x^{2}}\,b + 2\,\frac{∂a}{∂x}\,\frac{∂b}{∂x} + a\,\frac{∂^{2} b}{∂x^{2}}
+\end{equation}
+and similarly for the second derivatives in $y$ and in $z$. Applying the Helmholtz
+equation~\eqref{eq:Helmholtz} for $u(\V{r})$ yields:
+\begin{equation}
+  \label{eq:Helmholtz-for-u=a*b}
+  b\,\nabla^{2}a + 2\,\V{\nabla}a\cdot\V{\nabla}b +
+  a\,\Paren*{\nabla^{2}b + k^{2}\,b} = 0,
+\end{equation}
+where $\V{\nabla}a = ∂a/∂\V{r} = (∂a/∂x, ∂a/∂y, ∂a/∂z)$ denotes the spatial gradient of
+$a(\V{r})$. Assuming now that the Helmholtz equation~\eqref{eq:Helmholtz} holds for the
+carrier wave $b(\V{r})$, i.e.\ $\nabla^{2}b + k^{2}\,b = 0$, the Helmholtz equation for
+$u(\V{r}) = a(\V{r})\,b(\V{r})$ is equivalent to:
+\begin{equation}
+  \label{eq:Helmholtz-for-modulation}
+  \tcboxmath{
+    b(\V{r})\,\nabla^{2}a(\V{r}) + 2\,\V{\nabla}a(\V{r})\cdot\V{\nabla}b(\V{r}) = 0.
+  }
+\end{equation}
+This trick can be used to approximate the propagation of the auxiliary field $a(\V{r})$ by
+a simpler differential equation, compared to the Helmholtz equation for $u(\V{r})$,
+because the most significant spatial variations of the field $u(\V{r})$ are taken into
+account by the carrier wave $b(\V{r})$. We illustrate this by two examples.
+
+As a first example, we choose the carrier beam to be a plane wave, see
+Eq.~\eqref{eq:plane-wave-complex-amplitude}, which yields:
+\begin{equation}
+  b(\V{r}) = \mathe^{\mathi\,\V{k}·\V{r}}
+  \quad\Longrightarrow\quad
+  \V{\nabla}b(\V{r}) = \mathi\,\V{k}\,b(\V{r}),
+\end{equation}
+and Eq.~\eqref{eq:Helmholtz-for-modulation} simplifies to:
+\begin{equation}
+  \label{eq:Helmholtz-for-modulation-by-a-planar-wave}
+  \nabla^{2}a + 2\,\mathi\,\V{k}\cdot\V{\nabla}a = 0.
+\end{equation}
+is the equivalent Helmholtz equation for the auxiliary modulation field $a(\V{r})$. It may
+be noted that the term $\V{k}\cdot\V{\nabla}a$ is $k$ times the spatial derivative of
+$a(\V{r})$ along the direction of propagation of the chosen carrier wave. This particular
+choice is made in Sec.~\ref{sec:Helmholtz-paraxial-approximation} to derive the so-called
+paraxial approximation of the Helmholtz equation.
+
+As a second example, we choose the carrier beam to be a spherical wave originating at
+$\V{r}_{0}$, see Eq.~\eqref{eq:spherical-wave-complex-amplitude}, which yields:
+\begin{equation}
+  b(\V{r}) = \frac{\mathe^{\mathi\,k\,\Norm{\V{r} - \V{r}_{0}}}}{\Norm*{\V{r} - \V{r}_{0}}}\,
+  \quad\Longrightarrow\quad
+  \V{\nabla}b(\V{r}) = \Paren*{
+    \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}}
+    - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
+  }\,\Paren*{\V{r} - \V{r}_{0}}\,b(\V{r}),
+\end{equation}
+and Eq.~\eqref{eq:Helmholtz-for-modulation} simplifies to:
+\begin{equation}
+  \label{eq:Helmholtz-for-modulation-by-a-spherical-wave}
+  \nabla^{2}a + 2\,\Paren*{
+    \frac{\mathi\,k}{\Norm*{\V{r} - \V{r}_{0}}}
+    - \frac{1}{\Norm*{\V{r} - \V{r}_{0}}^{2}}
+  }\,\Paren*{\V{r} - \V{r}_{0}}\cdot\V{\nabla}a = 0.
+\end{equation}
+is the equivalent Helmholtz equation for the auxiliary modulation field $a(\V{r})$. It may
+be noted that the term $\Paren*{\V{r} - \V{r}_{0}}\cdot\V{\nabla}a$ is
+$\Norm*{\V{r} - \V{r}_{0}}$ times the spatial derivative of $a(\V{r})$ along the direction
+of propagation of the chosen carrier wave. Very far from $\V{r}_{0}$, the spherical wave
+is approximately planar and it can be verified that
+Eq.~\eqref{eq:Helmholtz-for-modulation-by-a-spherical-wave} becomes indeed equivalent to
+Eq.~\eqref{eq:Helmholtz-for-modulation-by-a-planar-wave}.
+
 
 \subsection{Diffraction by a surface}
 
