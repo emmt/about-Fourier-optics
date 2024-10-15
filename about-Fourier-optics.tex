@@ -1302,6 +1302,13 @@ to rewrite the convolution integral to have a sampling step in the output transv
 that is not the same as in the input transverse plane. This latter method is exactly
 equivalent to a 2-step Fresnel transform.
 
+
+According to \citet{Kopp+1998-Near_field_Fresnel_diffraction}, when the propagation is
+computed by a discrete convolution and FFTs, using the analytical expression or the
+propagation transfer function $\FT{h}_{z}(\V{α})$ rather that the FFT of the propagation
+kernel $h_{z}(\V{x})$ is to be preferred: not only it is faster (by saving one
+two-dimensional FFT) but it also avoids aliasing (due to the fact that
+$\FT{h}_{z}(\V{α})$ is not band-limited).
 \subsection{Sampling}
 
 \oops{
